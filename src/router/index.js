@@ -25,6 +25,17 @@ export const constantRoutes = [
   },
 
   {
+    path: '/boardroom/booking/periodic',
+    component: () => import('@/views/boardroom/periodic'),
+    hidden: true
+  },
+  {
+    path: '/boardroom/booking/long/term',
+    component: () => import('@/views/boardroom/long-term'),
+    hidden: true
+  },
+
+  {
     path: '/boardroom',
     component: Layout,
     meta: { title: 'Boardroom', icon: 'el-icon-s-help' },
