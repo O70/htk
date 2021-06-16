@@ -115,8 +115,9 @@
   </el-form>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import Rules from './rules'
-import { getFormInfo, getOrg } from '@/api/boardroom'
+import { getFormInfo, getOrg, currentUser } from '@/api/boardroom'
 
 export default {
   components: {
@@ -296,12 +297,19 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['userId', 'name'])
+  },
   created() {
     getFormInfo().then(({ data: { types, leaders }}) => {
       this.$set(this.info, 'types', types)
       this.$set(this.items[0].options, 'minor', leaders.map(({ name }) => name))
     })
+
     getOrg().then(({ data }) => this.$set(this.info, 'orgs', data))
+
+    currentUser(this.userId).then(({ data: { deptId: orgId, mobile }}) =>
+      Object.assign(this.form, { contacts: this.name, orgId, mobile }))
   },
   methods: {
     getFormData() {

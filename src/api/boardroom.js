@@ -15,7 +15,7 @@ export function getOrg() {
   })
 }
 
-export function getCurrentUser(id) {
+export function currentUser(id) {
   return getUserById(id)
 }
 

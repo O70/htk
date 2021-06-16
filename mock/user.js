@@ -10,18 +10,22 @@ const tokens = {
 
 const users = {
   'admin-token': {
+    id: 'ADMIN-ID',
+    name: 'Super Admin',
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin',
-    id: 'ADMIN-ID'
+    deptId: 'org-2',
+    mobile: '10000'
   },
   'editor-token': {
+    id: 'EDITOR-ID',
+    name: 'Normal Editor',
     roles: ['editor'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor',
-    id: 'EDITOR-ID'
+    deptId: 'org-4',
+    mobile: '10001'
   }
 }
 
