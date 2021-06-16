@@ -13,20 +13,22 @@ const users = {
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin'
+    name: 'Super Admin',
+    id: 'ADMIN-ID'
   },
   'editor-token': {
     roles: ['editor'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
+    name: 'Normal Editor',
+    id: 'EDITOR-ID'
   }
 }
 
 module.exports = [
   // user login
   {
-    url: '/vue-admin-template/user/login',
+    url: '/api/thraex/user/login',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -49,7 +51,7 @@ module.exports = [
 
   // get user info
   {
-    url: '/vue-admin-template/user/info\.*',
+    url: '/api/thraex/user/info\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
@@ -72,7 +74,7 @@ module.exports = [
 
   // user logout
   {
-    url: '/vue-admin-template/user/logout',
+    url: '/api/thraex/user/logout',
     type: 'post',
     response: _ => {
       return {

@@ -12,7 +12,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether hide the header
    */
-  hideHeader: true,
+  hideHeader: false,
 
   /**
    * @type {boolean} true | false
