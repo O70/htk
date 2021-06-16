@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     handleRoute() {
-      this.$router.push('/boardroom/index')
+      this.$router.push('/boardroom')
     },
     joinDate(y, m, d, cn) {
       const to = p => {

@@ -20,27 +20,20 @@ export const constantRoutes = [
 
   {
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
+    redirect: '/boardroom',
+    hidden: true
   },
 
   {
     path: '/boardroom',
-    redirect: '/boardroom/index',
     component: Layout,
     meta: { title: 'Boardroom', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
+        path: '',
         name: 'BoardroomStatistics',
         component: () => import('@/views/boardroom/statistics'),
-        meta: { title: 'Statistics', icon: 'el-icon-s-help' }
+        meta: { title: 'Booking', icon: 'el-icon-s-help' }
       },
       {
         path: 'booking',
