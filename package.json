@@ -1,7 +1,7 @@
 {
   "name": "thraex-boardroom",
   "version": "1.0.0",
-  "description": "Boardroom book",
+  "description": "Boardroom booking",
   "author": "THRAEX <THRAEX@aliyun.com>",
   "scripts": {
     "dev": "vue-cli-service serve",

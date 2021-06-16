@@ -117,7 +117,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Rules from './rules'
-import { getFormInfo, getOrg, currentUser } from '@/api/boardroom'
+import { getFormInfo, getOrg, getCurrentUser } from '@/api/boardroom'
 
 export default {
   components: {
@@ -308,7 +308,7 @@ export default {
 
     getOrg().then(({ data }) => this.$set(this.info, 'orgs', data))
 
-    currentUser(this.userId).then(({ data: { deptId: orgId, mobile }}) =>
+    getCurrentUser(this.userId).then(({ data: { deptId: orgId, mobile }}) =>
       Object.assign(this.form, { contacts: this.name, orgId, mobile }))
   },
   methods: {
@@ -332,9 +332,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-/* .el-form .el-form-item {
-  border-top: 1px dashed gray;
-  padding-top: 10px;
-} */
-</style>
