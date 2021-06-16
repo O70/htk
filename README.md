@@ -8,10 +8,10 @@ Plugins(`public/static/dhtmlxScheduler`):
 - `dhtmlxscheduler.js` -> `scheduler.js`
 - `dhtmlxscheduler_timeline.js` -> `timeline.js`
 - `dhtmlxscheduler_treetimeline.js` -> `treetimeline.js`
+- `dhtmlxscheduler_collision.js` -> `collision.js`
+- `dhtmlxscheduler_limit.js` -> `limit.js`
+- `dhtmlxscheduler_tooltip.js` -> `tooltip.js`
 - `locale_cn.js`
-
-Unified import: `index.js`
-  - Manual refresh of the page occurs'ReferenceError: scheduler is not defined'
 
 ES6 import: `components/scheduler/index.js`
 
@@ -42,8 +42,6 @@ Bugs(fix: reload `scheduler`):
 - [ ] Style
 
 ## Files
-
-**Moved from `views/scheduler/samples/` to `views/boardroom/`**
 
 - [X] static/dhtmlxScheduler
 - [X] components/scheduler
