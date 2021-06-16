@@ -82,5 +82,16 @@ module.exports = [
         data: 'success'
       }
     }
+  },
+  {
+    url: '/api/thraex/user\.*',
+    type: 'get',
+    response: config => {
+      const id = config.url.split('/').reverse()[0]
+      return {
+        code: 20000,
+        data: Object.values(users).find(it => it.id === id)
+      }
+    }
   }
 ]

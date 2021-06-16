@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { getById as getUserById } from '@/api/user'
 
 export function serverTime() {
   return request({
@@ -12,6 +13,10 @@ export function getOrg() {
     url: '/api/thraex/orgs',
     method: 'get'
   })
+}
+
+export function getCurrentUser(id) {
+  return getUserById(id)
 }
 
 export function getBoardrooms() {

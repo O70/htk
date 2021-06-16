@@ -16,6 +16,13 @@ export function getInfo(token) {
   })
 }
 
+export function getById(id) {
+  return request({
+    url: `/api/thraex/user/${id}`,
+    method: 'get'
+  })
+}
+
 export function logout() {
   return request({
     url: '/api/thraex/user/logout',
