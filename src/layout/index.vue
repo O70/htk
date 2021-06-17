@@ -1,8 +1,8 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div class="main-container">
+    <sidebar v-if="showSidebar" class="sidebar-container" />
+    <div class="main-container" :class="{ 'main-container-ml': showSidebar }">
       <div v-if="!hideHeader" :class="{ 'fixed-header': fixedHeader }">
         <navbar />
       </div>
@@ -23,6 +23,12 @@ export default {
     AppMain
   },
   mixins: [ResizeMixin],
+  props: {
+    showSidebar: {
+      type: Boolean,
+      default: true
+    }
+  },
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar

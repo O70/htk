@@ -24,7 +24,8 @@ export const constantRoutes = [
     hidden: true
   },
 
-  {
+  // Hide sidebar: [Plan 1]
+  /* {
     path: '/boardroom/booking/periodic',
     component: () => import('@/views/boardroom/periodic'),
     hidden: true
@@ -33,11 +34,32 @@ export const constantRoutes = [
     path: '/boardroom/booking/long/term',
     component: () => import('@/views/boardroom/long-term'),
     hidden: true
-  },
+  }, */
 
+  // Hide sidebar: [Plan 2]
+  /* {
+    path: '/other/booking',
+    component: Layout,
+    props: { hideSidebar: true },
+    hidden: true,
+    meta: { title: 'Other Booking', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'periodic',
+        component: () => import('@/views/boardroom/periodic')
+      },
+      {
+        path: 'long/term',
+        component: () => import('@/views/boardroom/long-term')
+      }
+    ]
+  }, */
+
+  // Hide sidebar: [Plan 3]
   {
     path: '/boardroom',
     component: Layout,
+    props: route => ({ showSidebar: route.meta.sidebar }),
     meta: { title: 'Boardroom', icon: 'el-icon-s-help' },
     children: [
       {
@@ -50,7 +72,21 @@ export const constantRoutes = [
         path: 'booking',
         name: 'BoardroomBooking',
         component: () => import('@/views/boardroom/booking'),
-        meta: { title: 'Booking', icon: 'el-icon-s-help' },
+        meta: { title: 'Booking Edit' },
+        hidden: true
+      },
+      {
+        path: 'booking/periodic',
+        name: 'BoardroomBookingPeriodic',
+        component: () => import('@/views/boardroom/periodic'),
+        meta: { title: 'Booking(Periodic)', sidebar: false },
+        hidden: true
+      },
+      {
+        path: 'booking/long/term',
+        name: 'BoardroomBookingLongTerm',
+        component: () => import('@/views/boardroom/long-term'),
+        meta: { title: 'Booking(Long-Term)', sidebar: false },
         hidden: true
       },
       {
