@@ -41,7 +41,8 @@ export default {
     BrEdit: () => import('./components/edit')
   },
   props: {
-    rid: {
+    // Boardroom id or Booking id
+    id: {
       type: String,
       default: null
     },
@@ -65,7 +66,7 @@ export default {
   },
   created() {
     Promise.all([
-      getBoardroom(this.rid),
+      getBoardroom(this.id),
       this.assemblyUnits(this.start)
     ]).then(([{ data }, units]) => {
       if (data) {

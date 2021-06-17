@@ -69,14 +69,6 @@ export const constantRoutes = [
         meta: { title: 'Booking', icon: 'el-icon-s-help' }
       },
       {
-        path: 'booking/:rid/:start',
-        props: true,
-        name: 'BoardroomBooking',
-        component: () => import('@/views/boardroom/booking'),
-        meta: { title: 'Booking Edit' },
-        hidden: true
-      },
-      {
         path: 'booking/periodic',
         name: 'BoardroomBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
@@ -95,6 +87,15 @@ export const constantRoutes = [
         name: 'BoardroomMyBooking',
         component: () => import('@/views/boardroom/components/view'),
         meta: { title: 'My Booking', icon: 'el-icon-s-help' }
+      },
+      {
+        // Reference: https://github.com/vuejs/vue-router/blob/dev/examples/route-matching/app.js
+        path: 'booking/:id/:start?',
+        props: true,
+        name: 'BoardroomBooking',
+        component: () => import('@/views/boardroom/booking'),
+        meta: { title: 'Booking Edit' },
+        hidden: true
       }
     ]
   },
