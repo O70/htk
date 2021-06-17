@@ -69,7 +69,8 @@ export const constantRoutes = [
         meta: { title: 'Booking', icon: 'el-icon-s-help' }
       },
       {
-        path: 'booking',
+        path: 'booking/:rid/:start',
+        props: true,
         name: 'BoardroomBooking',
         component: () => import('@/views/boardroom/booking'),
         meta: { title: 'Booking Edit' },

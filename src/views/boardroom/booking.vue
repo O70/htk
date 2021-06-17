@@ -40,6 +40,16 @@ export default {
     BrTimeline: () => import('./components/timeline'),
     BrEdit: () => import('./components/edit')
   },
+  props: {
+    rid: {
+      type: String,
+      default: null
+    },
+    start: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
       height: 0,
@@ -54,12 +64,9 @@ export default {
     }
   },
   created() {
-    const { rid, start } = this.$route.query
-    !rid && this.handleRoute()
-
     Promise.all([
-      getBoardroom(rid),
-      this.assemblyUnits(start)
+      getBoardroom(this.rid),
+      this.assemblyUnits(this.start)
     ]).then(([{ data }, units]) => {
       if (data) {
         this.boardroom = data

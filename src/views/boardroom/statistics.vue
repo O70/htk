@@ -149,10 +149,7 @@ export default {
           new this.Link({
             propsData: {
               value: { id, text },
-              handler: rid => this.$router.push({
-                path: '/boardroom/booking',
-                query: { rid, start: this.now.getTime() }
-              }),
+              handler: rid => this.$router.push(`/boardroom/booking/${rid}/${this.now.getTime()}`),
               viewer: rid => {
                 this.drawer.room = this.rooms.find(({ [this.props.key]: id }) => id === rid)
                 this.drawer.visible = true
