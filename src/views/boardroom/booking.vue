@@ -2,7 +2,7 @@
   <div class="app-container booking-form">
     <el-card class="timeline">
       <div slot="header" class="clearfix">
-        <label>{{ boardroom.name }}</label>
+        <label>{{ boardroom.name || 'Unknown' }}</label>
       </div>
 
       <el-form ref="form" :rules="rules" size="mini">
@@ -10,6 +10,7 @@
           <br-timeline
             ref="brTimeline"
             :units="units"
+            :readonly="isModify"
             height="135px"
             @view-changed="handleViewChange"
             @drag-end="$refs.form.clearValidate()"
@@ -33,13 +34,15 @@
   </div>
 </template>
 <script>
-import { serverTime, getBoardroom, getBookMarks, save } from '@/api/boardroom'
+import Modify from './components/modify'
+import { serverTime, getBoardroom, getBookMarks, saveBook } from '@/api/boardroom'
 
 export default {
   components: {
     BrTimeline: () => import('./components/timeline'),
     BrEdit: () => import('./components/edit')
   },
+  mixins: [Modify],
   props: {
     // Boardroom id or Booking id
     id: {
@@ -64,18 +67,14 @@ export default {
       }
     }
   },
+  computed: {
+    isModify() {
+      return !(this.id && this.start)
+    }
+  },
   created() {
-    Promise.all([
-      getBoardroom(this.id),
-      this.assemblyUnits(this.start)
-    ]).then(([{ data }, units]) => {
-      if (data) {
-        this.boardroom = data
-        this.units = units
-      } else {
-        this.handleRoute()
-      }
-    })
+    !this.isModify && getBoardroom(this.id)
+      .then(({ data }) => [data, this.start]).then(this.handleData)
   },
   updated() {
     this.$nextTick(() => {
@@ -91,8 +90,18 @@ export default {
     })
   },
   methods: {
+    handleData([room, start]) {
+      console.debug('isModify:', this.isModify)
+      console.debug(room, start)
+      if (room) {
+        this.boardroom = room
+        this.handleUnits(start).then(units => (this.units = units))
+      } else {
+        this.handleRoute()
+      }
+    },
     handleRoute() {
-      this.$router.push('/boardroom')
+      this.$router.push(this.isModify ? '/boardroom/booking/my' : '/boardroom')
     },
     joinDate(y, m, d, cn) {
       const to = p => {
@@ -101,7 +110,7 @@ export default {
       }
       return cn ? `${y}年${m}月${d}日` : `${y}-${to(m)}-${to(d)}`
     },
-    async assemblyUnits(start) {
+    async handleUnits(start) {
       let timestamp = Number.parseInt(start)
       Number.isNaN(timestamp) && (timestamp = await serverTime().then(({ data: time }) => time))
 
@@ -120,7 +129,9 @@ export default {
 
       return units
     },
-    handleViewChange({ now, marks: addMarks }) {
+    handleViewChange({ now, events: addEvents, marks: addMarks }) {
+      this.addBookEvent && this.addBookEvent(now, addEvents)
+
       getBookMarks({
         roomId: this.boardroom.id,
         dates: this.units.map(({ key }) => key)
@@ -173,7 +184,7 @@ export default {
         dangerouslyUseHTMLString: true
       }
       this.$confirm(msg('您预定的时间段为:', data.dates.map(({ start, end }) => [start, end]), '确认提交?'), '确认', cfg)
-        .then(() => save(data))
+        .then(() => saveBook(data))
         .then(({ code, message }) => code === 200
           ? this.handleRoute()
           : this.$alert(msg('以下时间段已被占用:', message), '提示', cfg).catch(this.emptyFunction))

@@ -40,7 +40,7 @@ export function getFormInfo() {
   })
 }
 
-export function save(data) {
+export function saveBook(data) {
   console.debug('Save data(Need to convert):', data)
   return request({ url: '/api/thraex/boardrooms/book', method: 'post', data })
     .then(({ code, ...other }) => ({ code: Number.parseInt(code / 100) + code % 100, ...other }))
@@ -48,7 +48,14 @@ export function save(data) {
       ? message.split(',').map(it => it.split('&')) : message, ...other }))
 }
 
-export function getBook(id) {
+export function getMyBooks() {
+  return request({
+    url: '/api/thraex/boardrooms/book/my',
+    method: 'get'
+  })
+}
+
+export function getBookById(id) {
   return request({
     url: `/api/thraex/boardrooms/book/${id}`,
     method: 'get'

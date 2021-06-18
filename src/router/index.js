@@ -64,35 +64,35 @@ export const constantRoutes = [
     children: [
       {
         path: '',
-        name: 'BoardroomStatistics',
+        name: 'BrStatistics',
         component: () => import('@/views/boardroom/statistics'),
         meta: { title: 'Booking', icon: 'el-icon-s-help' }
       },
       {
         path: 'booking/periodic',
-        name: 'BoardroomBookingPeriodic',
+        name: 'BrBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
         meta: { title: 'Booking(Periodic)', sidebar: false },
         hidden: true
       },
       {
         path: 'booking/long/term',
-        name: 'BoardroomBookingLongTerm',
+        name: 'BrBookingLongTerm',
         component: () => import('@/views/boardroom/long-term'),
         meta: { title: 'Booking(Long-Term)', sidebar: false },
         hidden: true
       },
       {
         path: 'booking/my',
-        name: 'BoardroomMyBooking',
-        component: () => import('@/views/boardroom/components/view'),
+        name: 'BrMyBooking',
+        component: () => import('@/views/boardroom/my-booking'),
         meta: { title: 'My Booking', icon: 'el-icon-s-help' }
       },
       {
         // Reference: https://github.com/vuejs/vue-router/blob/dev/examples/route-matching/app.js
         path: 'booking/:id/:start?',
         props: true,
-        name: 'BoardroomBooking',
+        name: 'BrBooking',
         component: () => import('@/views/boardroom/booking'),
         meta: { title: 'Booking Edit' },
         hidden: true

@@ -34,7 +34,7 @@ const rooms = [
 ].map((it, i) => Object.assign(it, {
   id: `room-${i}`,
   computer: it.locationId === 'location-2' ? 0 : 1,
-  mostNumber: 20 * i
+  mostNumber: 20 * (i + 1)
 }))
 
 for (let i = 0; i < 3; i++) {
@@ -55,6 +55,48 @@ const data = locations.map(it => Object.assign(it,
 function sleep(delay) {
   for (var t = Date.now(); Date.now() - t <= delay;);
 }
+
+const myBooks = (() => {
+  const template = {
+    // id: null,
+    typeId: 'type-1',
+    typeName: '科研会',
+    secret: 1,
+    num: 12,
+    orgId: 'org-4',
+    orgName: 'ORG-4',
+    contacts: '鬼王',
+    mobile: '119119',
+    subject: '会议主题Content',
+    introduction: '会议简介Content',
+    participateUnits: '参与单位Content',
+    leaders: 'Leader-1',
+    otherLeaders: '鬼王,HANZO,Content',
+    photograph: '无院领导参会或参会领导明确不照相',
+    tableCard: '不需要',
+    banner: '订会单位自行订购、悬挂',
+    signpost: '1个',
+    paper: '空白纸',
+    pen: '黑铅笔，红铅笔',
+    computer: '订会单位自带笔记本电脑',
+    keepSecret: '屏蔽器，手机屏蔽柜',
+    projector: '不需要',
+    remark: null,
+    startTime: '2021-6-14 08:00',
+    endTime: '2021-6-14 11:00'
+  }
+
+  const { id: roomId, name: roomName, mostNumber } = rooms.find(it => it.id === 'room-4')
+  Object.assign(template, { roomId, roomName, mostNumber })
+
+  const build = n => Object.assign({}, template, n)
+  const data = [
+    template,
+    build({ leaders: 'Leader-1，Leader-2' }),
+    build({ remark: '备注备注备注备注备注备注备注备注' })
+  ]
+  return data.map((it, ind) => Object.assign(it, { id: `book-${ind}` }))
+})()
 
 module.exports = [
   {
@@ -104,7 +146,7 @@ module.exports = [
     url: '/api/thraex/boardrooms/book/marks',
     type: 'get',
     response: config => {
-      const { roomId, dates } = config.query
+      const { roomId, dates = [] } = config.query
       const data = dates.map((it, i) => {
         const nd = new Date(it)
         const [y, m, d] = [nd.getFullYear(), nd.getMonth(), nd.getDate()]
@@ -122,11 +164,16 @@ module.exports = [
     }
   },
   {
+    url: '/api/thraex/boardrooms/book/my',
+    type: 'get',
+    response: _ => ({ code: 20000, data: myBooks })
+  },
+  {
     url: '/api/thraex/boardrooms/book',
     type: 'get',
     response: config => {
-      console.debug(config.url)
-      return { code: 20000, data: 'gui' }
+      const id = config.url.split('/').reverse()[0]
+      return { code: 20000, data: myBooks.find(it => it.id === id) || null }
     }
   },
   {
