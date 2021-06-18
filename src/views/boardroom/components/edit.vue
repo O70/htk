@@ -136,6 +136,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       info: {
         types: [],
         orgs: [],
@@ -318,7 +319,7 @@ export default {
 
     // TODO: opt
     getCurrentUser(this.userId).then(({ data: { deptId: orgId, mobile }}) =>
-      Object.assign(this.form, { contacts: this.name, orgId, mobile }))
+      !this.loading && Object.assign(this.form, { contacts: this.name, orgId, mobile }))
   },
   methods: {
     handleData(val) {
@@ -329,13 +330,12 @@ export default {
       })
       arrs.forEach(k => (needs[k] = needs[k] ? needs[k].split('，') : []))
       const { banner } = needs
-      console.debug('banner:', banner)
       if (banner) {
         const [p, ...s] = needs.banner.split('：')
         Object.assign(needs, { banner: p, bannerTxt: s.join('：') })
       }
       Object.assign(this.form, needs)
-      console.debug(JSON.parse(JSON.stringify(this.form)))
+      this.loading = true
     },
     getFormData() {
       return new Promise((resolve, reject) => {
