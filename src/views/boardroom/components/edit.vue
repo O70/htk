@@ -125,6 +125,10 @@ export default {
   },
   mixins: [Rules],
   props: {
+    data: {
+      type: Object,
+      default: null
+    },
     capacity: {
       type: Number,
       default: 0

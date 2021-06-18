@@ -22,8 +22,9 @@
     <el-card>
       <br-edit
         ref="brEdit"
-        :style="{ height: `${height}px` }"
+        :data="modifyObj"
         :capacity="boardroom.mostNumber"
+        :style="{ height: `${height}px` }"
       />
     </el-card>
 
@@ -66,6 +67,11 @@ export default {
           validator: (_, value, callback) => callback('请选择日期')
         }
       }
+    }
+  },
+  computed: {
+    modifyObj() {
+      return this.book
     }
   },
   created() {
