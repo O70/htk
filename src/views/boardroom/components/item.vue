@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="item.edit && item.edit.visible ? 12 : 24">
+    <el-col :span="item.edit && (item.edit.visible || form[item.edit.prop]) ? 12 : 24">
       <el-select
         v-model="form[item.prop]"
         :multiple="item.options.multiple"
@@ -33,7 +33,7 @@
       style="padding-left: 10px;"
     >
       <el-input
-        v-show="item.edit.visible"
+        v-show="item.edit.visible || form[item.edit.prop]"
         v-model.trim="form[item.edit.prop]"
         :placeholder="item.edit.label"
         @input="handleInput"

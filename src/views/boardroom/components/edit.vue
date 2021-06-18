@@ -291,7 +291,6 @@ export default {
         banner: null,
         bannerTxt: null,
         signpost: null,
-        // report: null, // hide
         projector: null,
         computer: null,
         paper: null,
@@ -304,6 +303,11 @@ export default {
   computed: {
     ...mapGetters(['userId', 'name'])
   },
+  watch: {
+    data(val) {
+      this.handleData(val)
+    }
+  },
   created() {
     getFormInfo().then(({ data: { types, leaders }}) => {
       this.$set(this.info, 'types', types)
@@ -312,10 +316,27 @@ export default {
 
     getOrg().then(({ data }) => this.$set(this.info, 'orgs', data))
 
+    // TODO: opt
     getCurrentUser(this.userId).then(({ data: { deptId: orgId, mobile }}) =>
       Object.assign(this.form, { contacts: this.name, orgId, mobile }))
   },
   methods: {
+    handleData(val) {
+      const [arrs, needs] = [[], {}]
+      Object.keys(this.form).forEach(k => {
+        Array.isArray(this.form[k]) && arrs.push(k)
+        needs[k] = val[k] || null
+      })
+      arrs.forEach(k => (needs[k] = needs[k] ? needs[k].split('，') : []))
+      const { banner } = needs
+      console.debug('banner:', banner)
+      if (banner) {
+        const [p, ...s] = needs.banner.split('：')
+        Object.assign(needs, { banner: p, bannerTxt: s.join('：') })
+      }
+      Object.assign(this.form, needs)
+      console.debug(JSON.parse(JSON.stringify(this.form)))
+    },
     getFormData() {
       return new Promise((resolve, reject) => {
         this.$refs.form.validate(valid => {
