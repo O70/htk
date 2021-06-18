@@ -10,7 +10,7 @@
           <br-timeline
             ref="brTimeline"
             :units="units"
-            :readonly="isModify"
+            :readonly="modify"
             height="135px"
             @view-changed="handleViewChange"
             @drag-end="$refs.form.clearValidate()"
@@ -52,7 +52,8 @@ export default {
     start: {
       type: String,
       default: null
-    }
+    },
+    modify: Boolean
   },
   data() {
     return {
@@ -67,13 +68,8 @@ export default {
       }
     }
   },
-  computed: {
-    isModify() {
-      return !(this.id && this.start)
-    }
-  },
   created() {
-    !this.isModify && getBoardroom(this.id)
+    !this.modify && getBoardroom(this.id)
       .then(({ data }) => [data, this.start]).then(this.handleData)
   },
   updated() {
@@ -91,8 +87,6 @@ export default {
   },
   methods: {
     handleData([room, start]) {
-      console.debug('isModify:', this.isModify)
-      console.debug(room, start)
       if (room) {
         this.boardroom = room
         this.handleUnits(start).then(units => (this.units = units))
@@ -101,7 +95,7 @@ export default {
       }
     },
     handleRoute() {
-      this.$router.push(this.isModify ? '/boardroom/booking/my' : '/boardroom')
+      this.$router.push(this.modify ? '/boardroom/booking/my' : '/boardroom')
     },
     joinDate(y, m, d, cn) {
       const to = p => {

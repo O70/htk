@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     handleEdit({ id }) {
-      this.$router.push(`/boardroom/booking/${id}`)
+      this.$router.push(`/boardroom/booking/modify/${id}`)
     }
   }
 }

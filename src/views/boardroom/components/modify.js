@@ -7,18 +7,20 @@ export default {
     }
   },
   created() {
-    this.isModify && getBookById(this.id).then(({ data }) => {
+    this.modify && getBookById(this.id).then(({ data }) => {
       let result = []
       if (data) {
         this.book = data
-        const { roomId: id, roomName: name, mostNumber } = data
-        result = [{ id, name, mostNumber }, new Date(data.startTime).getTime()]
+        const { roomId: id, roomName: name, mostNumber, startTime } = data
+        result = [{ id, name, mostNumber }, new Date(startTime).getTime()]
       }
       return result
     }).then(this.handleData)
   },
   methods: {
-    addBookEvent1(now, addEvents) {
+    addBookEvent(now, addEvents) {
+      if (!this.book) return
+
       const { startTime, endTime } = this.book
       const [start, end] = [new Date(startTime), new Date(endTime)]
 

@@ -89,6 +89,14 @@ export const constantRoutes = [
         meta: { title: 'My Booking', icon: 'el-icon-s-help' }
       },
       {
+        path: 'booking/modify/:id',
+        props: route => Object.assign(route.params, { modify: true }),
+        name: 'BrBookingModify',
+        component: () => import('@/views/boardroom/booking'),
+        meta: { title: 'Booking Modify' },
+        hidden: true
+      },
+      {
         // Reference: https://github.com/vuejs/vue-router/blob/dev/examples/route-matching/app.js
         path: 'booking/:id/:start?',
         props: true,
