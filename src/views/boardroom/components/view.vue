@@ -2,124 +2,14 @@
   <div class="view-container">
     <h3>{{ info.name }}</h3>
 
-    <el-row :gutter="5">
-      <el-col :span="12">
+    <el-row v-for="(row, i) in items" :key="`row-${i}`" :gutter="5">
+      <el-col v-for="(col, j) in row" :key="`col-${i}-${j}`" :span="12">
         <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            投影类型:
+          <el-col align="right" :span="10">
+            {{ col.label }}:
           </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.projectionType }}
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            扩音设备:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.pa }}
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row :gutter="5">
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            电脑:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.computer }}
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            网络:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.network }}
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row :gutter="5">
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            容纳人数:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.mostNumber }}
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            主桌人数:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.mainPerson }}
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row :gutter="5">
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            休息间:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.restroom }}
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            独立卫生间:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.toilet }}
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row :gutter="5">
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            无纸化办公:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.paperless }}
-          </el-col>
-        </el-row>
-      </el-col>
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            地点:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.location }}
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <el-row :gutter="5">
-      <el-col :span="12">
-        <el-row class="item-row">
-          <el-col align="right" :span="item.left">
-            具体位置:
-          </el-col>
-          <el-col class="item-row-right" :span="item.right">
-            {{ info.address }}
+          <el-col class="item-row-right" :span="14">
+            {{ info[col.key] }}
           </el-col>
         </el-row>
       </el-col>
@@ -140,10 +30,29 @@ export default {
   },
   data() {
     return {
-      item: {
-        left: 12,
-        right: 12
-      },
+      items: [
+        [
+          { key: 'projectionType', label: '投影类型' },
+          { key: 'pa', label: '扩音设备' }
+        ],
+        [
+          { key: 'computer', label: '电脑' },
+          { key: 'network', label: '网络' }
+        ],
+        [
+          { key: 'mostNumber', label: '容纳人数' },
+          { key: 'mainPerson', label: '主桌人数' }
+        ],
+        [
+          { key: 'restroom', label: '休息间' },
+          { key: 'toilet', label: '独立卫生间' }
+        ],
+        [
+          { key: 'paperless', label: '无纸化办公' },
+          { key: 'location', label: '地点' }
+        ],
+        [{ key: 'address', label: '具体位置' }]
+      ],
       bools: ['否', '是'],
       boolKeys: [
         'pa',
