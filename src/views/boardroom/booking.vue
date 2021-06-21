@@ -183,11 +183,13 @@ export default {
         closeOnClickModal: true,
         dangerouslyUseHTMLString: true
       }
-      this.$confirm(msg('您预定的时间段为:', data.dates.map(({ start, end }) => [start, end]), '确认提交?'), '确认', cfg)
-        .then(() => saveBook(data))
-        .then(({ code, message }) => code === 200
-          ? this.handleRoute()
-          : this.$alert(msg('以下时间段已被占用:', message), '提示', cfg).catch(this.emptyFunction))
+      const save = this.modify ? saveBook(data)
+        : this.$confirm(msg('您预定的时间段为:',
+          data.dates.map(({ start, end }) => [start, end]), '确认提交?'), '确认', cfg)
+          .then(() => saveBook(data))
+      save.then(({ code, message }) => code === 200
+        ? this.handleRoute()
+        : this.$alert(msg('以下时间段已被占用:', message), '提示', cfg).catch(this.emptyFunction))
         .catch(this.emptyFunction)
     }
   }
