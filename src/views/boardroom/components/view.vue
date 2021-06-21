@@ -1,78 +1,130 @@
 <template>
-  <el-card>
-    <div slot="header" class="clearfix">
-      <label>{{ info.name }}</label>
-    </div>
-    <el-form label-width="130px">
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="投影类型:">
+  <div class="view-container">
+    <h3>{{ info.name }}</h3>
+
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            投影类型:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.projectionType }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="扩音设备:">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            扩音设备:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.pa }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="电脑:">
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            电脑:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.computer }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="网络:">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            网络:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.network }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="容纳人数:">
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            容纳人数:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.mostNumber }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="主桌人数:">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            主桌人数:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.mainPerson }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="休息间:">
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            休息间:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.restroom }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="独立卫生间:">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            独立卫生间:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.toilet }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="无纸化办公系统:">
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            无纸化办公:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.paperless }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="地点:">
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            地点:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.location }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="5">
-        <el-col :span="12">
-          <el-form-item label="具体位置:">
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5">
+      <el-col :span="12">
+        <el-row class="item-row">
+          <el-col align="right" :span="item.left">
+            具体位置:
+          </el-col>
+          <el-col class="item-row-right" :span="item.right">
             {{ info.address }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
-  </el-card>
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import { Ployfills } from '@/api/boardroom'
@@ -88,6 +140,10 @@ export default {
   },
   data() {
     return {
+      item: {
+        left: 12,
+        right: 12
+      },
       bools: ['否', '是'],
       boolKeys: [
         'pa',
@@ -108,3 +164,16 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.view-container {
+  margin: 10px;
+
+  .item-row {
+    margin: 10px 0;
+
+    &-right {
+      padding-left: 5px;
+    }
+  }
+}
+</style>
