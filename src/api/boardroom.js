@@ -48,6 +48,12 @@ export function saveBook(data) {
       ? message.split(',').map(it => it.split('&')) : message, ...other }))
 }
 
+export function updateBook(data) {
+  console.debug('Update data(Need to convert):', data)
+  return request({ url: '/api/thraex/boardrooms/book', method: 'put', data })
+    .then(({ code, ...other }) => ({ code: Number.parseInt(code / 100) + code % 100, ...other }))
+}
+
 export function getMyBooks() {
   return request({
     url: '/api/thraex/boardrooms/book/my',

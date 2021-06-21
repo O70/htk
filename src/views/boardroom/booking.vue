@@ -36,7 +36,7 @@
 </template>
 <script>
 import Modify from './components/modify'
-import { serverTime, getBoardroom, getBookMarks, saveBook } from '@/api/boardroom'
+import { serverTime, getBoardroom, getBookMarks, saveBook, updateBook } from '@/api/boardroom'
 
 export default {
   components: {
@@ -183,7 +183,7 @@ export default {
         closeOnClickModal: true,
         dangerouslyUseHTMLString: true
       }
-      const save = this.modify ? saveBook(data)
+      const save = this.modify ? updateBook(data.book)
         : this.$confirm(msg('您预定的时间段为:',
           data.dates.map(({ start, end }) => [start, end]), '确认提交?'), '确认', cfg)
           .then(() => saveBook(data))

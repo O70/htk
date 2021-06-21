@@ -192,6 +192,11 @@ module.exports = [
     }
   },
   {
+    url: '/api/thraex/boardrooms/book',
+    type: 'put',
+    response: config => ({ code: 20000, data: config.body })
+  },
+  {
     url: '/api/thraex/boardrooms/group',
     type: 'get',
     response: _ => ({ code: 20000, data })
