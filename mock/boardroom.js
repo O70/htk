@@ -34,7 +34,22 @@ const rooms = [
 ].map((it, i) => Object.assign(it, {
   id: `room-${i}`,
   computer: it.locationId === 'location-2' ? 0 : 1,
-  mostNumber: 20 * (i + 1)
+  // projectionType: '单投影',
+  projectionTypeName: '单投影',
+  network: 1,
+  pa: 1,
+  mainPerson: 10,
+  mostNumber: 20 * (i + 1),
+  // restroom: 1,
+  restRoom: 1,
+  toilet: 0,
+  // paperless: 1,
+  paperlessOffice: 1,
+  // location: locations.find(l => l.id === it.locationId).name,
+  addressName: locations.find(l => l.id === it.locationId).name,
+  // address: `${locations.find(l => l.id === it.locationId).name}第${i + 1}层`,
+  addressInfo: `${locations.find(l => l.id === it.locationId).name}第${i + 1}层`,
+  files: new Array(3).fill('FILE').map((it, ind) => ({ id: `ROOM-FILE-${ind}`, fileId: `FILE-${ind}` }))
 }))
 
 for (let i = 0; i < 3; i++) {

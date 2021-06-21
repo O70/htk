@@ -25,7 +25,7 @@ Bugs(fix: reload `scheduler`):
 - [X] Time out of bounds
 - [X] Form validate
 - [X] Form default(`orgId`/`contacts`/`mobile`)
-- [ ] Form modify
+- [X] Form modify
 - [X] Submit dialog
 - [X] Blocked tips
 - [X] Org filter

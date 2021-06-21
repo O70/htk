@@ -1,6 +1,28 @@
 import request from '@/utils/request'
 import { getById as getUserById } from '@/api/user'
 
+export const Ployfills = {
+  room(data) {
+    const {
+      projectionTypeName: projectionType,
+      restRoom: restroom,
+      paperlessOffice: paperless,
+      addressName: location,
+      addressInfo: address,
+      ...other
+    } = data
+
+    return {
+      projectionType,
+      restroom,
+      paperless,
+      location,
+      address,
+      ...other
+    }
+  }
+}
+
 export function serverTime() {
   return request({
     url: '/api/thraex/server/time',
