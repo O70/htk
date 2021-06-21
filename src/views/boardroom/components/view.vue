@@ -14,6 +14,12 @@
         </el-row>
       </el-col>
     </el-row>
+
+    <el-carousel :interval="5000" arrow="always">
+      <el-carousel-item v-for="url in images" :key="url">
+        <el-image fit="cover" :src="url" />
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 <script>
@@ -69,6 +75,9 @@ export default {
       const data = Ployfills.room(this.data)
       return Object.assign({}, data,
         this.boolKeys.reduce((acc, cur) => ({ ...acc, [cur]: this.bools[data[cur]] }), {}))
+    },
+    images() {
+      return this.info.files.map(({ fileId }) => `${Ployfills.fileAPI}/${fileId}`)
     }
   }
 }

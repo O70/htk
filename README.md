@@ -31,7 +31,7 @@ Bugs(fix: reload `scheduler`):
 - [X] Org filter
 - [X] Secret dialog
 - [X] Legends
-- [ ] Base info components
+- [X] Base info components
 - [X] `boardroom` does not exist for booking
 - [X] Event/Marked color
 - [X] Condition

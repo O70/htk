@@ -20,7 +20,8 @@ export const Ployfills = {
       address,
       ...other
     }
-  }
+  },
+  fileAPI: 'https://fuss10.elemecdn.com'
 }
 
 export function serverTime() {
