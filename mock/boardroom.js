@@ -117,7 +117,10 @@ const myBooks = (() => {
   const data = [
     template,
     build({ leaders: 'Leader-1，Leader-2' }),
-    build({ leaders: '无院领导或其他单位局级以上领导参会' }),
+    build({ leaders: '无院领导或其他单位局级以上领导参会', otherLeaders: null, pen: '不需要' }),
+    // build({ leaders: 'Leader-1，Leader-2', otherLeaders: null, pen: '不需要' }),
+    // build({ leaders: 'Leader-1，Leader-2', otherLeaders: 'sadf', pen: '不需要' }),
+    // build({ leaders: null, otherLeaders: 'sadf', pen: '不需要' }),
     build({ leaders: 'Leader-1，Leader-2，Leader-3', banner: '不需要' }),
     build({ leaders: 'Leader-1，Leader-2，Leader-3', banner: '委托接待科(文本框内填写横幅内容)：就斤斤计较' }),
     build({ leaders: 'Leader-1，Leader-2，Leader-3', banner: '委托接待科(文本框内填写横幅内容)：就斤斤计较：就斤斤计较2' }),

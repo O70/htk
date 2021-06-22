@@ -14,15 +14,13 @@
           :label="item.options.major"
           :disabled="disabled.major"
         />
-        <el-option-group
-          :label="item.options.tips"
-          :disabled="disabled.minor"
-        >
+        <el-option-group :label="item.options.tips">
           <el-option
             v-for="(it, ind) in item.options.minor"
             :key="`minor-${item.prop}-${ind}`"
             :value="it"
             :label="it"
+            :disabled="disabled.minor"
           />
         </el-option-group>
       </el-select>
