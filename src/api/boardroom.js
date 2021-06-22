@@ -2,6 +2,7 @@ import request from '@/utils/request'
 import { getById as getUserById } from '@/api/user'
 
 export const Ployfills = {
+  fileAPI: fid => `https://fuss10.elemecdn.com/${fid}`,
   room(data) {
     const {
       projectionTypeName: projectionType,
@@ -20,8 +21,7 @@ export const Ployfills = {
       address,
       ...other
     }
-  },
-  fileAPI: 'https://fuss10.elemecdn.com'
+  }
 }
 
 export function serverTime() {

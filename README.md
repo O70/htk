@@ -52,6 +52,7 @@ Bugs(fix: reload `scheduler`):
 
 - [X] edit.vue
 - [X] item.vue
+- [X] modify.js
 - [X] rules.js
 - [ ] timeline.vue
   - [ ] style: remove `scoped` and add 5 `../`

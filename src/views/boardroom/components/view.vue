@@ -5,10 +5,10 @@
     <el-row v-for="(row, i) in items" :key="`row-${i}`" :gutter="5">
       <el-col v-for="(col, j) in row" :key="`col-${i}-${j}`" :span="12">
         <el-row class="item-row">
-          <el-col align="right" :span="10">
+          <el-col :span="10" align="right">
             {{ col.label }}:
           </el-col>
-          <el-col class="item-row-right" :span="14">
+          <el-col :span="14" class="item-row-right">
             {{ info[col.key] }}
           </el-col>
         </el-row>
@@ -16,8 +16,8 @@
     </el-row>
 
     <el-carousel :interval="5000" arrow="always">
-      <el-carousel-item v-for="url in images" :key="url">
-        <el-image fit="cover" :src="url" />
+      <el-carousel-item v-for="(url, ind) in images" :key="`${url}-${ind}`">
+        <el-image :src="url" fit="cover" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -77,7 +77,7 @@ export default {
         this.boolKeys.reduce((acc, cur) => ({ ...acc, [cur]: this.bools[data[cur]] }), {}))
     },
     images() {
-      return this.info.files.map(({ fileId }) => `${Ployfills.fileAPI}/${fileId}`)
+      return (this.info.files || []).map(({ fileId }) => Ployfills.fileAPI(fileId))
     }
   }
 }
