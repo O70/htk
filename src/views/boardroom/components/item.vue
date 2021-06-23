@@ -95,7 +95,7 @@ export default {
         }
 
         if (Number.isInteger(edit.for) && edit.for > -1) {
-          !edit.visible && this.$set(this.form, edit.prop, null)
+          this.$set(this.form, edit.prop, null)
         }
       }
     },

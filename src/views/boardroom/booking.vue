@@ -137,7 +137,8 @@ export default {
         dates: this.units.map(({ key }) => key)
       }).then(({ data }) => {
         const [year, month, date] = [now.getFullYear(), now.getMonth(), now.getDate()]
-        addMarks(data.map(({ startTime, endTime, state }) => [
+        const marks = data.filter(it => it.id !== this.id)
+        addMarks(marks.map(({ startTime, endTime, state }) => [
           new Date(startTime),
           new Date(endTime),
           state

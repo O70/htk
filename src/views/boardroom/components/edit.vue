@@ -4,7 +4,7 @@
     :model="form"
     :rules="rules"
     size="mini"
-    label-width="120px"
+    label-width="140px"
   >
     <el-row>
       <el-col :span="8">
