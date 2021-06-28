@@ -69,24 +69,24 @@ export const constantRoutes = [
         meta: { title: 'Booking', icon: 'el-icon-s-help' }
       },
       {
+        path: 'booking/my',
+        name: 'BrMyBooking',
+        component: () => import('@/views/boardroom/my-booking'),
+        meta: { title: 'My Booking', icon: 'el-icon-s-help' }
+      },
+      {
         path: 'booking/periodic',
         name: 'BrBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
         meta: { title: 'Booking(Periodic)', sidebar: false },
-        hidden: true
+        hidden: false
       },
       {
         path: 'booking/long/term',
         name: 'BrBookingLongTerm',
         component: () => import('@/views/boardroom/long-term'),
         meta: { title: 'Booking(Long-Term)', sidebar: false },
-        hidden: true
-      },
-      {
-        path: 'booking/my',
-        name: 'BrMyBooking',
-        component: () => import('@/views/boardroom/my-booking'),
-        meta: { title: 'My Booking', icon: 'el-icon-s-help' }
+        hidden: false
       },
       {
         path: 'booking/modify/:id',
