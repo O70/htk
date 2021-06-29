@@ -1,3 +1,3 @@
 <template>
-  <div>Periodic booking</div>
+  <div class="app-container">Periodic booking</div>
 </template>

@@ -1,7 +1,8 @@
 import Layout from '@/layout'
 
-const locale = {
+const locales = {
   zh: {
+    maintain: '维护',
     boardroom: '会议室',
     booking: '预定',
     my: '我的预定',
@@ -13,6 +14,7 @@ const locale = {
     edit: '编辑'
   },
   en: {
+    maintain: 'Maintain',
     boardroom: 'Boardroom',
     booking: 'Booking',
     my: 'My Booking',
@@ -24,7 +26,7 @@ const locale = {
     edit: 'Edit'
   }
 }
-const local = navigator.languages.includes('en') ? locale.en : locale.zh
+const locale = navigator.languages.includes('en') ? locales.en : locales.zh
 
 export default [
   // Hide sidebar: [Plan 3]
@@ -35,54 +37,61 @@ export default [
       showSidebar: route.meta.sidebar,
       showHeader: route.meta.header
     }),
-    meta: { title: local.boardroom },
+    meta: { title: locale.boardroom },
     children: [
       {
         path: '',
-        name: 'BrStatistics',
+        name: 'BrBookingStatistics',
         component: () => import('@/views/boardroom/statistics'),
-        meta: { title: local.booking }
+        meta: { title: locale.booking }
+      },
+      {
+        path: 'maintain',
+        name: 'BrMaintain',
+        component: () => import('@/views/boardroom/maintain'),
+        meta: { title: locale.maintain, sidebar: false, header: false },
+        hidden: true
       },
       {
         path: 'booking/my',
         name: 'BrMyBooking',
         component: () => import('@/views/boardroom/my-booking'),
-        meta: { title: local.my }
+        meta: { title: locale.my }
       },
       {
         path: 'booking/periodic',
         name: 'BrBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
-        meta: { title: local.periodic, sidebar: false, header: false },
-        hidden: false
+        meta: { title: locale.periodic, sidebar: false, header: false },
+        hidden: true
       },
       {
         path: 'booking/long/term',
         name: 'BrBookingLongTerm',
         component: () => import('@/views/boardroom/long-term'),
-        meta: { title: local.longTerm, sidebar: false, header: false },
-        hidden: false
+        meta: { title: locale.longTerm, sidebar: false, header: false },
+        hidden: true
       },
       {
         path: 'booking/approve',
         name: 'BrBookingApprove',
         component: () => import('@/views/boardroom/approve'),
-        meta: { title: local.approve, sidebar: false, header: false },
-        hidden: false
+        meta: { title: locale.approve, sidebar: false, header: false },
+        hidden: true
       },
       {
         path: 'booking/service',
         name: 'BrBookingService',
         component: () => import('@/views/boardroom/service'),
-        meta: { title: local.service, sidebar: false, header: false },
-        hidden: false
+        meta: { title: locale.service, sidebar: false, header: false },
+        hidden: true
       },
       {
         path: 'booking/modify/:id',
         props: route => Object.assign(route.params, { modify: true }),
         name: 'BrBookingModify',
         component: () => import('@/views/boardroom/booking'),
-        meta: { title: local.modify },
+        meta: { title: locale.modify },
         hidden: true
       },
       {
@@ -91,8 +100,50 @@ export default [
         props: true,
         name: 'BrBooking',
         component: () => import('@/views/boardroom/booking'),
-        meta: { title: local.edit },
+        meta: { title: locale.edit },
         hidden: true
+      }
+    ]
+  },
+
+  {
+    path: '/ns',
+    component: Layout,
+    props: route => ({
+      showSidebar: route.meta.sidebar,
+      showHeader: route.meta.header
+    }),
+    meta: { title: 'No Sidebar' },
+    children: [
+      {
+        path: 'maintain',
+        name: 'NsBrMaintain',
+        component: () => import('@/views/boardroom/maintain'),
+        meta: { title: locale.maintain, header: false }
+      },
+      {
+        path: 'booking/periodic',
+        name: 'NsBrBookingPeriodic',
+        component: () => import('@/views/boardroom/periodic'),
+        meta: { title: locale.periodic, header: false }
+      },
+      {
+        path: 'booking/long/term',
+        name: 'NsBrBookingLongTerm',
+        component: () => import('@/views/boardroom/long-term'),
+        meta: { title: locale.longTerm, header: false }
+      },
+      {
+        path: 'booking/approve',
+        name: 'NsBrBookingApprove',
+        component: () => import('@/views/boardroom/approve'),
+        meta: { title: locale.approve, header: false }
+      },
+      {
+        path: 'booking/service',
+        name: 'NsBrBookingService',
+        component: () => import('@/views/boardroom/service'),
+        meta: { title: locale.service, header: false }
       }
     ]
   }
