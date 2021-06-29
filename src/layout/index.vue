@@ -3,7 +3,7 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar v-if="showSidebar" class="sidebar-container" />
     <div class="main-container" :class="{ 'main-container-ml': showSidebar }">
-      <div v-if="!hideHeader" :class="{ 'fixed-header': fixedHeader }">
+      <div v-if="header.visible" :class="{ 'fixed-header': header.fixed }">
         <navbar />
       </div>
       <app-main />
@@ -27,6 +27,10 @@ export default {
     showSidebar: {
       type: Boolean,
       default: true
+    },
+    showHeader: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -36,11 +40,14 @@ export default {
     device() {
       return this.$store.state.app.device
     },
-    fixedHeader() {
-      return this.$store.state.settings.fixedHeader
-    },
-    hideHeader() {
-      return this.$store.state.settings.hideHeader
+    header() {
+      const { fixedHeader: fixed, hideHeader } = this.$store.state.settings
+      const visible = !hideHeader && this.showHeader
+
+      return {
+        fixed,
+        visible
+      }
     },
     classObj() {
       return {

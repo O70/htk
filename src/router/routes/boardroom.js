@@ -31,7 +31,10 @@ export default [
   {
     path: '/boardroom',
     component: Layout,
-    props: route => ({ showSidebar: route.meta.sidebar }),
+    props: route => ({
+      showSidebar: route.meta.sidebar,
+      showHeader: route.meta.header
+    }),
     meta: { title: local.boardroom },
     children: [
       {
@@ -50,28 +53,28 @@ export default [
         path: 'booking/periodic',
         name: 'BrBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
-        meta: { title: local.periodic, sidebar: false },
+        meta: { title: local.periodic, sidebar: false, header: false },
         hidden: false
       },
       {
         path: 'booking/long/term',
         name: 'BrBookingLongTerm',
         component: () => import('@/views/boardroom/long-term'),
-        meta: { title: local.longTerm, sidebar: false },
+        meta: { title: local.longTerm, sidebar: false, header: false },
         hidden: false
       },
       {
         path: 'booking/approve',
         name: 'BrBookingApprove',
         component: () => import('@/views/boardroom/approve'),
-        meta: { title: local.approve, sidebar: false },
+        meta: { title: local.approve, sidebar: false, header: false },
         hidden: false
       },
       {
         path: 'booking/service',
         name: 'BrBookingService',
-        component: () => import('@/views/boardroom/approve'),
-        meta: { title: local.service, sidebar: false },
+        component: () => import('@/views/boardroom/service'),
+        meta: { title: local.service, sidebar: false, header: false },
         hidden: false
       },
       {
