@@ -34,6 +34,7 @@
   </div>
 </template>
 <script>
+import UsableHeightMixin from '@/components/usable-height'
 import { serverTime, getBoardrooms, getBookEvents } from '@/api/boardroom'
 
 export default {
@@ -41,15 +42,16 @@ export default {
     BrTimeline: () => import('./components/timeline'),
     BrView: () => import('./components/view')
   },
+  mixins: [UsableHeightMixin],
   data() {
     return {
+      excludes: ['.navbar', '.card-header'],
+      occupy: 20 * 2 + 5 * 2 + 1 + 2,
       props: {
         key: 'id',
         label: 'name',
         children: 'children'
       },
-      height: 0,
-      occupy: 20 * 2 + 5 * 2 + 1 + 2,
       now: null,
       units: [],
       rooms: [],
@@ -91,17 +93,6 @@ export default {
 
       this.Link = link
       this.now = new Date(now)
-    })
-  },
-  updated() {
-    this.$nextTick(() => {
-      const bodyHeight = document.body.clientHeight
-      // const navHeight = document.querySelector('.navbar')?.clientHeight || 0
-      const navbar = document.querySelector('.navbar')
-      const navHeight = navbar ? navbar.clientHeight : 0
-
-      const headerHeight = document.querySelector('.card-header').clientHeight
-      this.height = bodyHeight - navHeight - headerHeight - this.occupy
     })
   },
   methods: {

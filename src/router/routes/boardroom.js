@@ -119,31 +119,31 @@ export default [
         path: 'maintain',
         name: 'NsBrMaintain',
         component: () => import('@/views/boardroom/maintain'),
-        meta: { title: locale.maintain, header: false }
+        meta: { title: locale.maintain }
       },
       {
         path: 'booking/periodic',
         name: 'NsBrBookingPeriodic',
         component: () => import('@/views/boardroom/periodic'),
-        meta: { title: locale.periodic, header: false }
+        meta: { title: locale.periodic }
       },
       {
         path: 'booking/long/term',
         name: 'NsBrBookingLongTerm',
         component: () => import('@/views/boardroom/long-term'),
-        meta: { title: locale.longTerm, header: false }
+        meta: { title: locale.longTerm }
       },
       {
         path: 'booking/approve',
         name: 'NsBrBookingApprove',
         component: () => import('@/views/boardroom/approve'),
-        meta: { title: locale.approve, header: false }
+        meta: { title: locale.approve }
       },
       {
         path: 'booking/service',
         name: 'NsBrBookingService',
         component: () => import('@/views/boardroom/service'),
-        meta: { title: locale.service, header: false }
+        meta: { title: locale.service }
       }
     ]
   }

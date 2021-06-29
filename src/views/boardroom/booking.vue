@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import UsableHeightMixin from '@/components/usable-height'
 import Modify from './components/modify'
 import { serverTime, getBoardroom, getBookMarks, saveBook, updateBook } from '@/api/boardroom'
 
@@ -43,7 +44,7 @@ export default {
     BrTimeline: () => import('./components/timeline'),
     BrEdit: () => import('./components/edit')
   },
-  mixins: [Modify],
+  mixins: [UsableHeightMixin, Modify],
   props: {
     // Boardroom id or Booking id
     id: {
@@ -58,7 +59,7 @@ export default {
   },
   data() {
     return {
-      height: 0,
+      excludes: ['.navbar', '.booking-form .el-card.timeline', '.booking-form footer'],
       occupy: 5 * 2 + 20 * 2 + 10 * 2 + 4,
       units: [],
       boardroom: {},
@@ -77,19 +78,6 @@ export default {
   created() {
     !this.modify && getBoardroom(this.id)
       .then(({ data }) => [data, this.start]).then(this.handleData)
-  },
-  updated() {
-    this.$nextTick(() => {
-      const bodyHeight = document.body.clientHeight
-      // const navHeight = document.querySelector('.navbar')?.clientHeight || 0
-      const navbar = document.querySelector('.navbar')
-      const navHeight = navbar ? navbar.clientHeight : 0
-
-      const form = document.querySelector('.booking-form')
-      const top = form.querySelector('.el-card.timeline').clientHeight
-      const footer = form.querySelector('footer').clientHeight
-      this.height = bodyHeight - navHeight - top - footer - this.occupy
-    })
   },
   methods: {
     handleData([room, start]) {
