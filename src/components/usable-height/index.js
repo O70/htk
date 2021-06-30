@@ -16,13 +16,21 @@ export default {
       }
     }
   },
+  mounted() {
+    window.addEventListener('resize', this.handleHeight)
+  },
   updated() {
-    this.$nextTick(() => {
-      const bodyHeight = document.body.clientHeight
-      const { excludes, occupy } = this.usable
-      const occupies = excludes.map(el => document.querySelector(el)).filter(el => el)
-        .reduce((acc, cur) => acc + cur.clientHeight, occupy)
-      this.height = bodyHeight - occupies
-    })
+    this.handleHeight()
+  },
+  methods: {
+    handleHeight() {
+      this.$nextTick(() => {
+        const bodyHeight = document.body.clientHeight
+        const { excludes, occupy } = this.usable
+        const occupies = excludes.map(el => document.querySelector(el)).filter(el => el)
+          .reduce((acc, cur) => acc + cur.clientHeight, occupy)
+        this.height = bodyHeight - occupies
+      })
+    }
   }
 }
