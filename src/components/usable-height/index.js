@@ -7,17 +7,18 @@ export default {
   computed: {
     usable() {
       const [excludes, occupy] = [this.excludes, this.occupy]
-      !excludes && console.warn(`excludes is ${excludes}`)
-      !occupy && console.warn(`occupy is ${occupy}`)
+      excludes === undefined && console.warn('excludes is undefined')
+      occupy === undefined && console.warn('occupy is undefined')
 
       return {
-        excludes: excludes || [],
+        excludes: [...new Set(['.navbar', ...(excludes || [])])],
         occupy: occupy || 0
       }
     }
   },
   mounted() {
     window.addEventListener('resize', this.handleHeight)
+    this.handleHeight()
   },
   updated() {
     this.handleHeight()
