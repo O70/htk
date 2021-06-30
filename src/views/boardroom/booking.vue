@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      excludes: ['.navbar', '.booking-form .el-card.timeline', '.booking-form footer'],
+      excludes: ['.booking-form .el-card.timeline', '.booking-form footer'],
       occupy: 5 * 2 + 20 * 2 + 10 * 2 + 4,
       units: [],
       boardroom: {},

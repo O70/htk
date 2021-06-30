@@ -45,7 +45,7 @@ export default {
   mixins: [UsableHeightMixin],
   data() {
     return {
-      excludes: ['.navbar', '.card-header'],
+      excludes: ['.card-header'],
       occupy: 20 * 2 + 5 * 2 + 1 + 2,
       props: {
         key: 'id',

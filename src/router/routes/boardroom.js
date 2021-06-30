@@ -113,7 +113,7 @@ export default [
       showSidebar: route.meta.sidebar,
       showHeader: route.meta.header
     }),
-    meta: { title: 'No Sidebar' },
+    meta: { title: 'Temporary(No Sidebar)' },
     children: [
       {
         path: 'maintain',
