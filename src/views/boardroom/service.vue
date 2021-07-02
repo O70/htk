@@ -10,7 +10,14 @@
         highlight-current-row
       >
         <el-table-column type="index" align="center" width="50" />
-        <el-table-column align="center" prop="roomName" label="会议室名称" />
+        <el-table-column align="center" label="会议室名称" class-name="new">
+          <template slot-scope="scope">
+            <el-badge v-if="scope.row.isNew" value="New" style="padding-right: 10px;">
+              {{ scope.row.roomName }}
+            </el-badge>
+            <span v-else>{{ scope.row.roomName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="subject" label="会议主题" />
         <el-table-column align="center" prop="secretLabel" label="是否涉密" width="80" />
         <el-table-column align="center" prop="times" label="会议时间" width="110" />
@@ -72,6 +79,7 @@ export default {
           endTime: end,
           times: this.handleTime(start, end),
           stateObj: { type, label },
+          isNew: false,
           ...other
         }
       })
@@ -90,9 +98,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-card {
-  ::v-deep &__body {
-    padding: 5px;
-  }
+::v-deep .el-card__body {
+  padding: 5px;
+}
+
+::v-deep .el-table__body-wrapper .new .cell {
+  overflow: visible;
 }
 </style>
