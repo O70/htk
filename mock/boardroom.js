@@ -148,7 +148,10 @@ const services = (() => {
     contacts: '鬼王鬼王',
     mobile: '13109876543',
     leaders: '领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导',
-    state: 10
+    // state: [10, 20, 30][ind % 3]
+    state: [10, 20, 30, 40][ind % 4]
+    // state: [20, 30, 40][ind % 3]
+    // state: 20
   }))
   return res
 })()

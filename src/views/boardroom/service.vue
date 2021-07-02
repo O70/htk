@@ -18,7 +18,14 @@
         <el-table-column align="center" prop="contacts" label="联系人" width="80" />
         <el-table-column align="center" prop="mobile" label="手机" width="110" />
         <el-table-column align="center" prop="leaders" label="参会领导" show-overflow-tooltip />
-        <el-table-column align="center" prop="stateLabel" label="状态" width="100" />
+        <el-table-column align="center" label="状态" width="100">
+          <template slot-scope="scope">
+            <el-tag
+              :type="scope.row.stateObj.type"
+              size="mini"
+            >{{ scope.row.stateObj.label }}</el-tag>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -32,9 +39,19 @@ export default {
   data() {
     return {
       occupy: 20 * 2 + 5 * 2 + 2,
-      consts: {
-        secret: ['否', '是'],
-        state: ['正常', '已取消', '已过期']
+      states: {
+        20: {
+          type: 'success',
+          label: '正常'
+        },
+        30: {
+          type: 'danger',
+          label: '已取消'
+        },
+        40: {
+          type: 'info',
+          label: '已过期'
+        }
       },
       data: []
     }
@@ -43,15 +60,18 @@ export default {
     getServiceBook().then(this.handleData)
   },
   methods: {
-    handleData({ data }) {
+    handleData({ data = [] }) {
+      const secret = ['否', '是']
+
       this.data = data.map(({ startTime, endTime, ...other }) => {
         const [start, end] = [new Date(startTime), new Date(endTime)]
+        const { type = 'warning', label = '未定义' } = this.states[other.state] || {}
         return {
+          secretLabel: secret[other.secret],
           startTime: start,
           endTime: end,
           times: this.handleTime(start, end),
-          secretLabel: this.consts.secret[other.secret],
-          stateLabel: this.consts.state[other.state],
+          stateObj: { type, label },
           ...other
         }
       })
