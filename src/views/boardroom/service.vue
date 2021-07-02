@@ -13,8 +13,8 @@
         <el-table-column align="center" prop="roomName" label="会议室名称" />
         <el-table-column align="center" prop="subject" label="会议主题" />
         <el-table-column align="center" prop="secretLabel" label="是否涉密" width="80" />
-        <el-table-column align="center" prop="time" label="会议时间" width="100" />
-        <el-table-column align="center" prop="orgName" label="组织单位" />
+        <el-table-column align="center" prop="times" label="会议时间" width="110" />
+        <el-table-column align="center" prop="orgName" label="组织单位" width="200" />
         <el-table-column align="center" prop="contacts" label="联系人" width="80" />
         <el-table-column align="center" prop="mobile" label="手机" width="110" />
         <el-table-column align="center" prop="leaders" label="参会领导" show-overflow-tooltip />
@@ -40,23 +40,32 @@ export default {
     }
   },
   created() {
-    getServiceBook().then(({ data }) => (this.data = data.map(it => ({
-      ...it,
-      secretLabel: this.consts.secret[it.secret],
-      stateLabel: this.consts.state[it.state]
-    }))))
-    // this.data = new Array(123).fill(1).map((_, ind) => ({
-    //   id: `ID-${ind}`,
-    //   roomName: `Room Name - ${ind}`,
-    //   subject: `Subject-${ind}`,
-    //   secret: ['否', '是'][ind % 2],
-    //   time: '08:00-11:30',
-    //   org: `Org-${ind}`,
-    //   contacts: '鬼王鬼鬼',
-    //   mobile: '13109876543',
-    //   leaders: '领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导',
-    //   state: ['正常', '已取消', '已过期'][ind % 3]
-    // }))
+    getServiceBook().then(this.handleData)
+  },
+  methods: {
+    handleData({ data }) {
+      this.data = data.map(({ startTime, endTime, ...other }) => {
+        const [start, end] = [new Date(startTime), new Date(endTime)]
+        return {
+          startTime: start,
+          endTime: end,
+          times: this.handleTime(start, end),
+          secretLabel: this.consts.secret[other.secret],
+          stateLabel: this.consts.state[other.state],
+          ...other
+        }
+      })
+    },
+    handleTime(start, end) {
+      const to = p => {
+        const n = p.toString()
+        return n.length > 1 ? n : `0${n}`
+      }
+      const [sh, sm] = [start.getHours(), start.getMinutes()]
+      const [eh, em] = [end.getHours(), end.getMinutes()]
+
+      return `${to(sh)}:${to(sm)} - ${to(eh)}:${to(em)}`
+    }
   }
 }
 </script>
