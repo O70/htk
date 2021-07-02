@@ -127,7 +127,30 @@ const myBooks = (() => {
     build({ leaders: 'Leader-1，Leader-2，Leader-3', banner: '委托接待科(文本框内填写横幅内容)：就斤斤计较：就斤斤计较2', pen: '不需要' }),
     build({ remark: '备注备注备注备注备注备注备注备注' })
   ]
-  return data.map((it, ind) => Object.assign(it, { id: `book-${ind}` }))
+  return data.map((it, ind) => Object.assign(it, { id: `BOOK-${ind}` }))
+})()
+
+const services = (() => {
+  const today = new Date()
+  const [y, m, d] = [today.getFullYear(), today.getMonth(), today.getDate()]
+  const [hours, minutes] = [[8, 9, 14, 15], [0, 30]]
+  const res = rooms.map((it, ind) => ({
+    id: `SERVICE-BOOK-${ind}`,
+    roomId: it.id,
+    roomName: it.name,
+    subject: `Subject-${ind}`,
+    secret: ind % 2,
+    startTime: new Date(y, m, d, hours[ind % 4], minutes[ind % 2]),
+    endTime: new Date(y, m, d, hours[ind % 4] + 2, minutes[ind % 2]),
+    orgId: `org-${ind}`,
+    // orgName: `ORG-${ind}`,
+    orgName: '超级计算机应用研究所',
+    contacts: '鬼王鬼王',
+    mobile: '13109876543',
+    leaders: '领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导',
+    state: 10
+  }))
+  return res
 })()
 
 module.exports = [
@@ -163,11 +186,13 @@ module.exports = [
       const { day: date } = config.query
       const nd = new Date(date)
       const [y, m, d] = [nd.getFullYear(), nd.getMonth(), nd.getDate()]
+      const hours = [8, 9, 14]
+      const minutes = [0, 30]
       const data = date === '2021-05-30' ? [] : rooms.map(({ id }, i) => ({
         id: `event-${i}`,
         roomId: id,
-        startTime: new Date(y, m, d, 8),
-        endTime: new Date(y, m, d, 10, 30),
+        startTime: new Date(y, m, d, hours[i % 3], minutes[i % 2]),
+        endTime: new Date(y, m, d, hours[i % 3] + 2, 30),
         state: [10, 20][i % 2]
       }))
 
@@ -183,17 +208,27 @@ module.exports = [
         const nd = new Date(it)
         const [y, m, d] = [nd.getFullYear(), nd.getMonth(), nd.getDate()]
 
+        const hours = [9, 14]
+        const minutes = [0, 30]
+        const ind = i % 2
+        const h = hours[ind]
+        const ms = minutes[ind]
         return {
           id: `mark-${i}`,
           roomId,
-          startTime: new Date(y, m, d, 12),
-          endTime: new Date(y, m, d, 13, 30),
-          state: [10, 20][i % 2]
+          startTime: new Date(y, m, d, h),
+          endTime: new Date(y, m, d, h + 2, ms),
+          state: [10, 20][ind]
         }
       })
 
       return { code: 20000, data }
     }
+  },
+  {
+    url: '/api/thraex/boardrooms/book/service',
+    type: 'get',
+    response: _ => ({ code: 20000, data: services })
   },
   {
     url: '/api/thraex/boardrooms/book/my',
