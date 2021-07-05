@@ -12,7 +12,11 @@
         <el-table-column type="index" align="center" width="50" />
         <el-table-column align="center" label="会议室名称" class-name="new">
           <template slot-scope="scope">
-            <el-badge v-if="scope.row.isNew" value="New" style="padding-right: 10px;">
+            <el-badge
+              v-if="scope.row.isNew"
+              value="New"
+              style="padding-right: 15px;z-index: 2001;"
+            >
               {{ scope.row.roomName }}
             </el-badge>
             <span v-else>{{ scope.row.roomName }}</span>
@@ -39,10 +43,11 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
+import Communication from './components/communication'
 import { getServiceBook } from '@/api/boardroom'
 
 export default {
-  mixins: [UsableHeightMixin],
+  mixins: [UsableHeightMixin, Communication],
   data() {
     return {
       occupy: 20 * 2 + 5 * 2 + 2,
