@@ -23,8 +23,16 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="subject" label="会议主题" />
-        <el-table-column align="center" prop="secretLabel" label="是否涉密" width="80" />
-        <el-table-column align="center" prop="times" label="会议时间" width="110" />
+        <el-table-column align="center" label="是否涉密" width="80">
+          <template slot-scope="scope">
+            {{ scope.row.secret | filterSecret }}
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="会议时间" width="110">
+          <template slot-scope="scope">
+            {{ scope.row | filterTime }}
+          </template>
+        </el-table-column>
         <el-table-column align="center" prop="orgName" label="组织单位" width="200" />
         <el-table-column align="center" prop="contacts" label="联系人" width="80" />
         <el-table-column align="center" prop="mobile" label="手机" width="110" />
@@ -32,9 +40,9 @@
         <el-table-column align="center" label="状态" width="100">
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.stateObj.type"
+              :type="scope.row.state | filterState(0)"
               size="mini"
-            >{{ scope.row.stateObj.label }}</el-tag>
+            >{{ scope.row.state | filterState(1) }}</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -47,49 +55,11 @@ import Communication from './components/communication'
 import { getServiceBook } from '@/api/boardroom'
 
 export default {
-  mixins: [UsableHeightMixin, Communication],
-  data() {
-    return {
-      occupy: 20 * 2 + 5 * 2 + 2,
-      states: {
-        20: {
-          type: 'success',
-          label: '正常'
-        },
-        30: {
-          type: 'danger',
-          label: '已取消'
-        },
-        40: {
-          type: 'info',
-          label: '已过期'
-        }
-      },
-      data: []
-    }
-  },
-  created() {
-    getServiceBook().then(this.handleData)
-  },
-  methods: {
-    handleData({ data = [] }) {
-      const secret = ['否', '是']
+  filters: {
+    filterSecret: val => ['否', '是'][val],
+    filterTime({ startTime, endTime }) {
+      const [start, end] = [new Date(startTime), new Date(endTime)]
 
-      this.data = data.map(({ startTime, endTime, ...other }) => {
-        const [start, end] = [new Date(startTime), new Date(endTime)]
-        const { type = 'warning', label = '未定义' } = this.states[other.state] || {}
-        return {
-          secretLabel: secret[other.secret],
-          startTime: start,
-          endTime: end,
-          times: this.handleTime(start, end),
-          stateObj: { type, label },
-          isNew: false,
-          ...other
-        }
-      })
-    },
-    handleTime(start, end) {
       const to = p => {
         const n = p.toString()
         return n.length > 1 ? n : `0${n}`
@@ -98,7 +68,26 @@ export default {
       const [eh, em] = [end.getHours(), end.getMinutes()]
 
       return `${to(sh)}:${to(sm)} - ${to(eh)}:${to(em)}`
+    },
+    filterState(val, ind) {
+      const states = {
+        20: ['success', '正常'],
+        30: ['danger', '已取消'],
+        40: ['info', '已过期']
+      }
+
+      return (states[val] || ['warning', '未定义'])[ind]
     }
+  },
+  mixins: [UsableHeightMixin, Communication],
+  data() {
+    return {
+      occupy: 20 * 2 + 5 * 2 + 2,
+      data: []
+    }
+  },
+  created() {
+    getServiceBook().then(({ data }) => (this.data = data))
   }
 }
 </script>
