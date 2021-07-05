@@ -24,31 +24,35 @@ export default {
         }
 
         if (cancel) {
-          const first = this.data[0]
-          first.stateObj = {
-            type: 'danger',
-            label: '已取消'
-          }
+          this.data[0].state = 30
+          // const first = this.data[0]
+          // first.stateObj = {
+          //   type: 'danger',
+          //   label: '已取消'
+          // }
         } else {
-          const first = this.data[0]
-          first.stateObj = {
-            type: 'success',
-            label: '正常'
-          }
+          this.data[0].state = 20
+          // const first = this.data[0]
+          // first.stateObj = {
+          //   type: 'success',
+          //   label: '正常'
+          // }
         }
 
         if (expired) {
-          const first = this.data[1]
-          first.stateObj = {
-            type: 'info',
-            label: '已过期'
-          }
+          this.data[1].state = 40
+          // const first = this.data[1]
+          // first.stateObj = {
+          //   type: 'info',
+          //   label: '已过期'
+          // }
         } else {
-          const first = this.data[1]
-          first.stateObj = {
-            type: 'success',
-            label: '正常'
-          }
+          this.data[1].state = 20
+          // const first = this.data[1]
+          // first.stateObj = {
+          //   type: 'success',
+          //   label: '正常'
+          // }
         }
       }
     }

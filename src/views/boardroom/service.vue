@@ -10,6 +10,7 @@
         highlight-current-row
       >
         <el-table-column type="index" align="center" width="50" />
+        <el-table-column align="center" prop="location" label="会议室地点" width="130" />
         <el-table-column align="center" label="会议室名称" class-name="new">
           <template slot-scope="scope">
             <el-badge

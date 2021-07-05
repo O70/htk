@@ -138,6 +138,8 @@ const services = (() => {
     id: `SERVICE-BOOK-${ind}`,
     roomId: it.id,
     roomName: it.name,
+    locationId: it.locationId,
+    location: locations.find(l => l.id === it.locationId).name,
     subject: `Subject-${ind}`,
     secret: ind % 2,
     startTime: new Date(y, m, d, hours[ind % 4], minutes[ind % 2]),
@@ -153,7 +155,18 @@ const services = (() => {
     // state: [20, 30, 40][ind % 3]
     state: 20
   }))
-  return res
+
+  let final = []
+  locations.forEach(it => {
+    final = [...final, ...res.filter(i => i.locationId === it.id)]
+  })
+  return final
+  // return res
+  // return res.sort((a, b) => b.location - a.location)
+
+  // const groups = locations.map(it => Object.assign(it,
+  //   { children: res.filter(({ locationId }) => locationId === it.id) }))
+  // return groups
 })()
 
 module.exports = [
