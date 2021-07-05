@@ -107,7 +107,7 @@ export function getBookMarks(params) {
   })
 }
 
-export function getServiceBook() {
+export function getBookService() {
   return request({
     url: '/api/thraex/boardrooms/book/service',
     method: 'get'

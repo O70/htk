@@ -11,7 +11,7 @@
         highlight-current-row
       >
         <el-table-column type="index" align="center" width="50" />
-        <el-table-column align="center" prop="location" label="会议室地点" width="130" />
+        <el-table-column align="center" prop="roomPlace" label="会议室地点" width="130" />
         <el-table-column align="center" label="会议室名称" class-name="new">
           <template slot-scope="scope">
             <el-badge
@@ -25,12 +25,12 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="subject" label="会议主题" />
-        <el-table-column align="center" label="是否涉密" width="80">
+        <el-table-column align="center" label="是否涉密" width="100">
           <template slot-scope="scope">
             {{ scope.row.secret | filterSecret }}
           </template>
         </el-table-column>
-        <el-table-column align="center" label="会议时间" width="110">
+        <el-table-column align="center" label="会议时间" width="120">
           <template slot-scope="scope">
             {{ scope.row | filterTime }}
           </template>
@@ -54,7 +54,7 @@
 <script>
 import UsableHeightMixin from '@/components/usable-height'
 import Communication from './components/communication'
-import { getServiceBook } from '@/api/boardroom'
+import { getBookService } from '@/api/boardroom'
 
 export default {
   filters: {
@@ -90,8 +90,8 @@ export default {
     }
   },
   created() {
-    getServiceBook().then(({ data }) => {
-      const locs = data.map(({ location }) => location)
+    getBookService().then(({ data }) => {
+      const locs = data.map(({ roomPlace: location }) => location)
       this.spans = [...new Set(locs)]
         .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
         .map(([min, max]) => ({ [min]: [max - min + 1, 1] }))
