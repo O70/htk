@@ -4,6 +4,7 @@
       <el-table
         :data="data"
         :height="height"
+        :span-method="handleSpan"
         stripe
         border
         fit
@@ -84,11 +85,26 @@ export default {
   data() {
     return {
       occupy: 20 * 2 + 5 * 2 + 2,
-      data: []
+      data: [],
+      spans: {}
     }
   },
   created() {
-    getServiceBook().then(({ data }) => (this.data = data))
+    getServiceBook().then(({ data }) => {
+      const locs = data.map(({ location }) => location)
+      this.spans = [...new Set(locs)]
+        .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
+        .map(([min, max]) => ({ [min]: [max - min + 1, 1] }))
+        .reduce((acc, cur) => ({ ...acc, ...cur }), {})
+      this.data = data
+    })
+  },
+  methods: {
+    handleSpan({ rowIndex, columnIndex }) {
+      if (columnIndex === 1) {
+        return this.spans[rowIndex] || [0, 0]
+      }
+    }
   }
 }
 </script>
