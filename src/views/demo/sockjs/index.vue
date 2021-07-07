@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import Communication from './components/communication'
+import Communication from './communication'
 
 export default {
   mixins: [Communication],
