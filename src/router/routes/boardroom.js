@@ -116,6 +116,12 @@ export default [
     meta: { title: 'Temporary(No Sidebar)' },
     children: [
       {
+        path: 'sockjs',
+        name: 'NsBrSockJSTest',
+        component: () => import('@/views/boardroom/sockjs-test'),
+        meta: { title: 'SockJS' }
+      },
+      {
         path: 'maintain',
         name: 'NsBrMaintain',
         component: () => import('@/views/boardroom/maintain'),

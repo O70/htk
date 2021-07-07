@@ -3,61 +3,35 @@
  * - Update(Cancel/Other...)
  * - Expired
  */
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
+
 export default {
   data() {
     return {
-      operations: {
-        add: false,
-        cancel: false,
-        expired: false
-      }
+      stompClient: null
     }
   },
-  watch: {
-    operations: {
-      deep: true,
-      handler(val) {
-        const { add, cancel, expired } = val
-        if (add) {
-          const first = this.data[0]
-          this.data.splice(0, 0, Object.assign({}, first, { isNew: true }))
-        }
-
-        if (cancel) {
-          this.data[0].state = 30
-          // const first = this.data[0]
-          // first.stateObj = {
-          //   type: 'danger',
-          //   label: '已取消'
-          // }
-        } else {
-          this.data[0].state = 20
-          // const first = this.data[0]
-          // first.stateObj = {
-          //   type: 'success',
-          //   label: '正常'
-          // }
-        }
-
-        if (expired) {
-          this.data[1].state = 40
-          // const first = this.data[1]
-          // first.stateObj = {
-          //   type: 'info',
-          //   label: '已过期'
-          // }
-        } else {
-          this.data[1].state = 20
-          // const first = this.data[1]
-          // first.stateObj = {
-          //   type: 'success',
-          //   label: '正常'
-          // }
-        }
-      }
+  methods: {
+    connect() {
+      const socket = new SockJS('http://localhost:8037/gs-guide-websocket')
+      this.stompClient = Stomp.over(socket)
+      this.stompClient.connect({}, frame => {
+        console.log('Connected:', frame)
+        this.stompClient.subscribe('/topic/greetings', greeting => {
+          console.log(typeof greeting, greeting)
+          this.data = JSON.parse(greeting.body)
+          this.data = (greeting.body)
+        })
+      })
+    },
+    disconnect() {
+      this.stompClient && this.stompClient.disconnect()
+      console.log('Disconnected')
+    },
+    send() {
+      console.debug('send:', this.stompClient)
+      this.stompClient && this.stompClient.send('/app/hello', {}, JSON.stringify({ name: this.msg }))
     }
-  },
-  created() {
-    console.debug('communication....')
   }
 }
