@@ -9,17 +9,20 @@ import Stomp from 'stompjs'
 export default {
   data() {
     return {
+      urls: {
+        sockjs: 'http://localhost:8037/gs-guide-websocket',
+        subscribe: '/topic/greetings',
+        send: '/app/hello'
+      },
       stompClient: null
     }
   },
   methods: {
     connect() {
-      const socket = new SockJS('http://localhost:8037/gs-guide-websocket')
+      const socket = new SockJS(this.urls.sockjs)
       this.stompClient = Stomp.over(socket)
       this.stompClient.connect({}, frame => {
-        console.log('Connected:', frame)
-        this.stompClient.subscribe('/topic/greetings', greeting => {
-          console.log(typeof greeting, greeting)
+        this.stompClient.subscribe(this.urls.subscribe, greeting => {
           this.data = JSON.parse(greeting.body)
           this.data = (greeting.body)
         })
@@ -27,11 +30,9 @@ export default {
     },
     disconnect() {
       this.stompClient && this.stompClient.disconnect()
-      console.log('Disconnected')
     },
     send() {
-      console.debug('send:', this.stompClient)
-      this.stompClient && this.stompClient.send('/app/hello', {}, JSON.stringify({ name: this.msg }))
+      this.stompClient && this.stompClient.send(this.urls.send, {}, JSON.stringify({ name: this.msg }))
     }
   }
 }
