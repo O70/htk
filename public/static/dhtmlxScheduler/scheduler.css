@@ -768,7 +768,11 @@ div.icon_delete {
 	height: 100%;
 
 	/* fix: Guiwang */
-	font-size: 14px;
+	font-size: 16px;
+}
+/* style: Guiwang */
+.dhx_matrix_scell .el-link {
+	font-size: 16px;
 }
 
 .dhx_matrix_cell,.dhx_matrix_scell {
@@ -1670,7 +1674,9 @@ div.dhx_menu_head,div.dhx_menu_icon {
 
 .dhx_scale_bar {
 	border-left: 1px solid #CECECE;
-	font: 11px/ 16px Arial;
+	/* fix: Guiwang */
+	/* font: 11px/ 16px Arial; */
+	font: 15px/ 16px Arial;
 	color: #767676;
 	padding-top: 2px;
 	background-color: #fff
