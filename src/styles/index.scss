@@ -63,3 +63,8 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+.el-message-box__wrapper .el-message-box .el-message-box__btns button:nth-child(1) {
+  float: right;
+  margin-left: 10px;
+}
