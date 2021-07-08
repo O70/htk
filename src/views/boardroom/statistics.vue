@@ -131,8 +131,8 @@ export default {
         }
       })
     },
-    handleViewChange({ events: addEvents }) {
-      this.loadEvents(addEvents).then(() => {
+    handleViewChange({ now, events: addEvents }) {
+      this.loadEvents(now, addEvents).then(() => {
         const els = document.querySelectorAll('.section-room')
         const rooms = []
         els.forEach(({ id, innerText: text }) => rooms.push({ id, text }))
@@ -140,7 +140,7 @@ export default {
           new this.Link({
             propsData: {
               value: { id, text },
-              handler: rid => this.$router.push(`/boardroom/booking/${rid}/${this.now.getTime()}`),
+              handler: rid => this.$router.push(`/boardroom/booking/${rid}/${now.getTime()}`),
               viewer: rid => {
                 this.drawer.room = this.rooms.find(({ [this.props.key]: id }) => id === rid)
                 this.drawer.visible = true
@@ -150,15 +150,15 @@ export default {
         )
       })
     },
-    async loadEvents(addEvents) {
-      const [y, m, n] = [this.now.getFullYear(), this.now.getMonth(), this.now.getDate()]
+    async loadEvents(now, addEvents) {
+      const [y, m, n] = [now.getFullYear(), now.getMonth(), now.getDate()]
       const remarks = this.remarks.map(it => ({
         ...it,
         start: new Date(y, m, n, 7),
         end: new Date(y, m, n, 23)
       }))
 
-      const date = this.$refs.picker.formatToString(this.now)
+      const date = this.$refs.picker.formatToString(now)
       const { data = [] } = await getBookEvents(date)
 
       const events = data.map(({ roomId, startTime, endTime, state }) => ({

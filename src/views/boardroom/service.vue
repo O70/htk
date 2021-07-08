@@ -53,7 +53,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import Communication from './components/communication'
+import Sock from './components/sock'
 import { getBookService } from '@/api/boardroom'
 
 export default {
@@ -81,7 +81,7 @@ export default {
       return (states[val] || ['warning', '未定义'])[ind]
     }
   },
-  mixins: [UsableHeightMixin, Communication],
+  mixins: [UsableHeightMixin, Sock],
   data() {
     return {
       occupy: 20 * 2 + 5 * 2 + 2,

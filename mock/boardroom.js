@@ -174,7 +174,11 @@ module.exports = [
   {
     url: '/api/thraex/server/time',
     type: 'get',
-    response: _ => ({ code: 20000, data: Date.now() })
+    // response: _ => ({ code: 20000, data: Date.now() })
+    response: _ => {
+      // sleep(2000)
+      return { code: 20000, data: Date.now() }
+    }
   },
   {
     url: '/api/thraex/orgs',
