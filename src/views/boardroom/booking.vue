@@ -202,9 +202,9 @@ export default {
     }
   }
 
-  form, .content {
+  form {
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   footer {

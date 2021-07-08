@@ -357,3 +357,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+form {
+  padding: 0 10px;
+}
+</style>
