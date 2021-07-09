@@ -26,7 +26,7 @@
         <el-table-column align="left" label="会议主题" class-name="new">
           <template slot-scope="scope">
             <el-badge
-              v-if="scope.row.state === 20"
+              v-if="isApprovedNew(scope.row.state)"
               value="New"
               style="padding-right: 15px;z-index: 1999;"
             >
@@ -35,7 +35,6 @@
             <span v-else>{{ scope.row.subject }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column align="center" prop="subject" label="会议主题" /> -->
         <el-table-column align="center" label="是否涉密" width="100">
           <template slot-scope="scope">
             {{ scope.row.secret | filterSecret }}
@@ -72,7 +71,7 @@
 <script>
 import UsableHeightMixin from '@/components/usable-height'
 import Refresh from './components/refresh'
-import { getBookService } from '@/api/boardroom'
+import { getBookService, clearNew } from '@/api/boardroom'
 
 export default {
   filters: {
@@ -124,6 +123,9 @@ export default {
     this.handleData()
   },
   methods: {
+    isApprovedNew(state) {
+      return state === 20
+    },
     handleData() {
       console.debug('load data...')
       getBookService(this.date).then(({ data }) => {
@@ -143,6 +145,10 @@ export default {
     handleRowClick(row) {
       this.drawer.data = row
       this.drawer.visible = true
+      if (this.isApprovedNew(row.state)) {
+        row.state = 21
+        clearNew(row.id)
+      }
     }
   }
 }

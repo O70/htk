@@ -280,6 +280,14 @@ module.exports = [
     response: _ => ({ code: 20000, data: myBooks })
   },
   {
+    url: '/api/thraex/boardrooms/book/clear/new',
+    type: 'put',
+    response: config => {
+      console.debug(config.url)
+      return { code: 20000, data: true }
+    }
+  },
+  {
     url: '/api/thraex/boardrooms/book',
     type: 'get',
     response: config => {

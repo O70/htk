@@ -114,3 +114,10 @@ export function getBookService(day) {
     params: { day }
   })
 }
+
+export function clearNew(id) {
+  return request({
+    url: `/api/thraex/boardrooms/book/clear/new/${id}`,
+    method: 'put'
+  })
+}
