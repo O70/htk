@@ -91,6 +91,7 @@ export default {
     filterState(val, ind) {
       const states = {
         20: ['success', '正常'],
+        21: ['success', '正常'],
         30: ['danger', '已取消']
       }
 
@@ -127,7 +128,6 @@ export default {
       return state === 20
     },
     handleData() {
-      console.debug('load data...')
       getBookService(this.date).then(({ data }) => {
         const locs = data.map(({ roomLocation: location }) => location)
         this.spans = [...new Set(locs)]
