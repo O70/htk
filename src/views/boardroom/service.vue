@@ -12,19 +12,20 @@
       >
         <el-table-column type="index" align="center" width="50" />
         <el-table-column align="center" prop="roomPlace" label="会议室地点" width="130" />
-        <el-table-column align="center" label="会议室名称" class-name="new">
+        <el-table-column align="center" prop="roomName" label="会议室名称" />
+        <el-table-column align="left" label="会议主题" class-name="new">
           <template slot-scope="scope">
             <el-badge
-              v-if="scope.row.isNew"
+              v-if="scope.row.state === 20"
               value="New"
               style="padding-right: 15px;z-index: 2001;"
             >
-              {{ scope.row.roomName }}
+              {{ scope.row.subject }}
             </el-badge>
-            <span v-else>{{ scope.row.roomName }}</span>
+            <span v-else>{{ scope.row.subject }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="subject" label="会议主题" />
+        <!-- <el-table-column align="center" prop="subject" label="会议主题" /> -->
         <el-table-column align="center" label="是否涉密" width="100">
           <template slot-scope="scope">
             {{ scope.row.secret | filterSecret }}
@@ -37,7 +38,7 @@
         </el-table-column>
         <el-table-column align="center" prop="orgName" label="组织单位" width="200" />
         <el-table-column align="center" prop="contacts" label="联系人" width="80" />
-        <el-table-column align="center" prop="mobile" label="手机" width="110" />
+        <el-table-column align="center" prop="mobile" label="手机" width="120" />
         <el-table-column align="center" prop="leaders" label="参会领导" show-overflow-tooltip />
         <el-table-column align="center" label="状态" width="100">
           <template slot-scope="scope">
@@ -74,8 +75,7 @@ export default {
     filterState(val, ind) {
       const states = {
         20: ['success', '正常'],
-        30: ['danger', '已取消'],
-        40: ['info', '已过期']
+        30: ['danger', '已取消']
       }
 
       return (states[val] || ['warning', '未定义'])[ind]
@@ -100,8 +100,8 @@ export default {
     })
   },
   methods: {
-    handleSpan({ rowIndex, columnIndex }) {
-      if (columnIndex === 1) {
+    handleSpan({ column, rowIndex }) {
+      if (column.property === 'roomPlace') {
         return this.spans[rowIndex] || [0, 0]
       }
     }

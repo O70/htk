@@ -154,7 +154,8 @@ const services = (() => {
     // state: [10, 20, 30][ind % 3]
     // state: [10, 20, 30, 40][ind % 4]
     // state: [20, 30, 40][ind % 3]
-    state: 20
+    state: [20, 30][ind % 2]
+    // state: 20
   }))
 
   let final = []
