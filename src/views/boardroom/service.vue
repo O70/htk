@@ -54,7 +54,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import Sock from './components/sock'
+import Refresh from './components/refresh'
 import { getBookService } from '@/api/boardroom'
 
 export default {
@@ -81,7 +81,7 @@ export default {
       return (states[val] || ['warning', '未定义'])[ind]
     }
   },
-  mixins: [UsableHeightMixin, Sock],
+  mixins: [UsableHeightMixin, Refresh],
   data() {
     return {
       occupy: 20 * 2 + 5 * 2 + 2,
@@ -90,16 +90,20 @@ export default {
     }
   },
   created() {
-    getBookService().then(({ data }) => {
-      const locs = data.map(({ roomPlace: location }) => location)
-      this.spans = [...new Set(locs)]
-        .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
-        .map(([min, max]) => ({ [min]: [max - min + 1, 1] }))
-        .reduce((acc, cur) => ({ ...acc, ...cur }), {})
-      this.data = data
-    })
+    this.handleData()
   },
   methods: {
+    handleData() {
+      console.debug('load data...')
+      getBookService().then(({ data }) => {
+        const locs = data.map(({ roomPlace: location }) => location)
+        this.spans = [...new Set(locs)]
+          .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
+          .map(([min, max]) => ({ [min]: [max - min + 1, 1] }))
+          .reduce((acc, cur) => ({ ...acc, ...cur }), {})
+        this.data = data
+      })
+    },
     handleSpan({ column, rowIndex }) {
       if (column.property === 'roomPlace') {
         return this.spans[rowIndex] || [0, 0]
