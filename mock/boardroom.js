@@ -246,7 +246,13 @@ module.exports = [
   {
     url: '/api/thraex/boardrooms/book/service',
     type: 'get',
-    response: _ => ({ code: 20000, data: services })
+    // response: _ => ({ code: 20000, data: services })
+    response: config => {
+      const { day } = config.query
+      console.debug(new Date(day))
+      return { code: 20000, data: services
+        .map(({ subject, ...other }) => ({ subject: `${subject}-${day}`, ...other })) }
+    }
   },
   {
     url: '/api/thraex/boardrooms/book/my',

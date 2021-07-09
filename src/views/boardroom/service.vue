@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
     <el-card>
+      <div slot="header" class="card-header">
+        <el-date-picker
+          ref="picker"
+          v-model="date"
+          :clearable="false"
+          size="mini"
+        />
+      </div>
+
       <el-table
         :data="data"
         :height="height"
@@ -84,9 +93,16 @@ export default {
   mixins: [UsableHeightMixin, Refresh],
   data() {
     return {
-      occupy: 20 * 2 + 5 * 2 + 2,
+      excludes: ['.card-header'],
+      occupy: 20 * 2 + 5 * 2 + 5 * 2 + 2 + 1,
+      date: new Date(),
       data: [],
       spans: {}
+    }
+  },
+  watch: {
+    date() {
+      this.handleData()
     }
   },
   created() {
@@ -94,8 +110,8 @@ export default {
   },
   methods: {
     handleData() {
-      console.debug('load data...')
-      getBookService().then(({ data }) => {
+      console.debug('load data...', this.date)
+      getBookService(this.date).then(({ data }) => {
         const locs = data.map(({ roomPlace: location }) => location)
         this.spans = [...new Set(locs)]
           .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
@@ -113,6 +129,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+::v-deep .el-card__header {
+  padding: 5px;
+  text-align: center;
+}
 ::v-deep .el-card__body {
   padding: 5px;
 }
