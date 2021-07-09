@@ -136,11 +136,12 @@ const services = (() => {
   const [hours, minutes] = [[8, 9, 14, 15], [0, 30]]
   const res = rooms.map((it, ind) => ({
     id: `SERVICE-BOOK-${ind}`,
+
     roomId: it.id,
     roomName: it.name,
     locationId: it.locationId,
     // location: locations.find(l => l.id === it.locationId).name,
-    roomPlace: locations.find(l => l.id === it.locationId).name,
+    roomLocation: locations.find(l => l.id === it.locationId).name,
     subject: `Subject-${ind}`,
     secret: ind % 2,
     startTime: new Date(y, m, d, hours[ind % 4], minutes[ind % 2]),

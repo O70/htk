@@ -21,7 +21,7 @@
         @row-click="handleRowClick"
       >
         <el-table-column type="index" align="center" width="50" />
-        <el-table-column align="center" prop="roomPlace" label="会议室地点" width="130" />
+        <el-table-column align="center" prop="roomLocation" label="会议室地点" width="130" />
         <el-table-column align="center" prop="roomName" label="会议室名称" />
         <el-table-column align="left" label="会议主题" class-name="new">
           <template slot-scope="scope">
@@ -127,7 +127,7 @@ export default {
     handleData() {
       console.debug('load data...')
       getBookService(this.date).then(({ data }) => {
-        const locs = data.map(({ roomPlace: location }) => location)
+        const locs = data.map(({ roomLocation: location }) => location)
         this.spans = [...new Set(locs)]
           .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])
           .map(([min, max]) => ({ [min]: [max - min + 1, 1] }))
@@ -136,7 +136,7 @@ export default {
       })
     },
     handleSpan({ column, rowIndex }) {
-      if (column.property === 'roomPlace') {
+      if (column.property === 'roomLocation') {
         return this.spans[rowIndex] || [0, 0]
       }
     },
