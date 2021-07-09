@@ -18,6 +18,7 @@
         border
         fit
         highlight-current-row
+        @row-click="handleRowClick"
       >
         <el-table-column type="index" align="center" width="50" />
         <el-table-column align="center" prop="roomPlace" label="会议室地点" width="130" />
@@ -27,7 +28,7 @@
             <el-badge
               v-if="scope.row.state === 20"
               value="New"
-              style="padding-right: 15px;z-index: 2001;"
+              style="padding-right: 15px;z-index: 1999;"
             >
               {{ scope.row.subject }}
             </el-badge>
@@ -59,6 +60,13 @@
         </el-table-column>
       </el-table>
     </el-card>
+
+    <el-drawer
+      :visible.sync="drawer.visible"
+      :with-header="false"
+    >
+      <br-order :data="drawer.data" />
+    </el-drawer>
   </div>
 </template>
 <script>
@@ -90,6 +98,9 @@ export default {
       return (states[val] || ['warning', '未定义'])[ind]
     }
   },
+  components: {
+    BrOrder: () => import('./components/order')
+  },
   mixins: [UsableHeightMixin, Refresh],
   data() {
     return {
@@ -97,7 +108,11 @@ export default {
       occupy: 20 * 2 + 5 * 2 + 5 * 2 + 2 + 1,
       date: new Date(),
       data: [],
-      spans: {}
+      spans: {},
+      drawer: {
+        visible: false,
+        data: null
+      }
     }
   },
   watch: {
@@ -110,7 +125,7 @@ export default {
   },
   methods: {
     handleData() {
-      console.debug('load data...', this.date)
+      console.debug('load data...')
       getBookService(this.date).then(({ data }) => {
         const locs = data.map(({ roomPlace: location }) => location)
         this.spans = [...new Set(locs)]
@@ -124,6 +139,10 @@ export default {
       if (column.property === 'roomPlace') {
         return this.spans[rowIndex] || [0, 0]
       }
+    },
+    handleRowClick(row) {
+      this.drawer.data = row
+      this.drawer.visible = true
     }
   }
 }

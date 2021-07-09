@@ -150,7 +150,26 @@ const services = (() => {
     orgName: '超级计算机应用研究所',
     contacts: '鬼王鬼王',
     mobile: '13109876543',
-    leaders: '领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导',
+    // leaders: '领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导领导',
+
+    typeName: '会议类型',
+    // orgName: '院内承办单位',
+    introduction: '会议简介',
+    participateUnits: '参与单位',
+    leaders: '参会领导',
+    otherLeaders: '其他参会领导',
+    photograph: '照相',
+    tableCard: '桌卡',
+    banner: '横幅',
+    signpost: '指路牌',
+    projector: '投影仪',
+    computer: '电脑',
+    paper: '摆台纸',
+    pen: '摆台笔',
+    keepSecret: '保密',
+    num: '会议人数',
+    remark: '备注',
+
     // state: [10, 20, 30][ind % 3]
     // state: [10, 20, 30, 40][ind % 4]
     // state: [20, 30, 40][ind % 3]

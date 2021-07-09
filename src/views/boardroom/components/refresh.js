@@ -5,7 +5,7 @@ export default {
     }
   },
   mounted() {
-    this.timer = setInterval(this.handleData, 2 * 1000)
+    this.timer = setInterval(this.handleData, 60 * 1000)
   },
   destroyed() {
     clearInterval(this.timer)
