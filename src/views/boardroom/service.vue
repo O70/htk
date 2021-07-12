@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     handleData() {
-      getBookService(this.date).then(({ data }) => {
+      getBookService(this.date.getTime()).then(({ data }) => {
         const locs = data.map(({ roomLocation: location }) => location)
         this.spans = [...new Set(locs)]
           .map(l => [locs.indexOf(l), locs.lastIndexOf(l)])

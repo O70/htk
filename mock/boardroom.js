@@ -173,7 +173,7 @@ const services = (() => {
     paper: '摆台纸',
     pen: '摆台笔',
     keepSecret: '保密',
-    num: '会议人数',
+    num: 20,
     remark: '备注',
 
     // state: [10, 20, 30][ind % 3]
