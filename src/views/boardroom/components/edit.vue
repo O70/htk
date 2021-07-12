@@ -144,7 +144,7 @@ export default {
         projector: ['需要', '不需要']
       },
       items: [
-        {
+        /* {
           prop: 'leaders',
           label: '参会领导',
           options: {
@@ -159,7 +159,31 @@ export default {
             visible: true,
             non: true
           }
-        },
+        }, */
+        [
+          {
+            prop: 'leaders',
+            label: '院内领导',
+            options: {
+              major: '无院领导',
+              minor: [],
+              tips: '若有局级以上领导参会，请选择：',
+              multiple: true
+            }
+          },
+          {
+            prop: 'otherLeaders',
+            label: '其他领导',
+            input: {
+              placeholder: '其他单位局级以上参会领导'
+            }
+            // options: {
+            //   major: '无',
+            //   minor: [],
+            //   tips: '若有其他单位局级以上参会领导，请填写'
+            // }
+          }
+        ],
         [
           {
             prop: 'photograph',
@@ -312,7 +336,7 @@ export default {
   created() {
     getFormInfo().then(({ data: { types, leaders }}) => {
       this.$set(this.info, 'types', types)
-      this.$set(this.items[0].options, 'minor', leaders.map(({ name }) => name))
+      this.$set(this.items[0][0].options, 'minor', leaders.map(({ name }) => name))
     })
 
     getOrg().then(({ data }) => this.$set(this.info, 'orgs', data))

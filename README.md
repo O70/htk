@@ -59,3 +59,4 @@ Bugs(fix: reload `scheduler`):
 - [ ] timeline.vue
   - [ ] style: remove `scoped` and add 5 `../`
 - [X] view.vue
+- [ ] service.vue

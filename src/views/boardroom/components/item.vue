@@ -1,5 +1,11 @@
 <template>
-  <el-row>
+  <el-row v-if="item.input">
+    <el-input
+      v-model="form[item.prop]"
+      :placeholder="`请填写${item.input.placeholder}`"
+    />
+  </el-row>
+  <el-row v-else>
     <el-col :span="showEdit ? 12 : 24">
       <el-select
         v-model="form[item.prop]"

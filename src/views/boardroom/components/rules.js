@@ -27,8 +27,8 @@ export default {
     Object.assign(this.rules, rules)
   },
   methods: {
-    handleRules({ prop, label, options, edit }) {
-      let rule = { required: true, message: `请选择${label}` }
+    handleRules({ prop, label, options, input, edit }) {
+      let rule = { required: true, message: input ? `请填写${input.placeholder}` : `请选择${label}` }
 
       if (edit) {
         if (edit.non) {
