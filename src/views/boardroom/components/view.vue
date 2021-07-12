@@ -16,15 +16,13 @@
     </el-row>
 
     <el-carousel :interval="5000" arrow="always">
-      <el-carousel-item v-for="(url, ind) in images" :key="`${url}-${ind}`">
+      <el-carousel-item v-for="(url, ind) in info.images" :key="`${url}-${ind}`">
         <el-image :src="url" fit="cover" />
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 <script>
-import { Ployfills } from '@/api/boardroom'
-
 export default {
   props: {
     data: {
@@ -72,12 +70,9 @@ export default {
   },
   computed: {
     info() {
-      const data = Ployfills.room(this.data)
-      return Object.assign({}, data,
-        this.boolKeys.reduce((acc, cur) => ({ ...acc, [cur]: this.bools[data[cur]] }), {}))
-    },
-    images() {
-      return (this.info.files || []).map(({ fileId }) => Ployfills.fileAPI(fileId))
+      const data = this.data
+      return Object.assign({}, data, this.boolKeys
+        .reduce((acc, cur) => ({ ...acc, [cur]: this.bools[data[cur]] }), {}))
     }
   }
 }

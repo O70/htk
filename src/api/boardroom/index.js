@@ -46,7 +46,17 @@ export function getBoardrooms() {
   return request({
     url: '/api/thraex/boardrooms/group',
     method: 'get'
-  })
+  }).then(({ data, ...other }) => ({
+    data: data.map(({ children, ...other }) => ({
+      children: children.map(it => {
+        const files = it.files || []
+        it.images = files.map(({ fileId }) => Ployfills.fileAPI(fileId))
+        return Ployfills.room(it)
+      }),
+      ...other
+    })),
+    ...other
+  }))
 }
 
 export function getBoardroom(id = '') {

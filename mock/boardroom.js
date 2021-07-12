@@ -72,8 +72,13 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
+// const data = locations.map(it => Object.assign(it,
+//   { children: rooms.filter(({ locationId }) => locationId === it.id) }))
+
+const newRooms = rooms.map(({ locationId: addressId, ...other }) => ({ addressId, ...other }))
+
 const data = locations.map(it => Object.assign(it,
-  { children: rooms.filter(({ locationId }) => locationId === it.id) }))
+  { children: newRooms.filter(({ addressId }) => addressId === it.id) }))
 
 // eslint-disable-next-line
 function sleep(delay) {
