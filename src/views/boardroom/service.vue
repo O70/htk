@@ -71,6 +71,7 @@
 <script>
 import UsableHeightMixin from '@/components/usable-height'
 import Refresh from './components/refresh'
+import States from './components/states'
 import { getBookService, clearNew } from '@/api/boardroom'
 
 export default {
@@ -101,7 +102,7 @@ export default {
   components: {
     BrOrder: () => import('./components/order')
   },
-  mixins: [UsableHeightMixin, Refresh],
+  mixins: [UsableHeightMixin, Refresh, States],
   data() {
     return {
       excludes: ['.card-header'],
@@ -124,9 +125,6 @@ export default {
     this.handleData()
   },
   methods: {
-    isApprovedNew(state) {
-      return state === 20
-    },
     handleData() {
       getBookService(this.date).then(({ data }) => {
         const locs = data.map(({ roomLocation: location }) => location)

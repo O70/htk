@@ -37,6 +37,7 @@
 <script>
 import UsableHeightMixin from '@/components/usable-height'
 import Modify from './components/modify'
+import States from './components/states'
 import { serverTime, getBoardroom, getBookMarks, saveBook, updateBook } from '@/api/boardroom'
 
 export default {
@@ -44,7 +45,7 @@ export default {
     BrTimeline: () => import('./components/timeline'),
     BrEdit: () => import('./components/edit')
   },
-  mixins: [UsableHeightMixin, Modify],
+  mixins: [UsableHeightMixin, Modify, States],
   props: {
     // Boardroom id or Booking id
     id: {
@@ -134,7 +135,7 @@ export default {
           key: this.joinDate(start.getFullYear(), start.getMonth() + 1, start.getDate()),
           start: new Date(year, month, date, start.getHours(), start.getMinutes()),
           end: new Date(year, month, date, end.getHours(), end.getMinutes()),
-          css: state === 20 ? 'thx_event_completed' : 'thx_event_pending'
+          css: this.isApproved(state) ? 'thx_event_completed' : 'thx_event_pending'
         })))
       })
     },

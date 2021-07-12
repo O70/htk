@@ -35,6 +35,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
+import States from './components/states'
 import { serverTime, getBoardrooms, getBookEvents } from '@/api/boardroom'
 
 export default {
@@ -42,7 +43,7 @@ export default {
     BrTimeline: () => import('./components/timeline'),
     BrView: () => import('./components/view')
   },
-  mixins: [UsableHeightMixin],
+  mixins: [UsableHeightMixin, States],
   data() {
     return {
       excludes: ['.card-header'],
@@ -165,7 +166,7 @@ export default {
         key: roomId,
         start: new Date(startTime),
         end: new Date(endTime),
-        css: state === 20 ? 'thx_event_completed' : 'thx_event_pending'
+        css: this.isApproved(state) ? 'thx_event_completed' : 'thx_event_pending'
       }))
       addEvents([...remarks, ...events])
     }
