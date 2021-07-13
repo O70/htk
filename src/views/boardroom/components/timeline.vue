@@ -70,6 +70,12 @@ export default {
   watch: {
     now(val) {
       this.scheduler && this.scheduler.setCurrentView(val)
+    },
+    units(val) {
+      if (this.scheduler) {
+        this.scheduler.deleteAllSections()
+        val.forEach(it => this.scheduler.addSection(it))
+      }
     }
   },
   mounted() {
