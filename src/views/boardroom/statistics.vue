@@ -64,7 +64,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     Promise.all([
       serverTime(),
       getBoardrooms(),
