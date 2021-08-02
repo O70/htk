@@ -25,6 +25,8 @@ export default {
   data() {
     return {
       items: [
+        { key: 'roomName', label: '会议室名称' },
+        { key: 'roomLocation', label: '会议室地点' },
         { key: 'typeName', label: '会议类型' },
         { key: 'secret', label: '是否涉密' },
         { key: 'num', label: '会议人数' },
