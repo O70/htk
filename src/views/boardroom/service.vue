@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column align="center" prop="orgName" label="组织单位" width="200" />
         <el-table-column align="center" prop="contacts" label="联系人" width="80" />
-        <el-table-column align="center" prop="mobile" label="手机" width="120" />
+        <el-table-column align="center" prop="mobile" label="联系电话" width="120" />
         <el-table-column align="center" prop="leaders" label="参会领导" show-overflow-tooltip />
         <el-table-column align="center" label="状态" width="100">
           <template slot-scope="scope">
