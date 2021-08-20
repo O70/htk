@@ -84,7 +84,9 @@ export default {
     handleData([room, start]) {
       if (room) {
         this.boardroom = room
-        this.handleUnits(start).then(units => (this.units = units))
+        this.handleUnits(start)
+          .then(units => (this.units = units))
+          .then(() => this.$refs.brTimeline.load())
       } else {
         this.handleRoute()
       }

@@ -78,10 +78,14 @@ export default {
       }
     }
   },
-  mounted() {
-    Scheduler().then(this.init)
-  },
+  // mounted() {
+  //   // Scheduler().then(this.init)
+  //   this.load()
+  // },
   methods: {
+    load() {
+      Scheduler().then(this.init)
+    },
     init(scheduler) {
       this.scheduler = scheduler
 

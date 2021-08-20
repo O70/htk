@@ -15,6 +15,7 @@
       </div>
 
       <br-timeline
+        ref="brTimeline"
         :height="`${height}px`"
         :dx="250"
         :now="now"
@@ -94,7 +95,7 @@ export default {
 
       this.Link = link
       this.now = new Date(now)
-    })
+    }).then(() => this.$refs.brTimeline.load())
   },
   methods: {
     async getLink() {
