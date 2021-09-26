@@ -20,7 +20,7 @@ export const constantRoutes = [
 
   {
     path: '/',
-    redirect: '/boardroom',
+    redirect: '/image/analysis',
     hidden: true
   },
 
