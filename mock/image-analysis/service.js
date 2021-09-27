@@ -1,3 +1,4 @@
+const fs = require('fs')
 const fsp = require('fs/promises')
 
 const { v4: uuidv4 } = require('uuid')
@@ -15,27 +16,31 @@ class Service {
     fsp.writeFile(DB_PATH, JSON.stringify(data, null, '\t'))
   }
 
-  async list() {
-    // fsp.readFile(DB_PATH).then(content => {
-    //   const rows = JSON.parse(content.toString())
-    //   console.debug(rows)
-    // })
-    const content = await fsp.readFile(DB_PATH)
+  list() {
+    const content = fs.readFileSync(DB_PATH)
     const rows = JSON.parse(content.toString())
-    // console.debug(rows)
+
     return rows
   }
 
   save(data) {
-    Object.assign(data, { id: uuidv4() })
+    Object.assign(data, { id: uuidv4(), createDate: Date.now() })
+
     fsp.readFile(DB_PATH).then(content => {
-      console.debug(content)
       const rows = JSON.parse(content.toString())
-      console.debug(rows)
       this.writeFile([data, ...rows])
     })
 
     return Object.assign(data, { id: uuidv4() })
+  }
+
+  remove(id) {
+    fsp.readFile(DB_PATH).then(content => {
+      const rows = JSON.parse(content.toString())
+      const ind = rows.findIndex(it => it.id === id)
+      ind > -1 && rows.splice(ind, 1)
+      this.writeFile(rows)
+    })
   }
 }
 
