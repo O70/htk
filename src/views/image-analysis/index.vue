@@ -21,13 +21,31 @@
           </template>
           <template slot-scope="scope">
             <el-tooltip content="复制" placement="top">
-              <el-button type="info" size="mini" icon="el-icon-message" circle />
+              <el-button
+                type="info"
+                size="mini"
+                icon="el-icon-message"
+                circle
+                @click="handleCopy(scope.row)"
+              />
             </el-tooltip>
             <el-tooltip content="编辑" placement="top">
-              <el-button type="primary" size="mini" icon="el-icon-edit" circle />
+              <el-button
+                type="primary"
+                size="mini"
+                icon="el-icon-edit"
+                circle
+                @click="handleEdit(scope.row)"
+              />
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button type="danger" size="mini" icon="el-icon-delete" circle />
+              <el-button
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                circle
+                @click="handleRemove(scope.$index, scope.row)"
+              />
             </el-tooltip>
           </template>
         </el-table-column>
@@ -68,7 +86,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import { list } from '@/api/image-analysis'
+import { list, save, remove } from '@/api/image-analysis'
 
 export default {
   mixins: [UsableHeightMixin],
@@ -98,11 +116,8 @@ export default {
   },
   computed: {
     locationLabel() {
-      const labels = {
-        '岩心或岩屑': '盆地名称',
-        '野外露头剖面': '盆地或位置'
-      }
-      return labels[this.form.model.type] || '待定'
+      const type = this.form.types.find(it => it.key === this.form.model.type)
+      return type ? type.label : '待定'
     }
   },
   created() {
@@ -113,9 +128,29 @@ export default {
       this.form.model = Object.assign({}, this.form.entity)
       this.form.visible = true
     },
+    handleEdit(row) {
+      this.form.model = Object.assign({}, row)
+      this.form.visible = true
+    },
     handleSave() {
-      console.debug(JSON.stringify(this.form.model))
+      console.debug('TODO: save', JSON.stringify(this.form.model))
       this.form.visible = false
+      save(this.form.model).then(({ data }) => {
+        console.debug('result:', data)
+        this.data.splice(0, 0, data)
+      })
+    },
+    handleCopy(row) {
+      console.debug('TODO: copy')
+      // console.debug(JSON.stringify(row))
+      const copy = Object.assign({}, row, { id: null })
+      // console.debug(copy)
+      this.data.splice(0, 0, copy)
+    },
+    handleRemove(index, { id }) {
+      console.debug('TODO: remove', 'remove record/image/result')
+      this.data.splice(index, 1)
+      remove(id).then(res => console.debug(res))
     }
   }
 }
