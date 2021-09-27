@@ -24,11 +24,19 @@ class Service {
   }
 
   save(data) {
-    Object.assign(data, { id: uuidv4(), createDate: Date.now() })
+    const { id } = data
+    const now = Date.now()
+    Object.assign(data, id ? { updateDate: now } : { id: uuidv4(), createDate: now })
 
     fsp.readFile(DB_PATH).then(content => {
-      const rows = JSON.parse(content.toString())
-      this.writeFile([data, ...rows])
+      let rows = JSON.parse(content.toString())
+      if (id) {
+        const ind = rows.findIndex(it => it.id === id)
+        rows.splice(ind, 1, data)
+      } else {
+        rows = [data, ...rows]
+      }
+      this.writeFile(rows)
     })
 
     return Object.assign(data, { id: uuidv4() })

@@ -135,16 +135,20 @@ export default {
     handleSave() {
       console.debug('TODO: save', JSON.stringify(this.form.model))
       this.form.visible = false
+
+      const { id } = this.form.model
       save(this.form.model).then(({ data }) => {
-        console.debug('result:', data)
-        this.data.splice(0, 0, data)
+        if (id) {
+          const ind = this.data.findIndex(it => it.id === id)
+          this.data.splice(ind, 1, data)
+        } else {
+          this.data.splice(0, 0, data)
+        }
       })
     },
     handleCopy(row) {
       console.debug('TODO: copy')
-      // console.debug(JSON.stringify(row))
       const copy = Object.assign({}, row, { id: null })
-      // console.debug(copy)
       this.data.splice(0, 0, copy)
     },
     handleRemove(index, { id }) {
