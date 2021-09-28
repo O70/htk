@@ -2,18 +2,30 @@ const fs = require('fs')
 const fsp = require('fs/promises')
 
 const { v4: uuidv4 } = require('uuid')
+const multiparty = require('multiparty')
 
-const [DB_DIR, DB_PATH] = ['./db.tmp', './db.tmp/db.json']
+const [DB_DIR, DB_PATH, IMG_DIR] = ['./db.tmp', './db.tmp/db.json', './db.tmp/images']
 
 class Service {
   constructor() {
     fsp.access(DB_DIR)
       .then(_ => fsp.access(DB_PATH).catch(_ => this.writeFile()))
+      .then(_ => fsp.access(IMG_DIR).catch(_ => fsp.mkdir(IMG_DIR)))
       .catch(_ => fsp.mkdir(DB_DIR).finally(_ => this.writeFile()))
   }
 
   writeFile(data = []) {
     fsp.writeFile(DB_PATH, JSON.stringify(data, null, '\t'))
+  }
+
+  upload(req) {
+    console.debug(req.body)
+    const form = new multiparty.Form({ uploadDir: IMG_DIR })
+    form.parse(req, function(err, fields, files) {
+      console.debug(1, err)
+      console.debug(2, fields)
+      console.debug(3, files)
+    })
   }
 
   list() {

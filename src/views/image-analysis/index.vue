@@ -9,13 +9,18 @@
         fit
         highlight-current-row
       >
+        <el-table-column type="expand">
+          <template slot-scope="scope">
+            <image-item :data="scope.row" />
+          </template>
+        </el-table-column>
         <el-table-column type="index" align="center" />
         <el-table-column prop="nation" label="国家" align="center" width="200" />
         <el-table-column prop="type" label="样品类型" align="center" width="150" />
         <el-table-column prop="location" label="盆地名称/盆地或位置" align="center" />
         <el-table-column prop="era" label="时代" align="center" />
         <el-table-column prop="stratum" label="层位" align="center" />
-        <el-table-column align="center" width="150">
+        <el-table-column align="center" width="170">
           <template slot="header">
             <el-button type="success" size="mini" @click="handleNew">新建样本</el-button>
           </template>
@@ -24,7 +29,7 @@
               <el-button
                 type="info"
                 size="mini"
-                icon="el-icon-message"
+                icon="el-icon-document-copy"
                 circle
                 @click="handleCopy(scope.row)"
               />
@@ -89,6 +94,9 @@ import UsableHeightMixin from '@/components/usable-height'
 import { list, save, remove } from '@/api/image-analysis'
 
 export default {
+  components: {
+    ImageItem: () => import('./item.vue')
+  },
   mixins: [UsableHeightMixin],
   data() {
     const entity = {
@@ -100,7 +108,7 @@ export default {
       stratum: null
     }
     return {
-      occupy: 20 * 2 + 3,
+      occupy: 20 * 2 + 5 * 2 + 3,
       height: 0,
       data: [],
       form: {
@@ -164,6 +172,6 @@ export default {
   padding: 5px;
 }
 ::v-deep .el-card__body {
-  padding: 0;
+  padding: 5px;
 }
 </style>

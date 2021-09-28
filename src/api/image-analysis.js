@@ -21,3 +21,11 @@ export function remove(id) {
     method: 'delete'
   })
 }
+
+export function upload(data) {
+  return request({
+    url: '/api/thraex/image/analysis/upload',
+    method: 'post',
+    data
+  })
+}
