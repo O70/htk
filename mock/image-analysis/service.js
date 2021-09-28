@@ -26,7 +26,8 @@ class Service {
   save(data) {
     const { id } = data
     const now = Date.now()
-    Object.assign(data, id ? { updateDate: now } : { id: uuidv4(), createDate: now })
+    Object.assign(data, id ? { updateDate: now }
+      : { id: uuidv4(), createDate: now, updateDate: null })
 
     fsp.readFile(DB_PATH).then(content => {
       let rows = JSON.parse(content.toString())

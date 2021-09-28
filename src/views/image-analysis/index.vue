@@ -133,11 +133,16 @@ export default {
       this.form.visible = true
     },
     handleSave() {
-      console.debug('TODO: save', JSON.stringify(this.form.model))
       this.form.visible = false
-
-      const { id } = this.form.model
-      save(this.form.model).then(({ data }) => {
+      this.handleSubmit(this.form.model)
+    },
+    handleCopy(row) {
+      const copy = Object.assign({}, row, { id: null })
+      this.handleSubmit(copy)
+    },
+    handleSubmit(model) {
+      const { id } = model
+      save(model).then(({ data }) => {
         if (id) {
           const ind = this.data.findIndex(it => it.id === id)
           this.data.splice(ind, 1, data)
@@ -145,11 +150,6 @@ export default {
           this.data.splice(0, 0, data)
         }
       })
-    },
-    handleCopy(row) {
-      console.debug('TODO: copy')
-      const copy = Object.assign({}, row, { id: null })
-      this.data.splice(0, 0, copy)
     },
     handleRemove(index, { id }) {
       console.debug('TODO: remove', 'remove record/image/result')
