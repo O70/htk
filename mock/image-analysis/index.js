@@ -10,7 +10,7 @@ module.exports = [
   {
     url: '/api/thraex/image/analysis',
     type: 'get',
-    response: { code: 20000, data: service.list() }
+    response: _ => ({ code: 20000, data: service.list() })
   },
   {
     url: '/api/thraex/image/analysis',

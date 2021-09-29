@@ -4,14 +4,18 @@ const fsp = require('fs/promises')
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
 
-const [DB_DIR, DB_PATH, IMG_DIR] = ['./db.tmp', './db.tmp/db.json', './db.tmp/images']
+const DB_DIR = './db.tmp'
+const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
 
 class Service {
   constructor() {
-    fsp.access(DB_DIR)
+    // fsp.mkdir(DB_DIR).then(_ => fsp.access(DB_PATH).catch(_ => this.writeFile()))
+    fsp.mkdir(IMG_DIR, { recursive: true })
+      .then(_ => fsp.access(DB_PATH).catch(_ => this.writeFile()))
+    /* fsp.access(DB_DIR)
       .then(_ => fsp.access(DB_PATH).catch(_ => this.writeFile()))
       .then(_ => fsp.access(IMG_DIR).catch(_ => fsp.mkdir(IMG_DIR)))
-      .catch(_ => fsp.mkdir(DB_DIR).finally(_ => this.writeFile()))
+      .catch(_ => fsp.mkdir(DB_DIR).finally(_ => this.writeFile())) */
   }
 
   writeFile(data = []) {
@@ -19,12 +23,20 @@ class Service {
   }
 
   upload(req) {
-    console.debug(req.body)
     const form = new multiparty.Form({ uploadDir: IMG_DIR })
-    form.parse(req, function(err, fields, files) {
-      console.debug(1, err)
-      console.debug(2, fields)
-      console.debug(3, files)
+    form.parse(req, (err, fields, files) => {
+      if (!err) {
+        let { sid } = fields;
+        [sid] = sid
+        let { file } = files;
+        [file] = file
+
+        const oldPath = file.path
+        const filename = oldPath.split('/').reverse()[0]
+        const dir = `${IMG_DIR}/${sid}`
+        const newPath = `${dir}/${filename}`
+        fsp.mkdir(dir, { recursive: true }).then(_ => fsp.rename(oldPath, newPath))
+      }
     })
   }
 
@@ -35,11 +47,15 @@ class Service {
     return rows
   }
 
+  one(id) {
+    return this.list().find(it => it.id === id)
+  }
+
   save(data) {
     const { id } = data
     const now = Date.now()
     Object.assign(data, id ? { updateDate: now }
-      : { id: uuidv4(), createDate: now, updateDate: null })
+      : { id: uuidv4(), createDate: now })
 
     fsp.readFile(DB_PATH).then(content => {
       let rows = JSON.parse(content.toString())
@@ -52,7 +68,7 @@ class Service {
       this.writeFile(rows)
     })
 
-    return Object.assign(data, { id: uuidv4() })
+    return data
   }
 
   remove(id) {
