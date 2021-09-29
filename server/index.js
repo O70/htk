@@ -53,3 +53,10 @@ app.post(`${API}/upload1`, a, function(req, res) {
   console.debug(req.file)
   console.debug(req.files)
 })
+
+app.get('/download', function(req, res) {
+  const path = `./db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png`
+  console.debug('Download image...')
+  // res.download(path)
+  service.download(res)
+})

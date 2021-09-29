@@ -1,5 +1,7 @@
 const fs = require('fs')
 const fsp = require('fs/promises')
+var path = require('path')
+var mime = require('mime')
 
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
@@ -38,6 +40,33 @@ class Service {
         fsp.mkdir(dir, { recursive: true }).then(_ => fsp.rename(oldPath, newPath))
       }
     })
+  }
+
+  download(res) {
+    console.debug(__dirname)
+    console.debug(__filename)
+    const file1 = `/Users/Guiwang/Workspace/JavaScripts/Projects/thraex-boardroom/db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png`
+    const file = `./db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png`
+    console.debug(file)
+    // res.setHeader('Content-disposition', 'attachment; filename=APAVhj_LCFw7608psyOAlly9.png')
+    // res.setHeader('Content-type', 'image/png')
+    // res.download(file)
+    // var filestream = fs.createReadStream(url)
+    // filestream.pipe(res)
+
+    fsp.access(file).then(_ => console.debug('has')).catch(e => console.debug('error:', e))
+
+    // var filename = path.basename(file)
+    // var mimetype = mime.lookup(file)
+
+    // res.set('Content-Disposition', 'attachment; filename=' + filename)
+    // res.set('Content-Type', mimetype)
+
+    // var filestream = fs.createReadStream(file)
+    // filestream.pipe(res)
+
+    // res.attachment(file)
+    res.download(file)
   }
 
   list() {

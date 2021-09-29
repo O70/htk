@@ -5,6 +5,7 @@
       list-type="picture-card"
       multiple
       :data="{ sid: data.id }"
+      :file-list="fileList"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
     >
@@ -29,8 +30,16 @@ export default {
     return {
       dialogImageUrl: '',
       dialogVisible: false,
-      files: []
+      files: [],
+      fileList: []
     }
+  },
+  created() {
+    this.fileList.push({
+      name: 'test',
+      url: '/dev-api/api/thraex/image/analysis/view'
+      // url: 'http://localhost:9716/download'
+    })
   },
   methods: {
     handleRemove(file, fileList) {
