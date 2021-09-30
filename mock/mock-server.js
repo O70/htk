@@ -9,9 +9,10 @@ const mockDir = path.join(process.cwd(), 'mock')
 function registerRoutes(app) {
   let mockLastIndex
   const { mocks } = require('./index.js')
-  const mocksForServer = mocks.map(route => {
+  /* const mocksForServer = mocks.map(route => {
     return responseFake(route.url, route.type, route.response)
-  })
+  }) */
+  const mocksForServer = mocks.map(route => responseFakeV2(route))
   for (const mock of mocksForServer) {
     app[mock.type](mock.url, mock.response)
     mockLastIndex = app._router.stack.length
@@ -41,6 +42,11 @@ const responseFake = (url, type, respond) => {
       res.json(Mock.mock(respond instanceof Function ? respond(req, res) : respond))
     }
   }
+}
+
+const responseFakeV2 = ({ url, type, response, native }) => {
+  const fake = responseFake(url, type, response)
+  return native ? Object.assign(fake, { response }) : fake
 }
 
 module.exports = app => {
