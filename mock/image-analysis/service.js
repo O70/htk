@@ -42,36 +42,29 @@ class Service {
     })
   }
 
-  download(res) {
-    console.debug(__dirname)
-    console.debug(__filename)
-    const file1 = `/Users/Guiwang/Workspace/JavaScripts/Projects/thraex-boardroom/db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png`
-    const file = `./db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png`
-    console.debug(file)
-    // res.setHeader('Content-disposition', 'attachment; filename=APAVhj_LCFw7608psyOAlly9.png')
-    // res.setHeader('Content-type', 'image/png')
-    // res.download(file)
-    // var filestream = fs.createReadStream(url)
-    // filestream.pipe(res)
+  download(path, res) {
+    res.download(`${IMG_DIR}/${path}`)
+  }
 
-    fsp.access(file).then(_ => console.debug('has')).catch(e => console.debug('error:', e))
+  pictures(sid) {
+    let result = []
+    try {
+      result = fs.readdirSync(`${IMG_DIR}/${sid}`)
+    } catch (error) {
+      console.error(error)
+    }
 
-    // var filename = path.basename(file)
-    // var mimetype = mime.lookup(file)
-
-    // res.set('Content-Disposition', 'attachment; filename=' + filename)
-    // res.set('Content-Type', mimetype)
-
-    // var filestream = fs.createReadStream(file)
-    // filestream.pipe(res)
-
-    // res.attachment(file)
-    res.download(file)
+    return result
   }
 
   list() {
-    const content = fs.readFileSync(DB_PATH)
-    const rows = JSON.parse(content.toString())
+    let rows = []
+    try {
+      const content = fs.readFileSync(DB_PATH)
+      rows = JSON.parse(content.toString())
+    } catch (error) {
+      console.error(error)
+    }
 
     return rows
   }

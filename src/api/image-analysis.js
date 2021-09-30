@@ -29,3 +29,12 @@ export function upload(data) {
     data
   })
 }
+
+export function pictures(sid) {
+  console.debug(sid)
+  return request({
+    url: '/api/thraex/image/analysis/picture/list',
+    method: 'get',
+    params: { sid }
+  })
+}

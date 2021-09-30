@@ -19,6 +19,8 @@
   </el-card>
 </template>
 <script>
+import { pictures } from '@/api/image-analysis'
+
 export default {
   props: {
     data: {
@@ -35,10 +37,15 @@ export default {
     }
   },
   created() {
-    this.fileList.push({
-      name: 'test',
-      url: '/dev-api/api/thraex/image/analysis/view'
-      // url: 'http://localhost:9716/download'
+    // this.fileList.push({
+    //   name: 'test',
+    //   url: '/dev-api/api/thraex/image/analysis/picture'
+    //   // url: 'http://localhost:9716/download'
+    // })
+    const url = `/dev-api/api/thraex/image/analysis/picture`
+    const sid = this.data.id
+    pictures(sid).then(({ data }) => {
+      this.fileList = data.map(it => ({ url: `${url}/${sid}/${it}` }))
     })
   },
   methods: {

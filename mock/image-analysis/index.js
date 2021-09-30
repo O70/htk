@@ -8,14 +8,20 @@ module.exports = [
     response: req => ({ code: 20000, data: service.upload(req) })
   },
   {
-    url: '/api/thraex/image/analysis/view',
+    url: '/api/thraex/image/analysis/picture/\.*/\.*',
     type: 'get',
+    native: true,
     response: (req, res) => {
-      // console.debug(res)
-      console.debug(res.download)
-      // return { id: 1 }
-      // res.download('db.tmp/images/4adcddae-e093-41fe-baff-6a590d93065e/APAVhj_LCFw7608psyOAlly9.png')
-      return service.download(res)
+      const [filename, sid] = req.url.split('/').reverse()
+      service.download(`${sid}/${filename}`, res)
+    }
+  },
+  {
+    url: '/api/thraex/image/analysis/picture/list',
+    type: 'get',
+    response: req => {
+      const { sid } = req.query
+      return { code: 20000, data: service.pictures(sid) }
     }
   },
   {
