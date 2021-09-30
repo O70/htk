@@ -17,6 +17,15 @@ module.exports = [
     }
   },
   {
+    url: '/api/thraex/image/analysis/\.*/\.*',
+    type: 'delete',
+    response: req => {
+      const [filename, sid] = req.url.split('/').reverse()
+      service.delPicture(`${sid}/${filename}`)
+      return { code: 20000, data: true }
+    }
+  },
+  {
     url: '/api/thraex/image/analysis/picture/list',
     type: 'get',
     response: req => {

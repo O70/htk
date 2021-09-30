@@ -25,6 +25,7 @@ class Service {
   }
 
   upload(req) {
+    const now = Date.now()
     const form = new multiparty.Form({ uploadDir: IMG_DIR })
     form.parse(req, (err, fields, files) => {
       if (!err) {
@@ -34,7 +35,7 @@ class Service {
         [file] = file
 
         const oldPath = file.path
-        const filename = oldPath.split('/').reverse()[0]
+        const filename = `${now}_${oldPath.split('/').reverse()[0]}`
         const dir = `${IMG_DIR}/${sid}`
         const newPath = `${dir}/${filename}`
         fsp.mkdir(dir, { recursive: true }).then(_ => fsp.rename(oldPath, newPath))
@@ -46,15 +47,19 @@ class Service {
     res.download(`${IMG_DIR}/${path}`)
   }
 
-  pictures(sid) {
+  pictures(path) {
     let result = []
     try {
-      result = fs.readdirSync(`${IMG_DIR}/${sid}`)
+      result = fs.readdirSync(`${IMG_DIR}/${path}`)
     } catch (error) {
       console.error(error)
     }
 
     return result
+  }
+
+  delPicture(path) {
+    fsp.rm(`${IMG_DIR}/${path}`)
   }
 
   list() {

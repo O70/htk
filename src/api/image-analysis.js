@@ -31,10 +31,16 @@ export function upload(data) {
 }
 
 export function pictures(sid) {
-  console.debug(sid)
   return request({
     url: '/api/thraex/image/analysis/picture/list',
     method: 'get',
     params: { sid }
+  })
+}
+
+export function delPicture(name) {
+  return request({
+    url: `/api/thraex/image/analysis/picture/${name}`,
+    method: 'delete'
   })
 }

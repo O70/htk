@@ -19,7 +19,7 @@
   </el-card>
 </template>
 <script>
-import { pictures } from '@/api/image-analysis'
+import { pictures, delPicture } from '@/api/image-analysis'
 
 export default {
   props: {
@@ -37,20 +37,18 @@ export default {
     }
   },
   created() {
-    // this.fileList.push({
-    //   name: 'test',
-    //   url: '/dev-api/api/thraex/image/analysis/picture'
-    //   // url: 'http://localhost:9716/download'
-    // })
-    const url = `/dev-api/api/thraex/image/analysis/picture`
-    const sid = this.data.id
-    pictures(sid).then(({ data }) => {
-      this.fileList = data.map(it => ({ url: `${url}/${sid}/${it}` }))
-    })
+    const [sid, url] = [this.data.id, `/dev-api/api/thraex/image/analysis/picture`]
+    pictures(sid).then(({ data }) =>
+      (this.fileList = data.map(it => ({
+        name: it,
+        path: `${sid}/${it}`,
+        url: `${url}/${sid}/${it}`
+      }))))
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList)
+      delPicture(file.path).then(res => console.log(res))
     },
     handlePreview(file) {
       this.dialogImageUrl = file.url
