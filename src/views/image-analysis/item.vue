@@ -11,8 +11,8 @@
     >
       <i class="el-icon-plus" />
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl">
+    <el-dialog :visible.sync="preview.visible">
+      <img width="100%" :src="preview.url">
     </el-dialog>
 
     <el-button>开始分析</el-button>
@@ -30,9 +30,10 @@ export default {
   },
   data() {
     return {
-      dialogImageUrl: '',
-      dialogVisible: false,
-      files: [],
+      preview: {
+        visible: false,
+        url: ''
+      },
       fileList: []
     }
   },
@@ -46,30 +47,13 @@ export default {
       }))))
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
+    handleRemove(file) {
       delPicture(file.path).then(res => console.log(res))
     },
     handlePreview(file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
+      this.preview.url = file.url
+      this.preview.visible = true
     }
-    /* handleUpload(file) {
-      console.debug(file)
-      console.debug(file.raw)
-      this.files.push(file.file)
-    },
-    handleAnalysis() {
-      this.$refs.upload.submit()
-      const data = new FormData()
-      console.debug(this.data, this.files)
-      data.set('sid', this.data.id)
-      data.append('files', this.files[0])
-      console.debug(data)
-      console.debug(data.values())
-      upload(data).then(res => console.debug(res))
-      // upload({ sid: 'sdf' }).then(res => console.debug(res))
-    } */
   }
 }
 </script>

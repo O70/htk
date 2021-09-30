@@ -1,7 +1,5 @@
 const fs = require('fs')
 const fsp = require('fs/promises')
-var path = require('path')
-var mime = require('mime')
 
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
@@ -104,6 +102,8 @@ class Service {
       const ind = rows.findIndex(it => it.id === id)
       ind > -1 && rows.splice(ind, 1)
       this.writeFile(rows)
+
+      fsp.rmdir(`${IMG_DIR}/${id}`, { recursive: true })
     })
   }
 }
