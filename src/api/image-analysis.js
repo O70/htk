@@ -44,3 +44,17 @@ export function delPicture(name) {
     method: 'delete'
   })
 }
+
+export function analysis(id) {
+  return request({
+    url: `/api/thraex/image/analysis/results/${id}`,
+    method: 'POST'
+  })
+}
+
+export function results(id) {
+  return request({
+    url: `/api/thraex/image/analysis/results/${id}`,
+    method: 'GET'
+  })
+}

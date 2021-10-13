@@ -106,6 +106,14 @@ class Service {
       fsp.rmdir(`${IMG_DIR}/${id}`, { recursive: true })
     })
   }
+
+  calc(id) {
+    console.debug('calc:', id)
+  }
+
+  results(id) {
+    console.debug('results:', id)
+  }
 }
 
 module.exports = Service

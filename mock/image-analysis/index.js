@@ -1,7 +1,25 @@
 const Service = require('./service')
 const service = new Service()
 
+const splits = req => req.url.split('/').reverse()
+
 module.exports = [
+  {
+    url: '/api/thraex/image/analysis/results',
+    type: 'get',
+    response: req => {
+      const [id] = splits(req)
+      return { code: 20000, data: service.results(id) }
+    }
+  },
+  {
+    url: '/api/thraex/image/analysis/results',
+    type: 'post',
+    response: req => {
+      const [id] = splits(req)
+      return { code: 20000, data: service.calc(id) }
+    }
+  },
   {
     url: '/api/thraex/image/analysis/upload',
     type: 'post',
@@ -12,7 +30,7 @@ module.exports = [
     type: 'get',
     native: true,
     response: (req, res) => {
-      const [filename, sid] = req.url.split('/').reverse()
+      const [filename, sid] = splits(req)
       service.download(`${sid}/${filename}`, res)
     }
   },
@@ -20,7 +38,7 @@ module.exports = [
     url: '/api/thraex/image/analysis/\.*/\.*',
     type: 'delete',
     response: req => {
-      const [filename, sid] = req.url.split('/').reverse()
+      const [filename, sid] = splits(req)
       service.delPicture(`${sid}/${filename}`)
       return { code: 20000, data: true }
     }
@@ -47,7 +65,7 @@ module.exports = [
     url: '/api/thraex/image/analysis',
     type: 'delete',
     response: req => {
-      const id = req.url.split('/').reverse()[0]
+      const id = splits(req)[0]
       service.remove(id)
       return { code: 20000, data: true }
     }
