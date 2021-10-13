@@ -2,12 +2,14 @@
   <div class="app-container">
     <el-card>
       <el-table
+        ref="table"
         :data="data"
         :height="height"
         stripe
         border
         fit
         highlight-current-row
+        @row-click="handleRowClick"
       >
         <el-table-column type="expand">
           <template slot-scope="scope">
@@ -95,7 +97,7 @@ import { list, save, remove } from '@/api/image-analysis'
 
 export default {
   components: {
-    ImageItem: () => import('./item.vue')
+    ImageItem: () => import('./item')
   },
   mixins: [UsableHeightMixin],
   data() {
@@ -132,6 +134,9 @@ export default {
     list().then(({ data }) => (this.data = data))
   },
   methods: {
+    handleRowClick(row) {
+      this.$refs.table.toggleRowExpansion(row)
+    },
     handleNew() {
       this.form.model = Object.assign({}, this.form.entity)
       this.form.visible = true
