@@ -1,10 +1,13 @@
 const fs = require('fs')
 const fsp = require('fs/promises')
+const { resolve } = require('path')
 
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
 
-const DB_DIR = './db.tmp'
+const analysis = require('./analysis')
+
+const DB_DIR = 'db.tmp'
 const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
 
 class Service {
@@ -108,7 +111,8 @@ class Service {
   }
 
   calc(id) {
-    console.debug('calc:', id)
+    const dir = `${resolve('./')}/${IMG_DIR}/${id}`
+    analysis(dir)
   }
 
   results(id) {
