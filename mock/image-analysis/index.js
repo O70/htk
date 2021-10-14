@@ -39,7 +39,8 @@ module.exports = [
     type: 'delete',
     response: req => {
       const [filename, sid] = splits(req)
-      service.delPicture(`${sid}/${filename}`)
+      // service.delPicture(`${sid}/${filename}`)
+      service.delPicture(sid, filename)
       return { code: 20000, data: true }
     }
   },

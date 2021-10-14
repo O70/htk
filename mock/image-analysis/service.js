@@ -9,6 +9,7 @@ const analysis = require('./analysis')
 
 const DB_DIR = 'db.tmp'
 const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
+const RESULTS_DIR = 'results'
 
 class Service {
   constructor() {
@@ -55,7 +56,7 @@ class Service {
   pictures(path) {
     let result = []
     try {
-      result = fs.readdirSync(`${IMG_DIR}/${path}`).filter(it => it !== 'results')
+      result = fs.readdirSync(`${IMG_DIR}/${path}`).filter(it => it !== RESULTS_DIR)
     } catch (error) {
       console.error('Not found')
     }
@@ -63,8 +64,11 @@ class Service {
     return result
   }
 
-  delPicture(path) {
-    fsp.rm(`${IMG_DIR}/${path}`)
+  delPicture(sid, filename) {
+    console.debug(sid, filename)
+    const fpath = `${sid}/${filename}`
+    fsp.rm(`${IMG_DIR}/${fpath}`)
+    fsp.rmdir(`${IMG_DIR}/${sid}/${RESULTS_DIR}/${filename}`, { recursive: true })
   }
 
   list() {
