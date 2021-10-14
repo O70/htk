@@ -1,6 +1,6 @@
 const fs = require('fs')
 const fsp = require('fs/promises')
-const { resolve } = require('path')
+const { resolve, extname } = require('path')
 
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
@@ -36,12 +36,16 @@ class Service {
         [file] = file
 
         const oldPath = file.path
-        const filename = `${now}_${oldPath.split('/').reverse()[0]}`
+        // const filename = `${now}_${oldPath.split('/').reverse()[0]}`
+        const suffix = extname(oldPath)
+        const filename = `${now}${suffix}`
         const dir = `${IMG_DIR}/${sid}`
         const newPath = `${dir}/${filename}`
         fsp.mkdir(dir, { recursive: true }).then(_ => fsp.rename(oldPath, newPath))
       }
     })
+
+    return now
   }
 
   download(path, res) {

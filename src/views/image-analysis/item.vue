@@ -15,6 +15,7 @@
       :file-list="fileList"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
+      :on-success="handleSuccess"
     >
       <i class="el-icon-plus" />
     </el-upload>
@@ -24,6 +25,7 @@
   </el-card>
 </template>
 <script>
+import { extname } from 'path'
 import { pictures, delPicture, analysis } from '@/api/image-analysis'
 
 export default {
@@ -58,6 +60,9 @@ export default {
     handlePreview(file) {
       this.preview.url = file.url
       this.preview.visible = true
+    },
+    handleSuccess({ data }, file) {
+      file.path = `${this.data.id}/${data}${extname(file.name)}`
     },
     handleAnalysis() {
       analysis(this.data.id).then(res => {
