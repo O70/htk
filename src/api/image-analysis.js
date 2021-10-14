@@ -52,9 +52,10 @@ export function analysis(id) {
   })
 }
 
-export function results(id) {
+export function results(id, prefix) {
   return request({
     url: `/api/thraex/image/analysis/results/${id}`,
-    method: 'GET'
+    method: 'GET',
+    params: { id, prefix }
   })
 }

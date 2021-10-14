@@ -8,8 +8,8 @@ module.exports = [
     url: '/api/thraex/image/analysis/results',
     type: 'get',
     response: req => {
-      const [id] = splits(req)
-      return { code: 20000, data: service.results(id) }
+      const { id, prefix } = req.query
+      return { code: 20000, data: service.results(id, prefix) }
     }
   },
   {
@@ -25,15 +25,15 @@ module.exports = [
     type: 'post',
     response: req => ({ code: 20000, data: service.upload(req) })
   },
-  {
-    url: '/api/thraex/image/analysis/picture/\.*/\.*',
-    type: 'get',
-    native: true,
-    response: (req, res) => {
-      const [filename, sid] = splits(req)
-      service.download(`${sid}/${filename}`, res)
-    }
-  },
+  // {
+  //   // url: '/api/thraex/image/analysis/picture/\.*/\.*',
+  //   type: 'get',
+  //   native: true,
+  //   response: (req, res) => {
+  //     const [filename, sid] = splits(req)
+  //     service.download(`${sid}/${filename}`, res)
+  //   }
+  // },
   {
     url: '/api/thraex/image/analysis/\.*/\.*',
     type: 'delete',
@@ -50,6 +50,15 @@ module.exports = [
     response: req => {
       const { sid } = req.query
       return { code: 20000, data: service.pictures(sid) }
+    }
+  },
+  {
+    url: '/api/thraex/image/analysis/picture',
+    type: 'get',
+    native: true,
+    response: (req, res) => {
+      const [, fpath] = req.url.split('/api/thraex/image/analysis/picture/')
+      service.download(fpath, res)
     }
   },
   {

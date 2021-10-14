@@ -123,8 +123,26 @@ class Service {
     analysis(dir)
   }
 
-  results(id) {
-    console.debug('results:', id)
+  results(id, prefix) {
+    const sample = `${IMG_DIR}/${id}`
+    const images = fs.readdirSync(sample)
+      .filter(it => it !== RESULTS_DIR)
+      .map(it => {
+        const results = fs.readdirSync(`${sample}/${RESULTS_DIR}/${it}`)
+          .map(s => `${prefix}/${id}/${RESULTS_DIR}/${it}/${s}`)
+        return {
+          filename: `${prefix}/${id}/${it}`,
+          results
+        }
+      })
+
+    return {
+      images,
+      final: {
+        image: `${prefix}/${id}/${RESULTS_DIR}/final.png`,
+        file: `${prefix}/${id}/${RESULTS_DIR}/final.xlsx`
+      }
+    }
   }
 }
 

@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="card-header clearfix">
+        <a :href="data.final.file">Excel</a>
         <el-button
           type="primary"
           size="mini"
@@ -10,9 +11,11 @@
         >返回</el-button>
       </div>
       <div :style="{ height: `${height}px` }">
-        <div v-for="it in 1000" :key="it">
-          <b>Analysis results - {{ it }}</b>
-        </div>
+        <el-row>
+          <el-col align="center">
+            <el-image :src="data.final.image" style="width: 100%;height: 400px;" />
+          </el-col>
+        </el-row>
       </div>
     </el-card>
   </div>
@@ -32,11 +35,22 @@ export default {
   data() {
     return {
       excludes: ['.card-header'],
-      occupy: 20 * 2 + 5 * 2 * 2 + 3
+      occupy: 20 * 2 + 5 * 2 * 2 + 3,
+      data: {
+        images: [],
+        final: {
+          image: null,
+          file: null
+        }
+      }
     }
   },
   created() {
-    console.debug(this.id)
+    const prefix = '/dev-api/api/thraex/image/analysis/picture'
+    results(this.id, prefix).then(({ data }) => {
+      console.debug(data)
+      this.data = data
+    })
   }
 }
 </script>
