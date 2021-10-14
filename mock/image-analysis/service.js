@@ -51,9 +51,9 @@ class Service {
   pictures(path) {
     let result = []
     try {
-      result = fs.readdirSync(`${IMG_DIR}/${path}`)
+      result = fs.readdirSync(`${IMG_DIR}/${path}`).filter(it => it !== 'results')
     } catch (error) {
-      console.error(error)
+      console.error('Not found')
     }
 
     return result
