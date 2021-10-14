@@ -3,6 +3,10 @@
 import os, sys, shutil, random
 
 def exec(img_dir):
+	if not os.path.exists(img_dir):
+		print('The image directory does not exist')
+		return
+	
 	result_dir = img_dir + '/results'
 	cleans(result_dir)
 
