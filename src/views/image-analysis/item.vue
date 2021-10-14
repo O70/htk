@@ -21,19 +21,12 @@
     <el-dialog :visible.sync="preview.visible">
       <img width="100%" :src="preview.url">
     </el-dialog>
-
-    <el-dialog title="分析结果" :visible.sync="results.visible" width="80%">
-      <image-result />
-    </el-dialog>
   </el-card>
 </template>
 <script>
 import { pictures, delPicture, analysis } from '@/api/image-analysis'
 
 export default {
-  components: {
-    ImageResult: () => import('./result')
-  },
   props: {
     data: {
       type: Object,
@@ -46,10 +39,7 @@ export default {
         visible: false,
         url: ''
       },
-      fileList: [],
-      results: {
-        visible: false
-      }
+      fileList: []
     }
   },
   created() {
@@ -75,7 +65,7 @@ export default {
       })
     },
     handleViewResults() {
-      this.results.visible = true
+      this.$router.push(`/image/analysis/${this.data.id}`)
     }
   }
 }

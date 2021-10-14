@@ -111,7 +111,6 @@ export default {
     }
     return {
       occupy: 20 * 2 + 5 * 2 + 3,
-      height: 0,
       data: [],
       form: {
         entity,
