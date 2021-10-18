@@ -21,6 +21,14 @@
     </el-upload>
     <el-dialog :visible.sync="preview.visible">
       <img width="100%" :src="preview.url">
+      <!-- <el-image
+        style="width: 100%;height: 100%;"
+        :src="preview.url"
+        :preview-src-list="[
+          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
+          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
+        ]">
+      </el-image> -->
     </el-dialog>
   </el-card>
 </template>
