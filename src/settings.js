@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Boardroom',
+  title: 'HTK',
 
   /**
    * @type {boolean} true | false
