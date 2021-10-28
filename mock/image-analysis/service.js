@@ -128,14 +128,17 @@ class Service {
 
     const result = {
       images: [],
-      final: {
-        image: `${dirPrefix}/final.png`,
-        file: `${dirPrefix}/final.xlsx`
-      }
+      finals: [],
+      excel: `${dirPrefix}/final.xlsx`
     }
 
     try {
       const sample = `${IMG_DIR}/${id}`
+
+      const finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/final`)
+        .map(it => `${prefix}/${id}/final/${it}`)
+      result.finals = finals
+
       const images = fs.readdirSync(sample)
         .filter(it => it !== RESULTS_DIR)
         .map(it => {

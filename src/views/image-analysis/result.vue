@@ -69,7 +69,7 @@ export default {
       data: {
         images: [],
         final: {
-          image: null,
+          image: [],
           file: null
         }
       }

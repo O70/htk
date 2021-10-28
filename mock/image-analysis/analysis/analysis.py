@@ -15,9 +15,12 @@ def exec(img_dir):
 		if os.path.isfile(fpath):
 			processing(it, fpath, result_dir)
 
-	mock_prefix = '/Users/Guiwang/Workspace/JavaScripts/Projects/thraex-boardroom/db.tmp'
-	shutil.copyfile(mock_prefix + '/a.png', result_dir + '/final.png')
-	shutil.copyfile(mock_prefix + '/meetings.xlsx', result_dir + '/final.xlsx')
+	mock_prefix = os.getcwd() + '/results.tmp'
+	final_dir = result_dir + '/final'
+	os.mkdir(final_dir)
+	for (ind, it) in enumerate(os.listdir(mock_prefix + '/finals')):
+		shutil.copyfile(mock_prefix + '/finals/' + it, final_dir + '/' + str(ind) + '_' + it)
+	shutil.copyfile(mock_prefix + '/others/param.xlsx', result_dir + '/final.xlsx')
 
 def cleans(dr):
 	try:
