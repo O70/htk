@@ -1,6 +1,9 @@
 <template>
   <el-card>
     <div slot="header" class="clearfix">
+      <label>
+        共计: {{ total }}
+      </label>
       <el-button-group style="float: right;">
         <el-button type="primary" size="mini" @click="handleAnalysis">开始分析</el-button>
         <el-button type="success" size="mini" @click="handleViewResults">查看结果</el-button>
@@ -8,6 +11,7 @@
     </div>
 
     <el-upload
+      ref="upload"
       action="/dev-api/api/thraex/image/analysis/upload"
       list-type="picture-card"
       multiple
@@ -21,14 +25,6 @@
     </el-upload>
     <el-dialog :visible.sync="preview.visible">
       <img width="100%" :src="preview.url">
-      <!-- <el-image
-        style="width: 100%;height: 100%;"
-        :src="preview.url"
-        :preview-src-list="[
-          'https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg',
-          'https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg'
-        ]">
-      </el-image> -->
     </el-dialog>
   </el-card>
 </template>
@@ -50,6 +46,12 @@ export default {
         url: ''
       },
       fileList: []
+    }
+  },
+  computed: {
+    total() {
+      const ref = this.$refs.upload
+      return ref ? ref.uploadFiles.length : this.fileList.length
     }
   },
   created() {

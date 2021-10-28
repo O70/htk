@@ -22,7 +22,7 @@
         <el-table-column prop="location" label="盆地名称/盆地或位置" align="center" />
         <el-table-column prop="era" label="时代" align="center" />
         <el-table-column prop="stratum" label="层位" align="center" />
-        <el-table-column align="center" width="170">
+        <el-table-column align="center" width="180">
           <template slot="header">
             <el-button type="success" size="mini" @click="handleNew">新建样本</el-button>
           </template>
@@ -34,6 +34,15 @@
                 icon="el-icon-document-copy"
                 circle
                 @click="handleCopy(scope.row)"
+              />
+            </el-tooltip>
+            <el-tooltip content="查看结果" placement="top">
+              <el-button
+                type="success"
+                size="mini"
+                icon="el-icon-view"
+                circle
+                @click="handleViewResults(scope.row.id)"
               />
             </el-tooltip>
             <el-tooltip content="编辑" placement="top">
@@ -164,9 +173,13 @@ export default {
       })
     },
     handleRemove(index, { id }) {
-      console.debug('TODO: remove', 'remove record/image/result')
-      this.data.splice(index, 1)
-      remove(id).then(res => console.debug(res))
+      this.$confirm('确认删除?', '提示', { type: 'warning' }).then(() => {
+        this.data.splice(index, 1)
+        remove(id).then(res => console.debug(res))
+      }).catch(() => {})
+    },
+    handleViewResults(id) {
+      this.$router.push(`/image/analysis/${id}`)
     }
   }
 }
