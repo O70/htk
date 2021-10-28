@@ -135,27 +135,22 @@ class Service {
     try {
       const sample = `${IMG_DIR}/${id}`
 
-      const finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/final`)
+      result.finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/final`)
         .map(it => `${prefix}/${id}/final/${it}`)
-      result.finals = finals
 
       const desc = fs.readFileSync(`${sample}/${RESULTS_DIR}/final.json`)
       result.desc = JSON.parse(desc)
 
-      const images = fs.readdirSync(sample)
+      result.images = fs.readdirSync(sample)
         .filter(it => it !== RESULTS_DIR)
         .map(it => {
           const results = fs.readdirSync(`${sample}/${RESULTS_DIR}/${it}`)
             .map(s => `${dirPrefix}/${it}/${s}`)
           const filepath = `${prefix}/${id}/${it}`
-          return {
-            filepath,
-            results,
-            previews: [filepath, ...results]
-          }
+
+          return [filepath, ...results]
         })
-      result.images = images
-    } catch (e) {
+    } catch {
       console.error('Not found results')
     }
 

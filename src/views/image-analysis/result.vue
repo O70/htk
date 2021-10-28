@@ -11,41 +11,19 @@
         >返回</el-button>
       </div>
       <div :style="{ height: `${height}px` }">
-        <!-- <el-row>
-          <el-col align="center">
-            <el-image :src="data.final.image" style="width: 100%;height: 400px;" />
-          </el-col>
-        </el-row> -->
-        <!-- <el-row>
-          <el-col>
-            <el-carousel :interval="4000" type="card">
-              <el-carousel-item v-for="item in data.images" :key="item.filepath">
-                <el-image :src="item.filepath" style="width: 100%;height: 400px;" />
-              </el-carousel-item>
-            </el-carousel>
-          </el-col>
-        </el-row> -->
-
         <el-row
-          v-for="item in data.images"
-          :key="item.filepath"
+          v-for="(item, ind) in data.images"
+          :key="`row-image-${ind}`"
           type="flex"
-          class="img-item"
+          class="img-row"
         >
           <el-image
-            :src="item.filepath"
-            :preview-src-list="item.previews"
-            class="img-size img-source"
+            v-for="it in item"
+            :key="it"
+            :src="it"
+            :preview-src-list="item"
+            class="img-col"
           />
-          <div class="img-result">
-            <el-image
-              v-for="it in item.results"
-              :key="it"
-              :src="it"
-              :preview-src-list="item.previews"
-              class="img-size img-result-item"
-            />
-          </div>
         </el-row>
       </div>
     </el-card>
@@ -70,6 +48,7 @@ export default {
       data: {
         images: [],
         finals: [],
+        desc: {},
         excel: null
       }
     }
@@ -91,23 +70,19 @@ export default {
   padding: 5px;
   overflow: auto;
 }
-.img-item {
+.img-row {
   margin: 5px 0;
   border: 2px solid;
-}
-.img-size {
-  width: 200px;
-  height: 200px;
-}
-.img-source {
-  width: 212px;
-  padding-right: 10px;
-  border-right: 2px dashed gray;
-}
-.img-result {
-  margin-left: 10px;
-}
-.img-result-item {
-  margin: 0 2px;
+
+  .img-col {
+    width: 200px;
+    height: 200px;
+    margin: 0 2px;
+
+    &:nth-child(1) {
+      padding-right: 5px;
+      border-right: 2px dashed gray;
+    }
+  }
 }
 </style>
