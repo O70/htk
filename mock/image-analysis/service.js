@@ -65,7 +65,6 @@ class Service {
   }
 
   delPicture(sid, filename) {
-    console.debug(sid, filename)
     const fpath = `${sid}/${filename}`
     fsp.rm(`${IMG_DIR}/${fpath}`)
     fsp.rmdir(`${IMG_DIR}/${sid}/${RESULTS_DIR}/${filename}`, { recursive: true })
@@ -129,6 +128,7 @@ class Service {
     const result = {
       images: [],
       finals: [],
+      desc: {},
       excel: `${dirPrefix}/final.xlsx`
     }
 
@@ -139,19 +139,24 @@ class Service {
         .map(it => `${prefix}/${id}/final/${it}`)
       result.finals = finals
 
+      const desc = fs.readFileSync(`${sample}/${RESULTS_DIR}/final.json`)
+      result.desc = JSON.parse(desc)
+
       const images = fs.readdirSync(sample)
         .filter(it => it !== RESULTS_DIR)
         .map(it => {
           const results = fs.readdirSync(`${sample}/${RESULTS_DIR}/${it}`)
             .map(s => `${dirPrefix}/${it}/${s}`)
+          const filepath = `${prefix}/${id}/${it}`
           return {
-            filename: `${prefix}/${id}/${it}`,
-            results
+            filepath,
+            results,
+            previews: [filepath, ...results]
           }
         })
       result.images = images
     } catch (e) {
-      console.error('Not found')
+      console.error('Not found results')
     }
 
     return result

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="card-header clearfix">
-        <a :href="data.final.file">Excel</a>
+        <a :href="data.excel">Excel</a>
         <el-button
           type="primary"
           size="mini"
@@ -19,8 +19,8 @@
         <!-- <el-row>
           <el-col>
             <el-carousel :interval="4000" type="card">
-              <el-carousel-item v-for="item in data.images" :key="item.filename">
-                <el-image :src="item.filename" style="width: 100%;height: 400px;" />
+              <el-carousel-item v-for="item in data.images" :key="item.filepath">
+                <el-image :src="item.filepath" style="width: 100%;height: 400px;" />
               </el-carousel-item>
             </el-carousel>
           </el-col>
@@ -28,13 +28,13 @@
 
         <el-row
           v-for="item in data.images"
-          :key="item.filename"
+          :key="item.filepath"
           type="flex"
           class="img-item"
         >
           <el-image
-            :src="item.filename"
-            :preview-src-list="item.results"
+            :src="item.filepath"
+            :preview-src-list="item.previews"
             class="img-size img-source"
           />
           <div class="img-result">
@@ -42,6 +42,7 @@
               v-for="it in item.results"
               :key="it"
               :src="it"
+              :preview-src-list="item.previews"
               class="img-size img-result-item"
             />
           </div>
@@ -68,10 +69,8 @@ export default {
       occupy: 20 * 2 + 5 * 2 * 2 + 3,
       data: {
         images: [],
-        final: {
-          image: [],
-          file: null
-        }
+        finals: [],
+        excel: null
       }
     }
   },
