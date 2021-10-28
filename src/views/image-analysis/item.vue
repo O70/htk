@@ -5,7 +5,7 @@
         共计: {{ total }}
       </label>
       <el-button-group style="float: right;">
-        <el-button type="primary" size="mini" @click="handleAnalysis">开始分析</el-button>
+        <el-button type="warning" size="mini" @click="handleAnalysis">开始分析</el-button>
         <el-button type="success" size="mini" @click="handleViewResults">查看结果</el-button>
       </el-button-group>
     </div>

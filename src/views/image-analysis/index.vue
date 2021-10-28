@@ -1,6 +1,16 @@
 <template>
   <div class="app-container">
     <el-card>
+      <div slot="header" class="clearfix">
+        <label>
+          共计: {{ data.length }}
+        </label>
+        <el-button-group style="float: right;">
+          <el-button type="warning" size="mini" @click="handleAnalysis">分析</el-button>
+          <el-button type="primary" size="mini" @click="handleNew">新建</el-button>
+          <el-button type="danger" size="mini">删除</el-button>
+        </el-button-group>
+      </div>
       <el-table
         ref="table"
         :data="data"
@@ -22,10 +32,10 @@
         <el-table-column prop="location" label="盆地名称/盆地或位置" align="center" />
         <el-table-column prop="era" label="时代" align="center" />
         <el-table-column prop="stratum" label="层位" align="center" />
-        <el-table-column align="center" width="180">
-          <template slot="header">
+        <el-table-column label="操作" align="center" width="180">
+          <!-- <template slot="header">
             <el-button type="success" size="mini" @click="handleNew">新建样本</el-button>
-          </template>
+          </template> -->
           <template slot-scope="scope">
             <el-tooltip content="复制" placement="top">
               <el-button
@@ -33,7 +43,7 @@
                 size="mini"
                 icon="el-icon-document-copy"
                 circle
-                @click="handleCopy(scope.row)"
+                @click="handleCopy($event, scope.row)"
               />
             </el-tooltip>
             <el-tooltip content="查看结果" placement="top">
@@ -42,7 +52,7 @@
                 size="mini"
                 icon="el-icon-view"
                 circle
-                @click="handleViewResults(scope.row.id)"
+                @click="handleViewResults($event, scope.row.id)"
               />
             </el-tooltip>
             <el-tooltip content="编辑" placement="top">
@@ -51,7 +61,7 @@
                 size="mini"
                 icon="el-icon-edit"
                 circle
-                @click="handleEdit(scope.row)"
+                @click="handleEdit($event, scope.row)"
               />
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -60,7 +70,7 @@
                 size="mini"
                 icon="el-icon-delete"
                 circle
-                @click="handleRemove(scope.$index, scope.row)"
+                @click="handleRemove($event, scope.$index, scope.row)"
               />
             </el-tooltip>
           </template>
@@ -149,7 +159,9 @@ export default {
       this.form.model = Object.assign({}, this.form.entity)
       this.form.visible = true
     },
-    handleEdit(row) {
+    handleEdit(event, row) {
+      event.stopPropagation()
+
       this.form.model = Object.assign({}, row)
       this.form.visible = true
     },
@@ -157,7 +169,9 @@ export default {
       this.form.visible = false
       this.handleSubmit(this.form.model)
     },
-    handleCopy(row) {
+    handleCopy(event, row) {
+      event.stopPropagation()
+
       const copy = Object.assign({}, row, { id: null })
       this.handleSubmit(copy)
     },
@@ -172,13 +186,19 @@ export default {
         }
       })
     },
-    handleRemove(index, { id }) {
+    handleRemove(event, index, { id }) {
+      event.stopPropagation()
+
       this.$confirm('确认删除?', '提示', { type: 'warning' }).then(() => {
         this.data.splice(index, 1)
         remove(id).then(res => console.debug(res))
       }).catch(() => {})
     },
-    handleViewResults(id) {
+    handleAnalysis() {
+      console.debug('analysis selected')
+    },
+    handleViewResults(event, id) {
+      event.stopPropagation()
       this.$router.push(`/image/analysis/${id}`)
     }
   }
