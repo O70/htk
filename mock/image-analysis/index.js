@@ -15,10 +15,7 @@ module.exports = [
   {
     url: '/api/thraex/image/analysis/results',
     type: 'post',
-    response: req => {
-      const [id] = splits(req)
-      return { code: 20000, data: service.calc(id) }
-    }
+    response: req => ({ code: 20000, data: service.calc(req.body) })
   },
   {
     url: '/api/thraex/image/analysis/upload',

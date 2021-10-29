@@ -45,10 +45,11 @@ export function delPicture(name) {
   })
 }
 
-export function analysis(id) {
+export function analysis(data) {
   return request({
-    url: `/api/thraex/image/analysis/results/${id}`,
-    method: 'POST'
+    url: `/api/thraex/image/analysis/results`,
+    method: 'POST',
+    data
   })
 }
 

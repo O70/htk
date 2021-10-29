@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os, sys, shutil, random
+import time
 
 '''
 Analog image analysis
@@ -51,4 +52,5 @@ def processing(fname, dist_dir):
 		shutil.copyfile(extracts_dir + '/' + it, item_dir + '/' + it)
 
 if __name__ == '__main__':
+	time.sleep(3)
 	exec(sys.argv[1])

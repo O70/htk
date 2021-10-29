@@ -124,7 +124,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import { list, save, remove } from '@/api/image-analysis'
+import { list, save, remove, analysis } from '@/api/image-analysis'
 
 export default {
   components: {
@@ -224,10 +224,10 @@ export default {
     },
     handleSplice(index, id) {
       this.data.splice(index, 1)
-      remove(id).then(res => console.debug(res))
+      remove(id)
     },
     handleAnalysis() {
-      console.debug('analysis selected...')
+      analysis(this.selected).then(res => console.debug('batch analysis:', res))
     },
     handleViewResults(event, id) {
       event.stopPropagation()

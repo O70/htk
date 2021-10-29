@@ -117,9 +117,22 @@ class Service {
     })
   }
 
-  calc(id) {
-    const dir = `${resolve('./')}/${IMG_DIR}/${id}`
-    analysis(dir)
+  calc(data) {
+    let res = 0
+    if (data) {
+      const items = (Array.isArray(data) ? data : [data])
+      res = items.length
+
+      const prefix = `${resolve('./')}/${IMG_DIR}`
+      const targets = items.map(it => ({
+        dir: `${prefix}/${it.id}`,
+        message: `${it.nation}-${it.type}`
+      }))
+
+      analysis(targets)
+    }
+
+    return res
   }
 
   results(id, prefix) {

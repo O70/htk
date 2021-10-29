@@ -75,7 +75,7 @@ export default {
       file.path = `${this.data.id}/${data}${extname(file.name)}`
     },
     handleAnalysis() {
-      analysis(this.data.id).then(res => {
+      analysis(this.data).then(res => {
         console.debug('analysis:', res)
       })
     },

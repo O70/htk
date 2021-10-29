@@ -6,8 +6,11 @@ const [app, filename, options] = [
   { cwd: __dirname }
 ]
 
-module.exports = dir => {
-  childProcess.execFile(app, [filename, dir], options, function() {
-    console.debug('invoke result:', arguments)
+module.exports = (items = []) => {
+  items.forEach(({ dir, message }) => {
+    childProcess.execFile(app, [filename, dir], options, (err, stdout, stderr) => {
+      console.debug('invoke result:', err, stdout, stderr)
+      console.debug(message)
+    })
   })
 }
