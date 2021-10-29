@@ -136,7 +136,7 @@ class Service {
       const sample = `${IMG_DIR}/${id}`
 
       result.finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/final`)
-        .map(it => `${prefix}/${id}/final/${it}`)
+        .map(it => `${dirPrefix}/final/${it}`)
 
       const desc = fs.readFileSync(`${sample}/${RESULTS_DIR}/final.json`)
       result.desc = JSON.parse(desc)

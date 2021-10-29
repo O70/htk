@@ -11,20 +11,48 @@
         >返回</el-button>
       </div>
       <div :style="{ height: `${height}px` }">
-        <el-row
-          v-for="(item, ind) in data.images"
-          :key="`row-image-${ind}`"
-          type="flex"
-          class="img-row"
-        >
-          <el-image
-            v-for="it in item"
-            :key="it"
-            :src="it"
-            :preview-src-list="item"
-            class="img-col"
-          />
+        <el-row>
+          <el-col :span="6">
+            <div
+              v-for="[k, v] in Object.entries(data.desc)"
+              :key="`${k}-${v}`"
+              style="line-height: 1.7;"
+            >
+              <label>{{ k }}: </label>
+              <el-tag type="success" size="mini">{{ v }}</el-tag>
+            </div>
+          </el-col>
+          <el-col :span="18">
+            <el-image
+              v-for="it in data.finals"
+              :key="it"
+              :src="it"
+              :preview-src-list="data.finals"
+              class="img-size"
+            />
+          </el-col>
         </el-row>
+        <el-divider />
+        <template
+          v-for="(item, ind) in data.images"
+        >
+          <el-row
+            :key="`row-image-${ind}`"
+            type="flex"
+            class="img-row"
+          >
+            <el-col>
+              <el-image
+                v-for="it in item"
+                :key="it"
+                :src="it"
+                :preview-src-list="item"
+                class="img-col"
+              />
+            </el-col>
+          </el-row>
+          <el-divider :key="`row-image-divider-${ind}`" />
+        </template>
       </div>
     </el-card>
   </div>
@@ -55,10 +83,8 @@ export default {
   },
   created() {
     const prefix = '/dev-api/api/thraex/image/analysis/picture'
-    results(this.id, prefix).then(({ data }) => {
-      console.debug(data)
-      this.data = data
-    })
+    results(this.id, prefix).then(({ data }) => (this.data = data))
+      .then(() => console.debug(JSON.parse(JSON.stringify(this.data))))
   }
 }
 </script>
@@ -70,9 +96,15 @@ export default {
   padding: 5px;
   overflow: auto;
 }
+.img-size {
+  width: 200px;
+  height: 200px;
+}
+.el-divider {
+  margin: 5px 0;
+}
 .img-row {
   margin: 5px 0;
-  border: 2px solid;
 
   .img-col {
     width: 200px;
@@ -80,8 +112,9 @@ export default {
     margin: 0 2px;
 
     &:nth-child(1) {
+      width: 207px;
       padding-right: 5px;
-      border-right: 2px dashed gray;
+      border-right: 2px solid #DCDFE6;;
     }
   }
 }
