@@ -173,7 +173,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:rgb(40, 41, 35);
+$bg:#283443;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
