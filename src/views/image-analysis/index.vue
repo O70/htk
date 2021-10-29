@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-card>
-      <div slot="header" class="clearfix">
+      <div slot="header" class="card-header clearfix">
         <label>
           共计: {{ data.length }}
         </label>
@@ -21,6 +21,7 @@
         highlight-current-row
         @row-click="handleRowClick"
       >
+        <el-table-column type="selection" width="40" />
         <el-table-column type="expand">
           <template slot-scope="scope">
             <image-item :data="scope.row" />
@@ -129,7 +130,8 @@ export default {
       stratum: null
     }
     return {
-      occupy: 20 * 2 + 5 * 2 + 3,
+      excludes: ['.card-header'],
+      occupy: 20 * 2 + 5 * 2 * 2 + 3,
       data: [],
       form: {
         entity,
