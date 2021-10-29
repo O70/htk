@@ -6,9 +6,19 @@
           共计: {{ data.length }}
         </label>
         <el-button-group style="float: right;">
-          <el-button type="warning" size="mini" @click="handleAnalysis">分析</el-button>
+          <el-button
+            type="warning"
+            size="mini"
+            :disabled="disabled"
+            @click="handleAnalysis"
+          >分析</el-button>
           <el-button type="primary" size="mini" @click="handleNew">新建</el-button>
-          <el-button type="danger" size="mini">删除</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            :disabled="disabled"
+            @click="handleRemoveAll"
+          >删除</el-button>
         </el-button-group>
       </div>
       <el-table
@@ -20,6 +30,7 @@
         fit
         highlight-current-row
         @row-click="handleRowClick"
+        @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="40" />
         <el-table-column type="expand">
@@ -141,13 +152,17 @@ export default {
           { key: '岩心或岩屑', label: '盆地名称' },
           { key: '野外露头剖面', label: '盆地或位置' }
         ]
-      }
+      },
+      selected: []
     }
   },
   computed: {
     locationLabel() {
       const type = this.form.types.find(it => it.key === this.form.model.type)
       return type ? type.label : '待定'
+    },
+    disabled() {
+      return this.selected.length <= 0
     }
   },
   created() {
@@ -156,6 +171,9 @@ export default {
   methods: {
     handleRowClick(row) {
       this.$refs.table.toggleRowExpansion(row)
+    },
+    handleSelectionChange(val) {
+      this.selected = val
     },
     handleNew() {
       this.form.model = Object.assign({}, this.form.entity)
@@ -191,13 +209,25 @@ export default {
     handleRemove(event, index, { id }) {
       event.stopPropagation()
 
-      this.$confirm('确认删除?', '提示', { type: 'warning' }).then(() => {
-        this.data.splice(index, 1)
-        remove(id).then(res => console.debug(res))
-      }).catch(() => {})
+      this.$confirm('确认删除?', '提示', { type: 'warning' })
+        .then(() => this.handleSplice(index, id))
+        .catch(() => {})
+    },
+    handleRemoveAll() {
+      this.$confirm('确认删除?', '提示', { type: 'warning' })
+        .then(() => {
+          this.selected.forEach(({ id }) => {
+            const ind = this.data.findIndex(d => d.id === id)
+            this.handleSplice(ind, id)
+          })
+        }).catch(() => {})
+    },
+    handleSplice(index, id) {
+      this.data.splice(index, 1)
+      remove(id).then(res => console.debug(res))
     },
     handleAnalysis() {
-      console.debug('analysis selected')
+      console.debug('analysis selected...')
     },
     handleViewResults(event, id) {
       event.stopPropagation()

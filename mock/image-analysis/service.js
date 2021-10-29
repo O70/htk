@@ -129,7 +129,7 @@ class Service {
       images: [],
       finals: [],
       desc: {},
-      excel: `${dirPrefix}/final.xlsx`
+      excel: null
     }
 
     try {
@@ -150,6 +150,8 @@ class Service {
 
           return [filepath, ...results]
         })
+
+      result.excel = `${dirPrefix}/final.xlsx`
     } catch {
       console.error('Not found results')
     }

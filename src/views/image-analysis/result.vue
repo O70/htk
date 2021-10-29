@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card>
       <div slot="header" class="card-header clearfix">
-        <a :href="data.excel">Excel</a>
+        <a v-if="data.excel" :href="data.excel">Excel</a>
         <el-button
           type="primary"
           size="mini"
