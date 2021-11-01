@@ -124,13 +124,14 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
+import SJ from './sockjs'
 import { list, save, remove, analysis } from '@/api/image-analysis'
 
 export default {
   components: {
     ImageItem: () => import('./item')
   },
-  mixins: [UsableHeightMixin],
+  mixins: [UsableHeightMixin, SJ],
   data() {
     const entity = {
       id: null,
