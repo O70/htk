@@ -12,6 +12,7 @@ const users = {
   'admin-token': {
     id: 'ADMIN-ID',
     name: 'Super Admin',
+    password: '111111',
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
@@ -21,6 +22,7 @@ const users = {
   'editor-token': {
     id: 'EDITOR-ID',
     name: 'Normal Editor',
+    password: '111111',
     roles: ['editor'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
@@ -35,14 +37,24 @@ module.exports = [
     url: '/api/thraex/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
+      const { username, password } = config.body
       const token = tokens[username]
+      console.debug(password, token)
 
       // mock error
       if (!token) {
         return {
           code: 60204,
-          message: 'Account and password are incorrect.'
+          message: '账号或密码不正确.'
+        }
+      }
+
+      const user = users[token.token]
+      console.debug(user)
+      if (!user || user.password !== password) {
+        return {
+          code: 60204,
+          message: '账号或密码不正确.'
         }
       }
 
