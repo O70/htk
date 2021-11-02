@@ -5,7 +5,8 @@ const { resolve, extname } = require('path')
 const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
 
-const analysis = require('./analysis')
+// const analysis = require('./analysis')
+require('./analysis')
 
 const DB_DIR = 'db.tmp'
 const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
@@ -118,18 +119,18 @@ class Service {
   }
 
   calc(data) {
-    let res = 0
+    let res = []
     if (data) {
       const items = (Array.isArray(data) ? data : [data])
       res = items.length
 
       const prefix = `${resolve('./')}/${IMG_DIR}`
-      const targets = items.map(it => ({
+      res = items.map(it => ({
         dir: `${prefix}/${it.id}`,
         message: `${it.nation}-${it.type}`
       }))
 
-      analysis(targets)
+      // analysis(targets)
     }
 
     return res

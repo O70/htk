@@ -79,6 +79,10 @@ export default {
         console.debug('analysis:', res)
       })
     },
+    handleNotify(id) {
+      // const it = this.selected.find(it => it.id === id)
+      // this.$$notify(`${it.nation}-${it.type}`)
+    },
     handleViewResults() {
       this.$router.push(`/image/analysis/${this.data.id}`)
     }

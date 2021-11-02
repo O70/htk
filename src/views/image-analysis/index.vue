@@ -228,7 +228,16 @@ export default {
       remove(id)
     },
     handleAnalysis() {
-      analysis(this.selected).then(res => console.debug('batch analysis:', res))
+      // analysis(this.selected).then(res => console.debug('batch analysis:', res))
+      this.sock.send(this.selected.map(({ id }) => id).join(','))
+    },
+    handleNotify(id) {
+      const it = this.selected.find(it => it.id === id)
+      console.debug(it)
+      this.$notify({
+        message: `${it.nation}-${it.type}分析完成!`,
+        type: 'success'
+      })
     },
     handleViewResults(event, id) {
       event.stopPropagation()
