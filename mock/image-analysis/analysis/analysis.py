@@ -52,5 +52,5 @@ def processing(fname, dist_dir):
 		shutil.copyfile(extracts_dir + '/' + it, item_dir + '/' + it)
 
 if __name__ == '__main__':
-	# time.sleep(3)
+	time.sleep(2)
 	exec(sys.argv[1])

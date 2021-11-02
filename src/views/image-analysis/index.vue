@@ -124,14 +124,14 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import SJ from './sockjs'
-import { list, save, remove, analysis } from '@/api/image-analysis'
+import Notify from './notify'
+import { list, save, remove } from '@/api/image-analysis'
 
 export default {
   components: {
     ImageItem: () => import('./item')
   },
-  mixins: [UsableHeightMixin, SJ],
+  mixins: [UsableHeightMixin, Notify],
   data() {
     const entity = {
       id: null,
@@ -229,19 +229,15 @@ export default {
     },
     handleAnalysis() {
       // analysis(this.selected).then(res => console.debug('batch analysis:', res))
-      this.sock.send(this.selected.map(({ id }) => id).join(','))
-    },
-    handleNotify(id) {
-      const it = this.selected.find(it => it.id === id)
-      console.debug(it)
-      this.$notify({
-        message: `${it.nation}-${it.type}分析完成!`,
-        type: 'success'
-      })
+      this.startAnalysis(this.selected.map(({ id }) => id).join(','))
     },
     handleViewResults(event, id) {
       event.stopPropagation()
       this.$router.push(`/image/analysis/${id}`)
+    },
+    getMessage(id) {
+      const it = this.selected.find(it => it.id === id)
+      return `${it.nation}-${it.type}`
     }
   }
 }

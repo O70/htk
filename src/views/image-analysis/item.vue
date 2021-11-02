@@ -30,9 +30,11 @@
 </template>
 <script>
 import { extname } from 'path'
-import { pictures, delPicture, analysis } from '@/api/image-analysis'
+import Notify from './notify'
+import { pictures, delPicture } from '@/api/image-analysis'
 
 export default {
+  mixins: [Notify],
   props: {
     data: {
       type: Object,
@@ -75,16 +77,15 @@ export default {
       file.path = `${this.data.id}/${data}${extname(file.name)}`
     },
     handleAnalysis() {
-      analysis(this.data).then(res => {
-        console.debug('analysis:', res)
-      })
-    },
-    handleNotify(id) {
-      // const it = this.selected.find(it => it.id === id)
-      // this.$$notify(`${it.nation}-${it.type}`)
+      // analysis(this.data).then(res => console.debug('analysis:', res))
+      this.startAnalysis(this.data.id)
     },
     handleViewResults() {
       this.$router.push(`/image/analysis/${this.data.id}`)
+    },
+    getMessage() {
+      const { nation, type } = this.data
+      return `${nation}-${type}`
     }
   }
 }
