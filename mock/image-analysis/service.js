@@ -10,7 +10,8 @@ require('./analysis')
 
 const DB_DIR = 'db.tmp'
 const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
-const RESULTS_DIR = 'results'
+// const RESULTS_DIR = 'results'
+const RESULTS_DIR = 'outputs'
 
 class Service {
   constructor() {
