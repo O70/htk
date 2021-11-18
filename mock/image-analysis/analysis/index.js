@@ -12,11 +12,16 @@ const [app, filename, options] = [
 
 function dataEvent(conn, message) {
   console.debug('[GUI]', 'server message:', message)
-  message.split(',').forEach(it => {
-    const dir = `${resolve('./')}/db.tmp/images/${it}`
+  message.split(',').forEach(id => {
+    const dir = `${resolve('./')}/db.tmp/images/${id}`
     childProcess.execFile(app, [filename, dir], options, (err, stdout, stderr) => {
       console.debug('invoke result:', err, stdout, stderr)
-      conn.write(it)
+      const res = {
+        id,
+        type: err ? 'error' : 'success',
+        label: err ? '失败' : '完成'
+      }
+      conn.write(JSON.stringify(res))
     })
   })
 }

@@ -19,13 +19,14 @@ export default {
     startAnalysis(data) {
       this.sock.send(data)
     },
-    showNotify(id) {
+    showNotify(data) {
+      const { id, type, label } = JSON.parse(data)
       const msg = this.getMessage(id)
       this.$notify({
-        title: '成功',
+        title: '提示',
         dangerouslyUseHTMLString: true,
-        message: `<b>${msg}</b>分析完成!`,
-        type: 'success'
+        message: `<b>${msg}</b>分析${label}!`,
+        type
       })
     }
   }
