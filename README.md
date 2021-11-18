@@ -1,62 +1,23 @@
-# Boardroom
+# HTK
 
-## DhtmlxScheduler v4.1.0
+## Deploy
 
-Plugins(`public/static/dhtmlxScheduler`):
+### Build
 
-- `dhtmlxscheduler.css` -> `scheduler.css`
-- `dhtmlxscheduler.js` -> `scheduler.js`
-- `dhtmlxscheduler_timeline.js` -> `timeline.js`
-- `dhtmlxscheduler_treetimeline.js` -> `treetimeline.js`
-- `dhtmlxscheduler_collision.js` -> `collision.js`
-- `dhtmlxscheduler_limit.js` -> `limit.js`
-- `dhtmlxscheduler_tooltip.js` -> `tooltip.js`
-- `locale_cn.js`
+``` sh
+$ docker build -t htk .
+```
 
-ES6 import: `components/scheduler/index.js`
+### Run
 
-Bugs(fix: reload `scheduler`):
-- `scheduler` global sharing
-- `scheduler` event repeated rendering
-  - fix: `scheduler.clearAll()`
+``` sh
+$ docker run -d --name htk-s -p 8080:9717 htk
+```
 
-## TODO
+### Remove
 
-- [ ] Update `package.json`
+``` sh
+$ docker rm -v htk-s
 
-- [X] Time out of bounds
-- [X] Form validate
-- [X] Form default(`orgId`/`contacts`/`mobile`)
-- [X] Form modify
-- [X] Submit dialog
-- [X] Blocked tips
-- [X] Org filter
-- [X] Secret dialog
-- [X] Legends
-- [X] Base info components
-- [X] `boardroom` does not exist for booking
-- [X] Event/Marked color
-- [X] Condition
-- [X] Remark position
-- [X] Event modify: move/resize
-- [X] Event cancel: icon
-- [ ] Notice
-- [ ] Opt: event cancel icon
-- [ ] Style
-
-## Files
-
-- [X] static/dhtmlxScheduler
-- [X] components/scheduler
-
-- [X] booking.vue
-- [X] statistics.vue
-
-- [X] edit.vue
-- [X] item.vue
-- [X] modify.js
-- [X] rules.js
-- [ ] timeline.vue
-  - [ ] style: remove `scoped` and add 5 `../`
-- [X] view.vue
-- [ ] service.vue
+$ docker rmi htk
+```
