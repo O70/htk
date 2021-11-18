@@ -6,7 +6,7 @@ const childProcess = require('child_process')
 
 const [app, filename, options] = [
   'python3',
-  'pys/analysis.py',
+  `${resolve()}/pys/analysis.py`,
   { cwd: __dirname }
 ]
 

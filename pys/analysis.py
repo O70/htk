@@ -7,6 +7,8 @@ import time
 Analog image analysis
 '''
 
+mock_prefix = sys.path[0] + '/results.tmp'
+
 def exec(img_dir):
 	if not os.path.exists(img_dir):
 		print('The image directory does not exist')
@@ -21,7 +23,6 @@ def exec(img_dir):
 			processing(it, result_dir)
 
 	final_dir = result_dir + '/final'
-	mock_prefix = os.getcwd() + '/pys/results.tmp'
 	os.mkdir(final_dir)
 	for (ind, it) in enumerate(os.listdir(mock_prefix + '/finals')):
 		shutil.copyfile(mock_prefix + '/finals/' + it, final_dir + '/' + str(ind) + '_' + it)
@@ -42,7 +43,7 @@ def processing(fname, dist_dir):
 	item_dir = dist_dir + '/' + fname
 	os.mkdir(item_dir)
 
-	extracts_dir = os.getcwd() + '/pys/results.tmp/extracts'
+	extracts_dir = mock_prefix + '/extracts'
 	extracts = os.listdir(extracts_dir)
 	size = random.randint(1, 5)
 	random.seed(len(extracts))
