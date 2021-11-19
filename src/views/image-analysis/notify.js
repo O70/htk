@@ -1,4 +1,5 @@
 import SockJS from 'sockjs-client'
+import { notifyAddress } from '@/api/image-analysis'
 
 export default {
   data() {
@@ -7,15 +8,18 @@ export default {
     }
   },
   mounted() {
-    this.sock = new SockJS('http://localhost:9718/notify')
-    this.sock.onopen = () => console.log('client open.')
-    this.sock.onmessage = e => this.showNotify(e.data)
-    this.sock.onclose = () => console.debug('client close.')
+    notifyAddress().then(({ data }) => this.init(data))
   },
   beforeDestroy() {
     this.sock.close()
   },
   methods: {
+    init(ip) {
+      this.sock = new SockJS(`http://${ip}:9718/notify`)
+      this.sock.onopen = () => console.log('client open.')
+      this.sock.onmessage = e => this.showNotify(e.data)
+      this.sock.onclose = () => console.debug('client close.')
+    },
     startAnalysis(data) {
       this.sock.send(data)
     },

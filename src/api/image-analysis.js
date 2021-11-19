@@ -60,3 +60,10 @@ export function results(id, prefix) {
     params: { id, prefix }
   })
 }
+
+export function notifyAddress() {
+  return request({
+    url: `/api/thraex/image/analysis/notify/address`,
+    method: 'GET'
+  })
+}

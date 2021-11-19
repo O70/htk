@@ -5,6 +5,11 @@ const splits = req => req.url.split('/').reverse()
 
 module.exports = [
   {
+    url: '/api/thraex/image/analysis/notify/address',
+    type: 'get',
+    response: _ => ({ code: 20000, data: require('ip').address() })
+  },
+  {
     url: '/api/thraex/image/analysis/results',
     type: 'get',
     response: req => {
