@@ -2,11 +2,13 @@
 
 cmd=$1
 
-if [[ $cmd = 'stop' ]] then
+if [[ $cmd = 'stop' ]]
+then
   port=9717
   pid=$(netstat -nlp | grep :$port | awk '{print $7}' | awk -F '/' '{print $1}')
   
-  if [ -n '$pid' ] then
+  if [ -n '$pid' ]
+  then
     kill -9 $pid
   fi
 else
