@@ -15,5 +15,7 @@ tests/**/coverage/
 *.njsproj
 *.sln
 
+*.log
+
 *.bak*
 *.tmp*
