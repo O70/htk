@@ -6,8 +6,10 @@ const childProcess = require('child_process')
 
 const [app, filename, options] = [
   'python3',
-  `${resolve()}/pys/analysis.py`,
-  { cwd: __dirname }
+  `${resolve()}/pys/index.py`,
+  // { cwd: __dirname }
+  {}
+  // { cwd: resolve() }
 ]
 
 function dataEvent(conn, message) {
@@ -15,13 +17,8 @@ function dataEvent(conn, message) {
   message.split(',').forEach(id => {
     const dir = `${resolve('./')}/db.tmp/images/${id}`
     childProcess.execFile(app, [filename, dir], options, (err, stdout, stderr) => {
-      console.debug('invoke result:', err, stdout, stderr)
-      const res = {
-        id,
-        type: err ? 'error' : 'success',
-        label: err ? '失败' : '完成'
-      }
-      conn.write(JSON.stringify(res))
+      console.log('invoke result:', err, stdout, stderr)
+      conn.write(JSON.stringify({ id, state: !err }))
     })
   })
 }

@@ -20,13 +20,13 @@ export default {
       this.sock.send(data)
     },
     showNotify(data) {
-      const { id, type, label } = JSON.parse(data)
+      const { id, state } = JSON.parse(data)
       const msg = this.getMessage(id)
       this.$notify({
         title: '提示',
         dangerouslyUseHTMLString: true,
-        message: `<b>${msg}</b>分析${label}!`,
-        type
+        message: `<b>${msg}</b>分析${state ? '完成' : '失败'}!`,
+        type: state ? 'success' : 'error'
       })
     }
   }

@@ -7,6 +7,7 @@ import time
 Analog image analysis
 '''
 
+# os.getcwd()
 mock_prefix = sys.path[0] + '/results.tmp'
 
 def exec(img_dir):
@@ -53,5 +54,5 @@ def processing(fname, dist_dir):
 		shutil.copyfile(extracts_dir + '/' + it, item_dir + '/' + it)
 
 if __name__ == '__main__':
-	time.sleep(2)
+	# time.sleep(2)
 	exec(sys.argv[1])
