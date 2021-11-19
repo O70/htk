@@ -1,5 +1,11 @@
 # HTK
 
+## Command
+
+- Startup: `./htk.sh`
+
+- Sotp: `./htk.sh stop`
+
 ## Deploy
 
 ### Build
