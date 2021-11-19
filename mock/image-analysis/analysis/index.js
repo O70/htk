@@ -4,19 +4,21 @@ const { resolve } = require('path')
 
 const childProcess = require('child_process')
 
-const [app, filename, options] = [
+/* const [app, filename, options] = [
   'python3',
   `${resolve()}/pys/index.py`,
   // { cwd: __dirname }
   {}
   // { cwd: resolve() }
-]
+] */
+
+const { app, entry, args, options = {}} = require(`${resolve()}/htk.config.js`)
 
 function dataEvent(conn, message) {
   console.debug('[GUI]', 'server message:', message)
   message.split(',').forEach(id => {
     const dir = `${resolve('./')}/db.tmp/images/${id}`
-    childProcess.execFile(app, [filename, dir], options, (err, stdout, stderr) => {
+    childProcess.execFile(app, [entry, args(dir)], options, (err, stdout, stderr) => {
       console.log('invoke result:', err, stdout, stderr)
       conn.write(JSON.stringify({ id, state: !err }))
     })
