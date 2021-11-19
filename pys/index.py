@@ -23,14 +23,14 @@ def exec(img_dir):
 		if os.path.isfile(fpath):
 			processing(it, result_dir)
 
-	final_dir = result_dir + '/final'
+	final_dir = result_dir + '/sample_result'
 	os.mkdir(final_dir)
 	for (ind, it) in enumerate(os.listdir(mock_prefix + '/finals')):
 		shutil.copyfile(mock_prefix + '/finals/' + it, final_dir + '/' + str(ind) + '_' + it)
 	
-	shutil.copyfile(mock_prefix + '/others/param.xlsx', result_dir + '/final.xlsx')
+	shutil.copyfile(mock_prefix + '/others/param.xlsx', result_dir + '/param.xlsx')
 
-	shutil.copyfile(mock_prefix + '/others/param.json', result_dir + '/final.json')
+	shutil.copyfile(mock_prefix + '/others/sample_param_result.json', result_dir + '/sample_param_result.json')
 
 def cleans(dr):
 	try:

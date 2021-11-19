@@ -149,10 +149,10 @@ class Service {
     try {
       const sample = `${IMG_DIR}/${id}`
 
-      result.finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/final`)
-        .map(it => `${dirPrefix}/final/${it}`)
+      result.finals = fs.readdirSync(`${sample}/${RESULTS_DIR}/sample_result`)
+        .map(it => `${dirPrefix}/sample_result/${it}`)
 
-      const desc = fs.readFileSync(`${sample}/${RESULTS_DIR}/final.json`)
+      const desc = fs.readFileSync(`${sample}/${RESULTS_DIR}/sample_param_result.json`)
       result.desc = JSON.parse(desc)
 
       result.images = fs.readdirSync(sample)
@@ -165,7 +165,7 @@ class Service {
           return [filepath, ...results]
         })
 
-      result.excel = `${dirPrefix}/final.xlsx`
+      result.excel = `${dirPrefix}/param.xlsx`
     } catch {
       console.error('Not found results')
     }
