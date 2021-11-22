@@ -17,6 +17,7 @@ const { app, entry, args, options = {}} = require(`${resolve()}/htk.config.js`)
 function dataEvent(conn, message) {
   console.debug('[GUI]', 'server message:', message)
   message.split(',').forEach(id => {
+    console.log('exec:', app, entry, args(dir), 'options:', options)
     const dir = `${resolve('./')}/db.tmp/images/${id}`
     childProcess.execFile(app, [entry, args(dir)], options, (err, stdout, stderr) => {
       console.log('invoke result:', err, stdout, stderr)
