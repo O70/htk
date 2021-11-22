@@ -91,11 +91,11 @@
     </el-card>
 
     <el-dialog title="基本信息" :visible.sync="form.visible" width="35%">
-      <el-form :model="form.model" label-width="90px" size="mini">
-        <el-form-item label="国家">
-          <el-input v-model="form.model.nation" clearable />
+      <el-form ref="form" :model="form.model" :rules="rules" label-width="120px" size="mini">
+        <el-form-item prop="nation" label="国家">
+          <el-input v-model.trim="form.model.nation" clearable />
         </el-form-item>
-        <el-form-item label="样品类型">
+        <el-form-item prop="type" label="样品类型">
           <el-select v-model="form.model.type" clearable style="width: 100%;">
             <el-option
               v-for="(item, ind) in form.types"
@@ -105,14 +105,14 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="locationLabel">
-          <el-input v-model="form.model.location" clearable />
+        <el-form-item prop="location" :label="locationLabel">
+          <el-input v-model.trim="form.model.location" clearable />
         </el-form-item>
-        <el-form-item label="时代">
-          <el-input v-model="form.model.era" clearable />
+        <el-form-item prop="era" label="时代">
+          <el-input v-model.trim="form.model.era" clearable />
         </el-form-item>
-        <el-form-item label="层位">
-          <el-input v-model="form.model.stratum" clearable />
+        <el-form-item prop="stratum" label="层位">
+          <el-input v-model.trim="form.model.stratum" clearable />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSave">保存</el-button>
@@ -154,6 +154,18 @@ export default {
           { key: '野外露头剖面', label: '盆地或位置' }
         ]
       },
+      rules: {
+        nation: { required: true, message: '请填写' },
+        type: { required: true, message: '请选择' },
+        location: { required: true, message: '请填写' },
+        /* location: { validator: (_, value, callback) => {
+          callback(value && value.trim().length > 0
+            ? undefined
+            : `请填写${this.locationLabel}`)
+        } }, */
+        era: { required: true, message: '请填写' },
+        stratum: { required: true, message: '请填写' }
+      },
       selected: []
     }
   },
@@ -179,16 +191,22 @@ export default {
     handleNew() {
       this.form.model = Object.assign({}, this.form.entity)
       this.form.visible = true
+      this.$refs.form && this.$refs.form.clearValidate()
     },
     handleEdit(event, row) {
       event.stopPropagation()
 
       this.form.model = Object.assign({}, row)
       this.form.visible = true
+      this.$refs.form && this.$refs.form.clearValidate()
     },
     handleSave() {
-      this.form.visible = false
-      this.handleSubmit(this.form.model)
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.form.visible = false
+          this.handleSubmit(this.form.model)
+        }
+      })
     },
     handleCopy(event, row) {
       event.stopPropagation()
