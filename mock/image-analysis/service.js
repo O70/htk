@@ -158,8 +158,9 @@ class Service {
       result.images = fs.readdirSync(sample)
         .filter(it => it !== RESULTS_DIR)
         .map(it => {
-          const results = fs.readdirSync(`${sample}/${RESULTS_DIR}/${it}`)
-            .map(s => `${dirPrefix}/${it}/${s}`)
+          const folder = it.replace(extname(it), '')
+          const results = fs.readdirSync(`${sample}/${RESULTS_DIR}/${folder}`)
+            .map(s => `${dirPrefix}/${folder}/${s}`)
           const filepath = `${prefix}/${id}/${it}`
 
           return [filepath, ...results]
