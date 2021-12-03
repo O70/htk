@@ -10,13 +10,14 @@
     "preview": "node build/index.js --preview",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "lint": "eslint --ext .js,.vue src",
-    "server": "node server/index.js",
+    "server": "node server/index",
     "joint": "run-p dev server"
   },
   "dependencies": {
     "axios": "0.21.1",
     "connect-multiparty": "^2.2.0",
     "core-js": "3.6.5",
+    "cors": "^2.8.5",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
     "multiparty": "^4.2.2",
