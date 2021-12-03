@@ -7,7 +7,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'Boardroom'
+const name = defaultSettings.title || 'HTK'
 
 const port = process.env.port || process.env.npm_config_port || 9717
 

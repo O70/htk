@@ -23,30 +23,17 @@
     >
       <i class="el-icon-plus" />
     </el-upload>
-    <!-- <el-dialog :visible.sync="preview.visible">
+    <el-dialog :visible.sync="preview.visible">
       <img width="100%" :src="preview.url">
-    </el-dialog> -->
-    <!-- <el-image
-      ref="preview"
-      :src="preview.url"
-      :preview-src-list="fileList.map(it => it.url)"
-    /> -->
-    <image-viewer :initial-index="0" :url-list="fileList.map(it => it.url)"
-      :on-close="closeViewer" v-show="preview.visible" />
+    </el-dialog>
   </el-card>
 </template>
 <script>
 import { extname } from 'path'
 import Notify from './notify'
-import { pictures, delPicture } from '@/api/image-analysis'
-
-// import ImageViewer from 'element-ui/lib/image'
-// console.debug(ImageViewer)
+import { pictures, delPicture } from '@/api/htk'
 
 export default {
-  components: {
-    ImageViewer: () => import('element-ui/packages/image/src/image-viewer')
-  },
   mixins: [Notify],
   props: {
     data: {
@@ -83,12 +70,8 @@ export default {
       delPicture(file.path).then(res => console.log(res))
     },
     handlePreview(file) {
+      this.preview.url = file.url
       this.preview.visible = true
-      // this.preview.url = file.url
-      // setTimeout(() => this.$refs.preview.$el.querySelector('img').click())
-    },
-    closeViewer() {
-      this.preview.visible = false
     },
     handleSuccess({ data }, file) {
       file.path = `${this.data.id}/${data}${extname(file.name)}`
@@ -98,7 +81,7 @@ export default {
       this.startAnalysis(this.data.id)
     },
     handleViewResults() {
-      this.$router.push(`/image/analysis/${this.data.id}`)
+      this.$router.push(`${this.data.id}`)
     },
     getMessage() {
       const { nation, type } = this.data

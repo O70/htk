@@ -10,7 +10,7 @@ app.listen(9716, function() {
   console.log('Listen to 9716...')
 })
 
-const Service = require('../mock/image-analysis/service')
+const Service = require('../mock/htk/service')
 const service = new Service()
 
 const API = '/api/thraex/image/analysis'

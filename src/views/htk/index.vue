@@ -125,7 +125,7 @@
 <script>
 import UsableHeightMixin from '@/components/usable-height'
 import Notify from './notify'
-import { list, save, remove } from '@/api/image-analysis'
+import { list, save, remove } from '@/api/htk'
 
 export default {
   components: {
@@ -251,7 +251,7 @@ export default {
     },
     handleViewResults(event, id) {
       event.stopPropagation()
-      this.$router.push(`/image/analysis/${id}`)
+      this.$router.push(`${id}`)
     },
     getMessage(id) {
       const it = this.selected.find(it => it.id === id)

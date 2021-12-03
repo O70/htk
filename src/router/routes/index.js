@@ -1,11 +1,5 @@
-import Boardroom from './boardroom'
-import ImageAnalysis from './image-analysis'
-import Demo from './demo'
-import Other from './other'
+import Htk from './htk'
 
 export default [
-  ...Boardroom,
-  ...ImageAnalysis,
-  ...Demo,
-  ...Other
+  ...Htk
 ]

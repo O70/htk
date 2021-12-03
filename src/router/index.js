@@ -18,11 +18,11 @@ export const constantRoutes = [
     hidden: true
   },
 
-  {
+  /* {
     path: '/',
-    redirect: '/image/analysis',
+    redirect: '/htk',
     hidden: true
-  },
+  }, */
 
   ...Routes,
 

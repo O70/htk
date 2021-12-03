@@ -1,5 +1,5 @@
 import SockJS from 'sockjs-client'
-import { notifyAddress } from '@/api/image-analysis'
+import { notifyAddress } from '@/api/htk'
 
 export default {
   data() {

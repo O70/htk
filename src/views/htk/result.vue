@@ -59,7 +59,7 @@
 </template>
 <script>
 import UsableHeightMixin from '@/components/usable-height'
-import { results } from '@/api/image-analysis'
+import { results } from '@/api/htk'
 
 export default {
   mixins: [UsableHeightMixin],
