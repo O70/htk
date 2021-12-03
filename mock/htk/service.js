@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid')
 const multiparty = require('multiparty')
 
 // const analysis = require('./analysis')
-require('./analysis')
+// require('./analysis')
 
 const DB_DIR = 'db.tmp'
 const [DB_PATH, IMG_DIR] = [`${DB_DIR}/db.json`, `${DB_DIR}/images`]
