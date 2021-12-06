@@ -23,9 +23,10 @@ export function getById(id) {
   })
 }
 
-export function logout() {
+export function logout(token) {
   return request({
     url: '/api/thraex/user/logout',
-    method: 'post'
+    method: 'post',
+    data: { token }
   })
 }

@@ -27,7 +27,7 @@ module.exports = [
     'post',
     function(req, res) {
       const { username, password } = req.body
-      console.debug('User login:', username, password)
+      console.debug('User login: [%s, %s]', username, password)
 
       const user = users.find(it => it.username === username && it.password === password)
 
@@ -45,7 +45,7 @@ module.exports = [
     'get',
     function(req, res) {
       const { token } = req.query
-      console.debug('Get user info:', token)
+      console.debug('Get user info: [%s]', token)
       const user = users.find(it => it.token === token)
 
       res.send(user ? {
@@ -61,8 +61,8 @@ module.exports = [
     '/user/logout',
     'post',
     function(req, res) {
-      const { token } = req.query
-      console.debug('User logout:', token)
+      const { token } = req.body
+      console.debug('User logout: [%s]', token)
 
       res.send({ code: 20000, data: 'success' })
     }
