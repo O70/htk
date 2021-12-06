@@ -39,8 +39,8 @@ const actions = {
       login({ username: username.trim(), password }).then(response => {
         if (response.code === 20000) {
           const { data } = response
-          commit('SET_TOKEN', data.token)
-          setToken(data.token)
+          commit('SET_TOKEN', data)
+          setToken(data)
           resolve()
         } else {
           reject(response.message)
