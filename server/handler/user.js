@@ -22,10 +22,10 @@ const users = [
 ]
 
 module.exports = [
-  [
-    '/user/login',
-    'post',
-    function(req, res) {
+  {
+    url: '/user/login',
+    type: 'POST',
+    handler(req, res) {
       const { username, password } = req.body
       console.debug('User login: [%s, %s]', username, password)
 
@@ -39,11 +39,11 @@ module.exports = [
         message: '账号或密码不正确.'
       })
     }
-  ],
-  [
-    '/user/info',
-    'get',
-    function(req, res) {
+  },
+  {
+    url: '/user/info',
+    type: 'GET',
+    handler(req, res) {
       const { token } = req.query
       console.debug('Get user info: [%s]', token)
       const user = users.find(it => it.token === token)
@@ -56,15 +56,25 @@ module.exports = [
         message: 'Login failed, unable to get user details.'
       })
     }
-  ],
-  [
-    '/user/logout',
-    'post',
-    function(req, res) {
+  },
+  {
+    url: '/user/logout',
+    type: 'POST',
+    handler(req, res) {
       const { token } = req.body
       console.debug('User logout: [%s]', token)
 
       res.send({ code: 20000, data: 'success' })
     }
-  ]
+  },
+  {
+    url: '/user/*',
+    type: 'GET',
+    handler(req, res) {
+      const [id] = req.url.split('/').reverse()
+      console.debug('Get user: [%s]', id)
+
+      res.send({ code: 200, data: users.find(it => it.id === id) })
+    }
+  }
 ]

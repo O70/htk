@@ -5,19 +5,28 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+const logger = require('./logger')
+
 const prefix = '/api/thraex'
 const all = require('./handler')
-all.forEach(([url, type, handler]) => {
+all.forEach(({ url, type, handler }) => {
   const proxy = new Proxy(handler, {
     apply(target, thisArg, args) {
-      console.log('Request method begin...')
+      logger.debug(type, url)
       const res = Reflect.apply(target, thisArg, args)
-      console.log('Request method end...')
+
+      logger.debug('console debug', 1, 'debug')
+      logger.log('console log', 1, 'log')
+      logger.info('console info', 1, 'info')
+      logger.warn('console warn', 1, 'warn')
+      logger.error('console error', 1, 'error')
+      logger.debug('Request method end...', 1, 'debug')
+
       return res
     }
   })
 
-  app[type](`${prefix}${url}`, proxy)
+  app[type.toLowerCase()](`${prefix}${url}`, proxy)
 })
 
 const server = app.listen(9716, function() {
