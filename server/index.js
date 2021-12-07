@@ -12,15 +12,21 @@ const all = require('./handler')
 all.forEach(({ url, type, handler }) => {
   const proxy = new Proxy(handler, {
     apply(target, thisArg, args) {
-      logger.debug(type, url)
+      logger.debug(type.toUpperCase(), url)
       const res = Reflect.apply(target, thisArg, args)
 
-      logger.debug('console debug', 1, 'debug')
-      logger.log('console log', 1, 'log')
-      logger.info('console info', 1, 'info')
-      logger.warn('console warn', 1, 'warn')
-      logger.error('console error', 1, 'error')
-      logger.debug('Request method end...', 1, 'debug')
+      // logger.debug('console debug', 1, 'debug')
+      // logger.log('console log', 1, 'log')
+      // logger.info('console info', 1, 'info')
+      // logger.warn('console warn', 1, 'warn')
+      // logger.error('console error', 1, 'error')
+      // logger.debug('Request method end...', 1, 'debug')
+
+      logger.error('console error...')
+      logger.warn('console warn...')
+      logger.log('console log...')
+      logger.info('console info...')
+      logger.debug('console debug...')
 
       return res
     }
