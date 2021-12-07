@@ -1,3 +1,5 @@
+const logger = require('../logger')
+
 const users = [
   {
     id: 'ADMIN-ID',
@@ -27,7 +29,7 @@ module.exports = [
     type: 'POST',
     handler(req, res) {
       const { username, password } = req.body
-      console.debug('User login: [%s, %s]', username, password)
+      logger.debug('User login: [%s, %s]', username, password)
 
       const user = users.find(it => it.username === username && it.password === password)
 
@@ -45,7 +47,7 @@ module.exports = [
     type: 'GET',
     handler(req, res) {
       const { token } = req.query
-      console.debug('Get user info: [%s]', token)
+      logger.debug('Get user info: [%s]', token)
       const user = users.find(it => it.token === token)
 
       res.send(user ? {
@@ -62,7 +64,7 @@ module.exports = [
     type: 'POST',
     handler(req, res) {
       const { token } = req.body
-      console.debug('User logout: [%s]', token)
+      logger.debug('User logout: [%s]', token)
 
       res.send({ code: 20000, data: 'success' })
     }
@@ -72,7 +74,7 @@ module.exports = [
     type: 'GET',
     handler(req, res) {
       const [id] = req.url.split('/').reverse()
-      console.debug('Get user: [%s]', id)
+      logger.debug('Get user: [%s]', id)
 
       res.send({ code: 200, data: users.find(it => it.id === id) })
     }
