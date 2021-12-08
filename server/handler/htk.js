@@ -1,15 +1,79 @@
-module.exports = app => {
-  const { htk: { prefix }} = app
+const logger = require('../logger')
 
-  const url = `${prefix}/image/analysis`
+const Service = require('../../mock/htk/service')
+const service = new Service()
 
-  app.get(url, function(req, res) {
-    console.log('Server:...', 0)
-    res.send({ code: 20000, data: 'htk get' })
-  })
+const splits = req => req.url.split('/').reverse()
 
-  app.post(url, function(req, res) {
-    console.log('Server:...', 2)
-    res.send({ code: 20000, data: 'htk post' })
-  })
-}
+module.exports = [
+  {
+    url: '/image/analysis/notify/address',
+    type: 'GET',
+    // handler: _ => ({ code: 20000, data: require('ip').address() })
+    handler: _ => ({ code: 20000, data: 'localhost' })
+  },
+  {
+    url: '/image/analysis/results',
+    type: 'GET',
+    handler: req => {
+      const { id, prefix } = req.query
+      return { code: 20000, data: service.results(id, prefix) }
+    }
+  },
+  {
+    url: '/image/analysis/results',
+    type: 'POST',
+    handler: req => ({ code: 20000, data: service.calc(req.body) })
+  },
+  {
+    url: '/image/analysis/upload',
+    type: 'POST',
+    handler: req => ({ code: 20000, data: service.upload(req) })
+  },
+  {
+    url: '/image/analysis/\.*/\.*',
+    type: 'DELETE',
+    handler: req => {
+      const [filename, sid] = splits(req)
+      // service.delPicture(`${sid}/${filename}`)
+      service.delPicture(sid, filename)
+      return { code: 20000, data: true }
+    }
+  },
+  {
+    url: '/image/analysis/picture/list',
+    type: 'GET',
+    handler: req => {
+      const { sid } = req.query
+      return { code: 20000, data: service.pictures(sid) }
+    }
+  },
+  {
+    url: '/image/analysis/picture',
+    type: 'GET',
+    native: true,
+    handler: (req, res) => {
+      const [, fpath] = req.url.split('/api/thraex/image/analysis/picture/')
+      service.download(fpath, res)
+    }
+  },
+  {
+    url: '/image/analysis',
+    type: 'GET',
+    handler: _ => ({ code: 20000, data: service.list() })
+  },
+  {
+    url: '/image/analysis',
+    type: 'POST',
+    handler: req => ({ code: 20000, data: service.save(req.body) })
+  },
+  {
+    url: '/image/analysis',
+    type: 'DELETE',
+    handler: req => {
+      const id = splits(req)[0]
+      service.remove(id)
+      return { code: 20000, data: true }
+    }
+  }
+]

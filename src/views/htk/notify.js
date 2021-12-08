@@ -15,6 +15,7 @@ export default {
   },
   methods: {
     init(ip) {
+      console.log('ip:', ip)
       this.sock = new SockJS(`http://${ip}:9718/notify`)
       this.sock.onopen = () => console.log('client open.')
       this.sock.onmessage = e => this.showNotify(e.data)
