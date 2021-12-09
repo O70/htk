@@ -8,15 +8,15 @@ export default {
     }
   },
   mounted() {
-    notifyAddress().then(({ data }) => this.init(data))
+    // notifyAddress().then(({ data }) => this.init(data))
   },
   beforeDestroy() {
-    this.sock.close()
+    this.sock && this.sock.close()
   },
   methods: {
     init(ip) {
       console.log('ip:', ip)
-      this.sock = new SockJS(`http://${ip}:9718/notify`)
+      this.sock = new SockJS(`http://${ip}:9716/notify`)
       this.sock.onopen = () => console.log('client open.')
       this.sock.onmessage = e => this.showNotify(e.data)
       this.sock.onclose = () => console.debug('client close.')

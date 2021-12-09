@@ -76,7 +76,7 @@ module.exports = [
       const [id] = req.url.split('/').reverse()
       logger.debug('Get user: [%s]', id)
 
-      res.send({ code: 200, data: users.find(it => it.id === id) })
+      res.send({ code: 20000, data: users.find(it => it.id === id) })
     }
   }
 ]

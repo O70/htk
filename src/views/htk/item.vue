@@ -57,7 +57,7 @@ export default {
     }
   },
   created() {
-    const [sid, url] = [this.data.id, `/dev-api/api/thraex/image/analysis/picture`]
+    const [sid, url] = [this.data.id, `http://localhost:9716/api/thraex/image/analysis/picture`]
     pictures(sid).then(({ data }) =>
       (this.fileList = data.map(it => ({
         name: it,
