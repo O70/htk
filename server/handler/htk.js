@@ -70,7 +70,7 @@ module.exports = [
     type: 'GET',
     native: true,
     handler(req, res) {
-      const [, fpath] = req.url.split('/api/thraex/image/analysis/picture/')
+      const [, fpath] = req.url.split('/image/analysis/picture/')
       logger.debug('Download image: [%s]', fpath)
       service.download(fpath, res)
     }
